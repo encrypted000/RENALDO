@@ -650,7 +650,7 @@
         "missing": null,
         "total": 348,
         "required": false,
-        "desc": "Median follow-up: 6.9 yrs (IQR 4.0\u20139.0 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 6.9 yrs (IQR 4.0\u20139.1 yrs) \u2014 based on last activity in results or medications"
       }
     ]
   },
