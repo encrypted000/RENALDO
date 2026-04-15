@@ -4,4 +4,5 @@ python-dotenv
 sshtunnel==0.4.0
 paramiko==2.12.0
 dash
-dash-bootstrap-componentsgunicorn
+dash-bootstrap-components
+gunicorn
