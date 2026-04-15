@@ -1,109 +1,170 @@
-# RaDaR Data Completeness Dashboard
+# RENALDO
+### RarE kidNey dAta compLeteness DashbOard
 
-Interactive dashboard showing data completeness for the Rare Disease Registry (RaDaR),
-managed by the UK Kidney Association.
+> An interactive data completeness monitoring dashboard for the [RaDaR](https://www.radar.nhs.uk) (Rare Disease Registry) — managed by the **UK Kidney Association**.
+
+🔗 **Live dashboard:** [renaldo.onrender.com](https://renaldo.onrender.com)
+
+---
+
+## What is RENALDO?
+
+RENALDO monitors the quality and completeness of patient data across **33 rare kidney disease cohorts** in the RaDaR registry. It helps data managers and clinicians quickly identify where data collection needs improvement — using colour-coded completeness scores across all key variables.
+
+### Key Features
+
+- **Overall RaDaR view** — demographics completeness across all 39,000+ patients
+- **33 cohort sections** — per-cohort breakdown including adults, children, follow-up
+- **Kidney Failure metrics** — patients with evidence of KF (transplant, dialysis, or eGFR < 15)
+- **Transplant tracking** — single vs multiple transplant patients
+- **Colour-coded tables** — instant visual identification of data gaps
+- **Static JSON deployment** — no live DB connection required to view
+
+---
+
+## Dashboard Preview
+
+| Colour | Meaning |
+|--------|---------|
+| 🟢 Green | 0–20% missing — good |
+| 🟡 Yellow-green | 20–40% missing — acceptable |
+| 🟡 Yellow | 40–60% missing — needs attention |
+| 🟠 Orange | 60–80% missing — poor |
+| 🔴 Red | 80–100% missing — critical |
+
+---
 
 ## Project Structure
 
 ```
-RaDaR_completeness/
-  app.py                              ← starts the Dash app
-  config/
-    settings.py                       ← SSH tunnel + DB connection
-    demographics.py                   ← demographics variable definitions
-  analytics/
-    utils.py                          ← shared calculation functions
-    demographics_completeness.py      ← calculates completeness, writes JSON
-  dashboard/
-    __init__.py                       ← creates the Dash app
-    layout.py                         ← assembles the full page
-    components/
-      header.py                       ← page header
-      legend.py                       ← colour key
-      summary_cards.py                ← 4 metric cards
-      table.py                        ← colour-coded data table
-      accordion.py                    ← collapsible sections
-    callbacks/
-      data_callbacks.py               ← load + refresh data
-      render_callbacks.py             ← render content from store
-    assets/
-      style.css                       ← all CSS
-  tests/
-    test_analytics.py                 ← unit tests for calculations
-    test_connection.py                ← DB connection tests
-  output/
-    completeness.json                 ← generated, never edit manually
-  logs/
-    radar.log                         ← application logs
+RENALDO/
+├── app.py                          ← Dash app entry point
+├── requirements.txt
+├── output/
+│   └── completeness.json           ← generated data (never edit manually)
+├── analytics/
+│   ├── run_all.py                  ← main script — runs everything in one go
+│   ├── demographics_completeness.py
+│   ├── cohorts_completeness.py
+│   └── utils.py
+├── config/
+│   ├── settings.py                 ← SSH tunnel + DB connection (uses env vars)
+│   ├── demographics.py             ← demographics variable definitions
+│   └── cohorts.py                  ← excluded group IDs + cohort letters
+├── dashboard/
+│   ├── __init__.py
+│   ├── layout.py
+│   ├── assets/
+│   │   └── style.css
+│   ├── components/
+│   │   ├── accordion.py
+│   │   ├── header.py
+│   │   ├── legend.py
+│   │   ├── summary_cards.py
+│   │   └── table.py
+│   └── callbacks/
+│       ├── data_callbacks.py
+│       └── render_callbacks.py
+└── tests/
+    ├── test_analytics.py
+    └── test_connection.py
 ```
 
-## Setup
+---
 
-### 1. Environment variables (run once)
-```
-setx RADAR_DB_HOST "localhost"
-setx RADAR_DB_PORT "5432"
-setx RADAR_DB_NAME "radar"
-setx RADAR_DB_USER "radar_ro"
-setx RADAR_DB_PASS "your_password"
-setx RADAR_SSH_HOST "db.radar.nhs.uk"
-setx RADAR_SSH_PORT "22"
-setx RADAR_SSH_USER "bidhanp"
-setx RADAR_SSH_KEY "C:\Users\bidhan.pant\.ssh\id_rsa"
-```
-Close and reopen your terminal after running these.
+## Local Setup
 
-### 2. Install dependencies
-```
+### 1. Install dependencies
+```bash
 pip install -r requirements.txt
 ```
 
-### 3. Run analytics (generates the data)
+### 2. Set environment variables
+The analytics pipeline connects to RaDaR via SSH tunnel. Set these once:
+```bash
+setx RADAR_SSH_HOST "your_ssh_host"
+setx RADAR_SSH_PORT "22"
+setx RADAR_SSH_USER "your_username"
+setx RADAR_SSH_KEY "C:\path\to\your\id_rsa"
+setx RADAR_DB_PORT "5432"
+setx RADAR_DB_NAME "radar"
+setx RADAR_DB_USER "your_db_user"
+setx RADAR_DB_PASS "your_db_password"
 ```
-python -m analytics.demographics_completeness
+Close and reopen your terminal after setting these.
+
+### 3. Generate the data
+```bash
+python -m analytics.run_all
 ```
+This opens an SSH tunnel, queries the database, and writes `output/completeness.json`.
 
 ### 4. Start the dashboard
-```
+```bash
 python app.py
 ```
-Open your browser at: http://localhost:8050
+Open: [http://localhost:8050](http://localhost:8050)
 
-## Daily Usage
+---
 
-```
+## Updating the Live Dashboard
+
+The hosted dashboard reads from `output/completeness.json`. To update it:
+
+```bash
 # Step 1 — refresh data from database
-python -m analytics.demographics_completeness
+python -m analytics.run_all
 
-# Step 2 — start dashboard
-python app.py
+# Step 2 — push to GitHub (Render auto-redeploys)
+git add output/completeness.json
+git commit -m "Update completeness data"
+git push
 ```
 
-Or just click "Refresh data" in the dashboard to reload from the last generated JSON.
-
-## Running Tests
-
-```
-# Unit tests (no DB needed)
-python -m pytest tests/test_analytics.py -v
-
-# Connection tests (requires DB access)
-python -m pytest tests/test_connection.py -v
-
-# All tests
-python -m pytest tests/ -v
-```
-
-## Adding a New Cohort
-
-1. Add variable definitions to `config/cohorts.py` (create this file)
-2. Create `analytics/cohort_completeness.py` for the calculation
-3. The dashboard accordion automatically picks up new sections from `completeness.json`
+---
 
 ## Data Rules
 
-- Only `source_type = 'RADAR'` records are included
-- Patients where `test = TRUE` or `control = TRUE` are excluded
-- Email completeness excludes a list of known placeholder emails (see `config/demographics.py`)
-- NHS number completeness checks `patient_numbers` table
-- Diagnosis completeness checks `patient_diagnoses` table
+| Rule | Detail |
+|------|--------|
+| Source | Only `source_type = 'RADAR'` records |
+| Excluded patients | `test = TRUE` or `control = TRUE` |
+| Excluded cohorts | NURTuRE-CKD, NephroS, NaHUS, withdrawn consent, and other non-standard groups |
+| Email completeness | Excludes known placeholder/default emails |
+| NHS number | Checked against `patient_numbers` table |
+| Diagnosis | Checked against `patient_diagnoses` table |
+| Kidney Failure | Transplant OR dialysis OR eGFR < 15 confirmed twice ≥ 28 days apart |
+| Follow-up | Enrolment to last activity (results/medications) or date of death |
+| Enrolment date | `group_patients.from_date` (matches "Recruited On" in RaDaR front end) |
+
+---
+
+## Running Tests
+
+```bash
+# Unit tests — no DB needed
+python -m pytest tests/test_analytics.py -v
+
+# Connection tests — requires DB access
+python -m pytest tests/test_connection.py -v
+```
+
+---
+
+## Tech Stack
+
+| Component | Technology |
+|-----------|-----------|
+| Dashboard | [Plotly Dash](https://dash.plotly.com/) |
+| UI components | [Dash Bootstrap Components](https://dash-bootstrap-components.opensource.faculty.ai/) |
+| Data processing | [pandas](https://pandas.pydata.org/) |
+| Database | PostgreSQL via SSH tunnel (psycopg2 + sshtunnel) |
+| Hosting | [Render](https://render.com) |
+
+---
+
+## Organisation
+
+**UK Kidney Association** — [ukkidney.org](https://ukkidney.org)
+
+RaDaR is a national registry for rare kidney diseases, collecting longitudinal data on patients across the UK.
