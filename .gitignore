@@ -1,0 +1,11 @@
+.env
+__pycache__/
+*.pyc
+*.pyo
+# output/ — include completeness.json but exclude everything else
+output/*
+!output/completeness.json
+logs/
+*.log
+.venv/
+radar_env/
