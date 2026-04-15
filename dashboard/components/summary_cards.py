@@ -23,7 +23,7 @@ def build_summary_cards(data: list):
             html.Div(label, className="card-label"),
             html.Div(value, className="card-value"),
             html.Div(sub,   className="card-sub"),
-        ], className=f"summary-card {cls}"), width=2)
+        ], className=f"summary-card {cls}"), xs=6, sm=4, lg=2)
 
     return dbc.Row([
         card("Total patients",     f"{total_patients:,}",
@@ -38,4 +38,4 @@ def build_summary_cards(data: list):
              "variables 20–60% missing",     "s-warning",  "!"),
         card("Need attention",     str(attention_vars),
              "variables > 60% missing",      "s-danger",   "⚠"),
-    ], className="g-3")
+    ], className="g-2")

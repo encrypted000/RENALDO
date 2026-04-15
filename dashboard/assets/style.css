@@ -187,6 +187,12 @@ body {
   padding:   28px 32px;
 }
 
+@media (max-width: 767px) {
+  .main {
+    padding: 16px 12px;
+  }
+}
+
 /* ── Controls ── */
 .controls {
   display:     flex;
@@ -447,4 +453,186 @@ body {
   font-size:   12px;
   color:       var(--text3);
   line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════════
+   MOBILE RESPONSIVE  (≤ 767px)
+═══════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+
+  /* ── Header ── */
+  .header-inner {
+    flex-direction: column;
+    align-items:    flex-start;
+    gap:            12px;
+    padding:        16px 14px 12px;
+  }
+
+  .header-logo {
+    gap: 10px;
+  }
+
+  .logo-badge {
+    width:  40px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 10px;
+  }
+
+  .header h1 {
+    font-size: 18px;
+  }
+
+  .header-sub {
+    font-size: 11px;
+  }
+
+  .header-meta {
+    text-align: left;
+    display:    flex;
+    align-items: center;
+    gap:        12px;
+    flex-wrap:  wrap;
+  }
+
+  .header-date {
+    font-size: 15px;
+  }
+
+  .header-label {
+    display: none;
+  }
+
+  .header-patients {
+    margin-top: 0;
+    font-size:  11px;
+    padding:    4px 10px;
+  }
+
+  /* ── Nav strip ── */
+  .nav-inner {
+    padding: 0 10px;
+  }
+
+  .nav-actions {
+    gap:       6px;
+    flex-wrap: wrap;
+    padding:   6px 0;
+  }
+
+  .nav-btn {
+    font-size: 11px;
+    padding:   4px 10px;
+  }
+
+  /* ── Summary cards ── */
+  .summary-card {
+    padding: 12px 14px !important;
+  }
+
+  .card-icon {
+    width:         28px;
+    height:        28px;
+    font-size:     13px;
+    border-radius: 7px;
+    margin-bottom: 8px;
+  }
+
+  .card-value {
+    font-size: 22px;
+  }
+
+  .card-label {
+    font-size: 11px;
+  }
+
+  .card-sub {
+    font-size: 10px;
+  }
+
+  /* ── Description box ── */
+  .description-box,
+  [style*="borderLeft: 4px solid #1a6fa8"] {
+    padding: 12px 14px !important;
+    font-size: 12px !important;
+  }
+
+  /* ── Legend ── */
+  .legend-bar {
+    padding: 10px 12px;
+    gap:     4px 12px;
+  }
+
+  .legend-item {
+    font-size: 11px;
+  }
+
+  /* ── Accordion section header ── */
+  .sec-head-inner {
+    flex-wrap: wrap;
+    gap:       6px;
+  }
+
+  .sec-title {
+    font-size: 13px;
+  }
+
+  .sec-count {
+    font-size: 10px;
+  }
+
+  /* Hide progress bar on very small screens — keeps header clean */
+  .sec-bar-wrap {
+    display: none !important;
+  }
+
+  /* ── Table — force horizontal scroll ── */
+  .dash-table-container {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .dash-table-container .dash-spreadsheet-container {
+    overflow-x: auto !important;
+  }
+
+  .dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner th,
+  .dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner td {
+    font-size: 11px !important;
+    padding:   5px 8px !important;
+  }
+
+  /* ── Section dividers ── */
+  .section-divider {
+    margin: 18px 0 10px;
+  }
+
+  /* ── State box ── */
+  .state-box {
+    padding: 32px 16px;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    font-size: 11px;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   SMALL TABLET  (768px – 991px)
+═══════════════════════════════════════════ */
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .header-inner {
+    padding: 20px 20px 14px;
+  }
+
+  .main {
+    padding: 20px 20px;
+  }
+
+  .card-value {
+    font-size: 24px;
+  }
 }
