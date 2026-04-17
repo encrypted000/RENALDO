@@ -22,7 +22,7 @@ def create_header():
                 html.Div([
                     html.Div(className="live-dot"),
                     html.Span(id="total-patients-hdr", children="—"),
-                    html.Span(" active patients"),
+                    html.Span(" total participants"),
                 ], className="header-patients"),
             ], className="header-meta"),
 
