@@ -56,8 +56,9 @@ def _description_box() -> html.Div:
             " and all ",
             html.Strong("33 disease cohort groups"),
             " currently active in RaDaR. "
-            "Use the colour coding to quickly "
-            "identify areas where data collection may need improvement.",
+            "Each variable is colour-coded by the percentage of missing values — "
+            "green indicates good completeness, while orange and red highlight variables "
+            "where data collection requires attention.",
         ]),
 
     ], style={
