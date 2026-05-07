@@ -186,8 +186,7 @@ def run():
                 continue
 
             elif var_name == "DIAGNOSIS":
-                missing = int(total - len(set(demographics["patient_id"]) & prd_overall_pids))
-                result  = build_result(var, missing, total)
+                continue  # PRD data loaded in Step 3 — inserted into demo_results after prd_df is built
 
             elif var_name == "NHS_NUMBER":
                 missing = int((demographics["has_nhs_number"] == False).sum())
@@ -365,6 +364,21 @@ def run():
         prd_overall_pids = set(prd_df["patient_id"]) & all_cohort_pids
         prd_cohort_map   = prd_df.groupby("group_id")["patient_id"].apply(set).to_dict()
         print(f"  {len(prd_overall_pids):,} patients with a Primary Renal Diagnosis recorded")
+
+        # Insert Section A DIAGNOSIS at index 9 (after A.9 EMAIL_ADDRESS, before A.11 NHS_NUMBER)
+        diag_missing_a = int(total - len(set(demographics["patient_id"]) & prd_overall_pids))
+        diag_pct_a     = round(diag_missing_a / total * 100, 1) if total > 0 else 0.0
+        status         = "✓" if diag_pct_a < 10 else "!" if diag_pct_a < 50 else "✗"
+        print(f"  [{status}] DIAGNOSIS (PRD): {diag_pct_a}% missing ({diag_missing_a:,}/{total:,})")
+        demo_results.insert(9, {
+            "id":          "A.10",
+            "name":        "DIAGNOSIS",
+            "pct_missing": diag_pct_a,
+            "missing":     diag_missing_a,
+            "total":       total,
+            "required":    True,
+            "desc":        "Primary Renal Diagnosis — patient must have a diagnosis with type=PRIMARY in group_diagnoses matching their enrolled cohort",
+        })
 
         # ── Kidney Failure patients (single query, reused for section A + all cohorts) ──
         # KF = earliest of: transplant date, dialysis from_date, or eGFR<15 confirmed
