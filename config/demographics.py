@@ -71,7 +71,7 @@ DEMOGRAPHICS_VARIABLES = [
         "name":     "DIAGNOSIS",
         "column":   None,
         "required": True,
-        "desc":     "Patient must have at least one record in patient_diagnoses",
+        "desc":     "Primary Renal Diagnosis — patient must have a diagnosis with type=PRIMARY in group_diagnoses matching their enrolled cohort",
     },
     {
         "id":       "A.11",

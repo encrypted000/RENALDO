@@ -83,9 +83,7 @@ def run():
         demographics = pd.read_sql(f"""
             SELECT
                 pd.*,
-                CASE WHEN pdiag.patient_id IS NOT NULL
-                     THEN TRUE ELSE FALSE END AS has_diagnosis,
-                CASE WHEN pnum.patient_id  IS NOT NULL
+                CASE WHEN pnum.patient_id IS NOT NULL
                      THEN TRUE ELSE FALSE END AS has_nhs_number
             FROM patient_demographics pd
             INNER JOIN patients p
@@ -98,8 +96,6 @@ def run():
                 JOIN groups g2 ON g2.id = gp2.group_id AND g2.type = 'COHORT'
                 WHERE gp2.group_id NOT IN ({excluded})
             ) cohort_pts ON cohort_pts.patient_id = pd.patient_id
-            LEFT JOIN (SELECT DISTINCT patient_id FROM patient_diagnoses) pdiag
-                ON pdiag.patient_id = pd.patient_id
             LEFT JOIN (SELECT DISTINCT patient_id FROM patient_numbers) pnum
                 ON pnum.patient_id = pd.patient_id
             WHERE pd.source_type = 'RADAR'
@@ -190,7 +186,7 @@ def run():
                 continue
 
             elif var_name == "DIAGNOSIS":
-                missing = int((demographics["has_diagnosis"] == False).sum())
+                missing = int(total - len(set(demographics["patient_id"]) & prd_overall_pids))
                 result  = build_result(var, missing, total)
 
             elif var_name == "NHS_NUMBER":
@@ -335,20 +331,40 @@ def run():
                 pd.first_name, pd.last_name, pd.date_of_birth, pd.date_of_death,
                 pd.cause_of_death, pd.gender, pd.ethnicity_id, pd.nationality_id,
                 pd.email_address,
-                CASE WHEN pdiag.patient_id IS NOT NULL THEN TRUE ELSE FALSE END AS has_diagnosis,
-                CASE WHEN pnum.patient_id  IS NOT NULL THEN TRUE ELSE FALSE END AS has_nhs_number
+                CASE WHEN pnum.patient_id IS NOT NULL THEN TRUE ELSE FALSE END AS has_nhs_number
             FROM patient_demographics pd
             INNER JOIN patients p
                 ON  p.id = pd.patient_id
                AND p.test    = FALSE
                AND p.control = FALSE
-            LEFT JOIN (SELECT DISTINCT patient_id FROM patient_diagnoses) pdiag
-                ON pdiag.patient_id = pd.patient_id
             LEFT JOIN (SELECT DISTINCT patient_id FROM patient_numbers) pnum
                 ON pnum.patient_id = pd.patient_id
             WHERE pd.source_type = 'RADAR'
         """, conn)
         print(f"  {len(all_demo_df):,} RADAR demographic records loaded for cohorts")
+
+        # ── Primary Renal Diagnosis (PRD) per patient per cohort ──
+        # A patient has a PRD if they have a diagnosis in patient_diagnoses whose
+        # diagnosis_id matches a group_diagnoses row with type='PRIMARY' for the
+        # same cohort group the patient is enrolled in.
+        print("  Loading Primary Renal Diagnosis (PRD) data...")
+        prd_df = pd.read_sql(f"""
+            SELECT DISTINCT pdiag.patient_id, gp.group_id
+            FROM patient_diagnoses pdiag
+            JOIN group_patients gp
+                ON  gp.patient_id = pdiag.patient_id
+            JOIN groups g
+                ON  g.id   = gp.group_id
+                AND g.type = 'COHORT'
+            JOIN group_diagnoses gd
+                ON  gd.diagnosis_id = pdiag.diagnosis_id
+                AND gd.group_id     = gp.group_id
+                AND gd.type         = 'PRIMARY'
+            WHERE gp.group_id NOT IN ({excluded})
+        """, conn)
+        prd_overall_pids = set(prd_df["patient_id"]) & all_cohort_pids
+        prd_cohort_map   = prd_df.groupby("group_id")["patient_id"].apply(set).to_dict()
+        print(f"  {len(prd_overall_pids):,} patients with a Primary Renal Diagnosis recorded")
 
         # ── Kidney Failure patients (single query, reused for section A + all cohorts) ──
         # KF = earliest of: transplant date, dialysis from_date, or eGFR<15 confirmed
@@ -539,7 +555,19 @@ def run():
                     ).sum())
 
                 elif var_name == "DIAGNOSIS":
-                    missing_in_demo = int((cohort_demo["has_diagnosis"] == False).sum())
+                    prd_pids      = prd_cohort_map.get(group_id, set())
+                    total_missing = int(len(cohort_pids - prd_pids))
+                    pct           = round(total_missing / patient_count * 100, 1) if patient_count > 0 else 0.0
+                    demo_vars.append({
+                        "id":          cohort_var_id,
+                        "name":        var_name,
+                        "pct_missing": pct,
+                        "missing":     total_missing,
+                        "total":       patient_count,
+                        "required":    var["required"],
+                        "desc":        f"Primary Renal Diagnosis for enrolled cohort — {total_missing:,} of {patient_count:,} patients missing",
+                    })
+                    continue
 
                 elif var_name == "NHS_NUMBER":
                     missing_in_demo = int((cohort_demo["has_nhs_number"] == False).sum())
