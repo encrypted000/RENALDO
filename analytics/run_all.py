@@ -174,17 +174,6 @@ def run():
                 demo_results.append(result)
                 continue
 
-            elif var_name == "CAUSE_OF_DEATH":
-                missing = int(is_missing(deceased["cause_of_death"]).sum())
-                pct     = round(missing / deceased_total * 100, 1) if deceased_total > 0 else 0.0
-                result  = build_result(var, missing, deceased_total)
-                result["pct_missing"] = pct
-                result["desc"]        = (
-                    f"Cause of death — calculated among {deceased_total:,} deceased patients only"
-                )
-                demo_results.append(result)
-                continue
-
             elif var_name == "DIAGNOSIS":
                 continue  # PRD data loaded in Step 3 — inserted into demo_results after prd_df is built
 
@@ -328,7 +317,7 @@ def run():
             SELECT
                 pd.patient_id,
                 pd.first_name, pd.last_name, pd.date_of_birth, pd.date_of_death,
-                pd.cause_of_death, pd.gender, pd.ethnicity_id, pd.nationality_id,
+                pd.gender, pd.ethnicity_id,
                 pd.email_address,
                 CASE WHEN pnum.patient_id IS NOT NULL THEN TRUE ELSE FALSE END AS has_nhs_number
             FROM patient_demographics pd
@@ -365,14 +354,15 @@ def run():
         prd_cohort_map   = prd_df.groupby("group_id")["patient_id"].apply(set).to_dict()
         print(f"  {len(prd_overall_pids):,} patients with a Primary Renal Diagnosis recorded")
 
-        # Insert Section A DIAGNOSIS at index 9 (after A.9 EMAIL_ADDRESS, before A.11 NHS_NUMBER)
+        # Insert Section A DIAGNOSIS before NHS_NUMBER (after A.9 EMAIL_ADDRESS)
         diag_missing_a = int(total - len(set(demographics["patient_id"]) & prd_overall_pids))
         diag_pct_a     = round(diag_missing_a / total * 100, 1) if total > 0 else 0.0
         status         = "✓" if diag_pct_a < 10 else "!" if diag_pct_a < 50 else "✗"
         print(f"  [{status}] DIAGNOSIS (PRD): {diag_pct_a}% missing ({diag_missing_a:,}/{total:,})")
-        demo_results.insert(9, {
+        nhs_idx = next((i for i, v in enumerate(demo_results) if v.get("name") == "NHS_NUMBER"), len(demo_results))
+        demo_results.insert(nhs_idx, {
             "id":          "A.10",
-            "name":        "DIAGNOSIS",
+            "name":        "Primary Renal Diagnosis",
             "pct_missing": diag_pct_a,
             "missing":     diag_missing_a,
             "total":       total,
@@ -449,8 +439,9 @@ def run():
             "required":    False,
             "desc":        (
                 f"Kidney Failure — {kf_total_a:,} of {total_cohort_patients:,} patients ({kf_pct_a}%) "
-                f"have evidence of KF (transplant, dialysis, or eGFR<15 confirmed ×2 ≥28 days apart). "
-                f"Based on RaDaR data — not linked to UKRR."
+                f"have evidence of kidney failure based on transplant records, dialysis records, or eGFR "
+                f"below 15 ml/min/1.73m² on two occasions ≥28 days apart with no recovery. "
+                f"Classified using data recorded in RaDaR (the same data submitted to UKRR) — not sourced from UKRR directly."
             ),
         })
         print(f"  [ℹ] KIDNEY_FAILURE: {kf_total_a:,} / {total_cohort_patients:,} ({kf_pct_a}%)")
@@ -545,23 +536,6 @@ def run():
                     })
                     continue
 
-                elif var_name == "CAUSE_OF_DEATH":
-                    if cohort_dec_n > 0:
-                        missing = int(is_missing(cohort_deceased["cause_of_death"]).sum())
-                        pct     = round(missing / cohort_dec_n * 100, 1)
-                    else:
-                        missing, pct = 0, 0.0
-                    demo_vars.append({
-                        "id":          cohort_var_id,
-                        "name":        var_name,
-                        "pct_missing": pct,
-                        "missing":     missing,
-                        "total":       cohort_dec_n,
-                        "required":    var["required"],
-                        "desc":        f"Cause of death — calculated among {cohort_dec_n:,} deceased patients only",
-                    })
-                    continue
-
                 elif var_name == "EMAIL_ADDRESS":
                     missing_in_demo = int((
                         cohort_demo["email_address"].isna() |
@@ -574,7 +548,7 @@ def run():
                     pct           = round(total_missing / patient_count * 100, 1) if patient_count > 0 else 0.0
                     demo_vars.append({
                         "id":          cohort_var_id,
-                        "name":        var_name,
+                        "name":        "Primary Renal Diagnosis",
                         "pct_missing": pct,
                         "missing":     total_missing,
                         "total":       patient_count,
@@ -633,8 +607,9 @@ def run():
                     "required":    False,
                     "desc":        (
                         f"Kidney Failure — {kf_count:,} of {patient_count:,} patients ({kf_pct}%) "
-                        f"have evidence of KF (transplant, dialysis, or eGFR<15 confirmed ×2 ≥28 days apart). "
-                        f"Based on RaDaR data — not linked to UKRR."
+                        f"have evidence of kidney failure based on transplant records, dialysis records, or eGFR "
+                        f"below 15 ml/min/1.73m² on two occasions ≥28 days apart with no recovery. "
+                        f"Classified using data recorded in RaDaR (the same data submitted to UKRR) — not sourced from UKRR directly."
                     ),
                 },
                 {

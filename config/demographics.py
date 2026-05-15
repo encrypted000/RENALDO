@@ -32,13 +32,6 @@ DEMOGRAPHICS_VARIABLES = [
         "desc":     "Date of death",
     },
     {
-        "id":       "A.5",
-        "name":     "CAUSE_OF_DEATH",
-        "column":   "cause_of_death",
-        "required": False,
-        "desc":     "Cause of death",
-    },
-    {
         "id":       "A.6",
         "name":     "GENDER",
         "column":   "gender",
@@ -51,13 +44,6 @@ DEMOGRAPHICS_VARIABLES = [
         "column":   "ethnicity_id",
         "required": True,
         "desc":     "Ethnic origin",
-    },
-    {
-        "id":       "A.8",
-        "name":     "NATIONALITY",
-        "column":   "nationality_id",
-        "required": True,
-        "desc":     "Nationality",
     },
     {
         "id":       "A.9",

@@ -3,6 +3,14 @@ import dash_bootstrap_components as dbc
 from dashboard.components.table import build_table
 
 
+SMALL_N_THRESHOLD = 20  # suppress cohorts with fewer patients than this
+
+
+def _patient_count(variables: list) -> int:
+    total_var = next((v for v in variables if v.get("name") == "TOTAL_PATIENTS"), None)
+    return total_var.get("total", 0) if total_var else 0
+
+
 def _section_pct_complete(variables: list) -> int:
     valid = [v for v in variables if v.get("pct_missing") is not None]
     if not valid:
@@ -105,11 +113,14 @@ def _build_items(data: list, active_all: bool = False, demo_open: bool = False):
     all_item_ids = []
 
     for sec in (s for s in data if s.get("section") != "A"):
-        letter    = sec["section"]
         variables = sec.get("variables", [])
-        pct_c     = _section_pct_complete(variables) if variables else None
-        closed    = sec.get("closed", False)
-        item_id   = f"item-{letter}"
+        if _patient_count(variables) < SMALL_N_THRESHOLD:
+            continue
+
+        letter  = sec["section"]
+        pct_c   = _section_pct_complete(variables) if variables else None
+        closed  = sec.get("closed", False)
+        item_id = f"item-{letter}"
         all_item_ids.append(item_id)
 
         cohort_items.append(
@@ -134,7 +145,7 @@ def _build_items(data: list, active_all: bool = False, demo_open: bool = False):
         className="radar-accordion",
     )
 
-    n_cohorts = len([s for s in data if s.get("section") != "A"])
+    n_cohorts = len(cohort_items)
     return demo_accordion, _cohort_divider(n_cohorts), cohorts_accordion
 
 
