@@ -19,7 +19,8 @@ def _section_pct_complete(variables: list) -> int:
 
 
 def _section_header(letter: str, title: str, n_vars: int,
-                    pct_complete: int = None, closed: bool = False) -> html.Div:
+                    pct_complete: int = None, closed: bool = False,
+                    small_n: bool = False) -> html.Div:
     closed_badge = html.Span(
         "CLOSED",
         style={
@@ -41,7 +42,7 @@ def _section_header(letter: str, title: str, n_vars: int,
         className="ms-auto me-3"
     )
 
-    count_label = f"({n_vars} variables)" if n_vars > 0 else "(coming soon)"
+    count_label = "(low N)" if small_n else (f"({n_vars} variables)" if n_vars > 0 else "(coming soon)")
 
     children = [
         html.Span(letter, className="sec-letter"),
@@ -49,6 +50,8 @@ def _section_header(letter: str, title: str, n_vars: int,
     ]
     if closed_badge:
         children.append(closed_badge)
+    if small_n:
+        children.append(_small_n_badge())
     children.append(html.Span(f" {count_label}", className="sec-count"))
     children.append(bar)
 
@@ -69,6 +72,98 @@ def _coming_soon_body() -> html.Div:
         "borderTop":  "0.5px solid #e0ddd8",
         "background": "#fafaf8",
     })
+
+
+def _small_n_body() -> html.Div:
+    return html.Div([
+        html.Strong(f"Cohort has fewer than {SMALL_N_THRESHOLD} patients"),
+        html.Div(
+            "To protect patient confidentiality, detailed completeness data is not "
+            "shown for cohorts this small.",
+            style={"fontSize": "11px", "marginTop": "4px"},
+        ),
+    ], style={
+        "padding":    "28px 16px",
+        "textAlign":  "center",
+        "color":      "#6b46c1",
+        "borderTop":  "0.5px solid #ddd3f5",
+        "background": "#f5f0ff",
+    })
+
+
+def _small_n_badge() -> html.Span:
+    return html.Span(
+        "LOW N",
+        style={
+            "fontSize":     "11px",
+            "background":   "#6b46c1",
+            "color":        "#fff",
+            "padding":      "1px 6px",
+            "borderRadius": "3px",
+            "marginLeft":   "6px",
+        }
+    )
+
+
+def _biochemistry_body(sec: dict, small_n: bool) -> html.Div:
+    if small_n:
+        return _small_n_body()
+
+    biochem = sec.get("biochemistry")
+    if not biochem:
+        return html.Div([
+            html.Strong("Biochemistry metadata coming soon"),
+            html.Div(
+                "Creatinine and proteinuria counts pre-KRT for this cohort will be "
+                "added in a future update.",
+                style={"fontSize": "11px", "marginTop": "4px"},
+            ),
+        ], style={
+            "padding":    "20px 16px",
+            "textAlign":  "center",
+            "color":      "#6b6b6b",
+            "background": "#fafaf8",
+        })
+
+    rows = []
+    for key, label in (("creatinine", "Creatinine"), ("proteinuria", "Proteinuria")):
+        stat = biochem.get(key)
+        if not stat:
+            continue
+        count = stat.get("count", 0)
+        total = stat.get("total", 0)
+
+        if total == 0:
+            detail = "No kidney failure patients recorded in this cohort"
+        elif total < SMALL_N_THRESHOLD:
+            detail = f"Fewer than {SMALL_N_THRESHOLD} kidney failure patients in this cohort — suppressed"
+        else:
+            pct = round(count / total * 100, 1)
+            detail = f"{count:,} / {total:,} kidney failure patients ({pct}%) had a result recorded pre-KRT"
+
+        rows.append(
+            html.Div([
+                html.Span(label, style={"fontWeight": "600", "minWidth": "110px", "display": "inline-block"}),
+                html.Span(detail, style={"fontSize": "12px", "color": "var(--text2)"}),
+            ], style={"padding": "6px 0"})
+        )
+
+    return html.Div(rows, style={"padding": "14px 16px"})
+
+
+def _biochemistry_dropdown(sec: dict, letter: str, small_n: bool) -> dbc.Accordion:
+    return dbc.Accordion([
+        dbc.AccordionItem(
+            children=_biochemistry_body(sec, small_n),
+            title="Biochemistry Metadata",
+            item_id=f"item-{letter}-biochem",
+        )
+    ],
+        active_item=None,
+        start_collapsed=True,
+        flush=False,
+        className="radar-accordion-sub",
+    )
 
 
 def _cohort_divider(n: int) -> html.Div:
@@ -114,24 +209,34 @@ def _build_items(data: list, active_all: bool = False, demo_open: bool = False):
 
     for sec in (s for s in data if s.get("section") != "A"):
         variables = sec.get("variables", [])
-        if _patient_count(variables) < SMALL_N_THRESHOLD:
-            continue
+        n_patients = _patient_count(variables)
+        small_n    = n_patients < SMALL_N_THRESHOLD
 
         letter  = sec["section"]
-        pct_c   = _section_pct_complete(variables) if variables else None
+        pct_c   = _section_pct_complete(variables) if (variables and not small_n) else None
         closed  = sec.get("closed", False)
         item_id = f"item-{letter}"
         all_item_ids.append(item_id)
 
+        if small_n:
+            body = _small_n_body()
+        elif variables:
+            body = build_table(variables, letter)
+        else:
+            body = _coming_soon_body()
+
+        body = html.Div([body, _biochemistry_dropdown(sec, letter, small_n)])
+
         cohort_items.append(
             dbc.AccordionItem(
-                children=build_table(variables, letter) if variables else _coming_soon_body(),
+                children=body,
                 title=_section_header(
                     letter,
                     sec["title"],
                     len(variables),
                     pct_c,
                     closed,
+                    small_n,
                 ),
                 item_id=item_id,
             )

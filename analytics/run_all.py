@@ -396,22 +396,57 @@ def run():
                   AND r.date < bounds.last_low
             ),
             egfr_kf AS (
-                SELECT DISTINCT e1.patient_id
+                -- KF confirmation date = date of the 2nd qualifying reading (≥28 days after the 1st)
+                SELECT e1.patient_id, MIN(e2.date) AS kf_date
                 FROM egfr_below_15 e1
                 JOIN egfr_below_15 e2
                     ON  e1.patient_id = e2.patient_id
                     AND e2.date >= e1.date + INTERVAL '28 days'
                 WHERE e1.patient_id NOT IN (SELECT patient_id FROM intervening_high)
+                GROUP BY e1.patient_id
+            ),
+            transplant_dates AS (
+                SELECT patient_id, MIN(date) AS kf_date FROM transplants GROUP BY patient_id
+            ),
+            dialysis_dates AS (
+                SELECT patient_id, MIN(from_date) AS kf_date FROM dialysis GROUP BY patient_id
+            ),
+            all_kf_dates AS (
+                SELECT patient_id, kf_date FROM transplant_dates
+                UNION ALL
+                SELECT patient_id, kf_date FROM dialysis_dates
+                UNION ALL
+                SELECT patient_id, kf_date FROM egfr_kf
             )
-            SELECT patient_id FROM transplants
-            UNION
-            SELECT patient_id FROM dialysis
-            UNION
-            SELECT patient_id FROM egfr_kf
+            SELECT patient_id, MIN(kf_date) AS kf_date
+            FROM all_kf_dates
+            GROUP BY patient_id
         """, conn)
+        kf_df["kf_date"] = pd.to_datetime(kf_df["kf_date"], errors="coerce")
         # Restrict to the 39,178 cohort patients only (excludes excluded groups)
         kf_patient_ids = set(kf_df["patient_id"]) & all_cohort_pids
+        kf_date_map    = kf_df.set_index("patient_id")["kf_date"].to_dict()
         print(f"  {len(kf_patient_ids):,} patients with Kidney Failure events (within cohort patients)")
+
+        # ── Biochemistry (creatinine/proteinuria) pre-KRT counts ──
+        # observation_id 46 = Creatinine, 17 = Proteinuria_DIP
+        print("  Loading biochemistry (creatinine/proteinuria) pre-KRT counts...")
+        biochem_df = pd.read_sql("""
+            SELECT patient_id, observation_id, MIN(date) AS first_date
+            FROM results
+            WHERE observation_id IN (46, 17)
+            GROUP BY patient_id, observation_id
+        """, conn)
+        biochem_df["first_date"] = pd.to_datetime(biochem_df["first_date"], errors="coerce")
+        creatinine_first_map  = biochem_df[biochem_df["observation_id"] == 46].set_index("patient_id")["first_date"].to_dict()
+        proteinuria_first_map = biochem_df[biochem_df["observation_id"] == 17].set_index("patient_id")["first_date"].to_dict()
+
+        def _pre_krt(pid, first_map):
+            kf_date = kf_date_map.get(pid)
+            first   = first_map.get(pid)
+            return bool(kf_date is not None and first is not None and first < kf_date)
+
+        print(f"  Biochemistry pre-KRT lookups ready for {len(kf_patient_ids):,} KF patients")
 
         # ── Transplant counts per patient (restricted to cohort patients) ──
         print("  Calculating transplant counts per patient...")
@@ -580,6 +615,12 @@ def run():
             single_tx_c = int(sum(1 for pid in cohort_pids if transplant_count_map.get(pid, 0) == 1))
             multi_tx_c  = int(sum(1 for pid in cohort_pids if transplant_count_map.get(pid, 0) >= 2))
 
+            # ── Biochemistry pre-KRT — among this cohort's KF patients only ──
+            cohort_kf_pids  = cohort_pids & kf_patient_ids
+            creatinine_n    = sum(1 for pid in cohort_kf_pids if _pre_krt(pid, creatinine_first_map))
+            proteinuria_n   = sum(1 for pid in cohort_kf_pids if _pre_krt(pid, proteinuria_first_map))
+            kf_denom        = len(cohort_kf_pids)
+
             variables = [
                 {
                     "id": f"{letter}.total",   "name": "TOTAL_PATIENTS",
@@ -635,6 +676,10 @@ def run():
             cohort_sections.append({
                 "section": letter, "title": db_name,
                 "closed": closed,  "variables": variables,
+                "biochemistry": {
+                    "creatinine":  {"count": creatinine_n,  "total": kf_denom},
+                    "proteinuria": {"count": proteinuria_n, "total": kf_denom},
+                },
             })
 
             closed_tag = " [CLOSED]" if closed else ""

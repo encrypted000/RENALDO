@@ -8,7 +8,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 39488,
+        "total": 39996,
         "required": true,
         "desc": "Patient first name"
       },
@@ -17,7 +17,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 39488,
+        "total": 39996,
         "required": true,
         "desc": "Patient last name"
       },
@@ -26,7 +26,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 39488,
+        "total": 39996,
         "required": true,
         "desc": "Date of birth"
       },
@@ -34,17 +34,17 @@
         "id": "A.4",
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
-        "missing": 3919,
-        "total": 39488,
+        "missing": 4040,
+        "total": 39996,
         "required": false,
-        "desc": "Date of death \u2014 3,919 of 39,488 patients (9.9%) have a recorded death date"
+        "desc": "Date of death \u2014 4,040 of 39,996 patients (10.1%) have a recorded death date"
       },
       {
         "id": "A.6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 39488,
+        "total": 39996,
         "required": true,
         "desc": "Gender"
       },
@@ -52,26 +52,26 @@
         "id": "A.7",
         "name": "ETHNICITY",
         "pct_missing": 19.3,
-        "missing": 7621,
-        "total": 39488,
+        "missing": 7723,
+        "total": 39996,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "A.9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 32.3,
-        "missing": 12745,
-        "total": 39488,
+        "pct_missing": 32.0,
+        "missing": 12803,
+        "total": 39996,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "A.10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 20.7,
-        "missing": 8180,
-        "total": 39488,
+        "pct_missing": 20.3,
+        "missing": 8115,
+        "total": 39996,
         "required": true,
         "desc": "Primary Renal Diagnosis \u2014 patient must have a diagnosis with type=PRIMARY in group_diagnoses matching their enrolled cohort"
       },
@@ -80,7 +80,7 @@
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 1,
-        "total": 39488,
+        "total": 39996,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -88,45 +88,45 @@
         "id": "A.13",
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
-        "missing": 13006,
-        "total": 39488,
+        "missing": 13086,
+        "total": 39996,
         "required": false,
-        "desc": "Kidney Failure \u2014 13,006 of 39,488 patients (32.9%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 13,086 of 39,996 patients (32.7%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "A.14",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
-        "missing": 8163,
-        "total": 39488,
+        "missing": 8186,
+        "total": 39996,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 8,163 of 39,488"
+        "desc": "Patients with exactly 1 transplant \u2014 8,186 of 39,996"
       },
       {
         "id": "A.15",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
-        "missing": 989,
-        "total": 39488,
+        "missing": 996,
+        "total": 39996,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 989 of 39,488"
+        "desc": "Patients with 2 or more transplants \u2014 996 of 39,996"
       },
       {
         "id": "A.16",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 39470,
+        "total": 39978,
         "required": false,
-        "desc": "Median follow-up: 5.6 yrs (IQR 2.0\u20138.3 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 5.6 yrs (IQR 2.0\u20138.4 yrs) \u2014 based on last activity in results or medications"
       }
     ],
     "stats": {
-      "adults": 37044,
-      "children": 2444,
+      "adults": 37490,
+      "children": 2506,
       "median_fu": 5.6,
       "q1_fu": 2.0,
-      "q3_fu": 8.3
+      "q3_fu": 8.4
     }
   },
   {
@@ -139,7 +139,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 1322,
+        "total": 1353,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -148,7 +148,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 1134,
+        "total": 1150,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -157,7 +157,7 @@
         "name": "CHILDREN",
         "pct_missing": null,
         "missing": null,
-        "total": 188,
+        "total": 203,
         "required": false,
         "desc": "Patients aged under 18"
       },
@@ -166,7 +166,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.1,
         "missing": 1,
-        "total": 1322,
+        "total": 1353,
         "required": true,
         "desc": "Patient first name"
       },
@@ -175,7 +175,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.1,
         "missing": 1,
-        "total": 1322,
+        "total": 1353,
         "required": true,
         "desc": "Patient last name"
       },
@@ -184,7 +184,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.1,
         "missing": 1,
-        "total": 1322,
+        "total": 1353,
         "required": true,
         "desc": "Date of birth"
       },
@@ -192,53 +192,53 @@
         "id": "B.d4",
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
-        "missing": 55,
-        "total": 1322,
+        "missing": 56,
+        "total": 1353,
         "required": false,
-        "desc": "Date of death \u2014 55 of 1,322 patients (4.2%) have a recorded death date"
+        "desc": "Date of death \u2014 56 of 1,353 patients (4.1%) have a recorded death date"
       },
       {
         "id": "B.d6",
         "name": "GENDER",
         "pct_missing": 0.1,
         "missing": 1,
-        "total": 1322,
+        "total": 1353,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "B.d7",
         "name": "ETHNICITY",
-        "pct_missing": 23.0,
-        "missing": 304,
-        "total": 1322,
+        "pct_missing": 23.5,
+        "missing": 318,
+        "total": 1353,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "B.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 26.2,
-        "missing": 346,
-        "total": 1322,
+        "pct_missing": 25.8,
+        "missing": 349,
+        "total": 1353,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "B.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 6.8,
-        "missing": 90,
-        "total": 1322,
+        "pct_missing": 6.6,
+        "missing": 89,
+        "total": 1353,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 90 of 1,322 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 89 of 1,353 patients missing"
       },
       {
         "id": "B.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.1,
         "missing": 1,
-        "total": 1322,
+        "total": 1353,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -246,39 +246,49 @@
         "id": "B.kf",
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
-        "missing": 469,
-        "total": 1322,
+        "missing": 471,
+        "total": 1353,
         "required": false,
-        "desc": "Kidney Failure \u2014 469 of 1,322 patients (35.5%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 471 of 1,353 patients (34.8%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "B.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
-        "missing": 300,
-        "total": 1322,
+        "missing": 301,
+        "total": 1353,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 300 of 1,322"
+        "desc": "Patients with exactly 1 transplant \u2014 301 of 1,353"
       },
       {
         "id": "B.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 83,
-        "total": 1322,
+        "total": 1353,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 83 of 1,322"
+        "desc": "Patients with 2 or more transplants \u2014 83 of 1,353"
       },
       {
         "id": "B.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 1321,
+        "total": 1352,
         "required": false,
-        "desc": "Median follow-up: 5.9 yrs (IQR 2.0\u20138.7 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 5.7 yrs (IQR 1.9\u20138.7 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 225,
+        "total": 471
+      },
+      "proteinuria": {
+        "count": 12,
+        "total": 471
+      }
+    }
   },
   {
     "section": "C",
@@ -427,9 +437,19 @@
         "missing": null,
         "total": 10,
         "required": false,
-        "desc": "Median follow-up: 4.7 yrs (IQR 2.4\u20139.0 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 4.9 yrs (IQR 2.5\u20139.4 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 2,
+        "total": 2
+      },
+      "proteinuria": {
+        "count": 0,
+        "total": 2
+      }
+    }
   },
   {
     "section": "D",
@@ -441,7 +461,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 348,
+        "total": 350,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -450,7 +470,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 252,
+        "total": 253,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -459,7 +479,7 @@
         "name": "CHILDREN",
         "pct_missing": null,
         "missing": null,
-        "total": 96,
+        "total": 97,
         "required": false,
         "desc": "Patients aged under 18"
       },
@@ -468,7 +488,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 348,
+        "total": 350,
         "required": true,
         "desc": "Patient first name"
       },
@@ -477,7 +497,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 348,
+        "total": 350,
         "required": true,
         "desc": "Patient last name"
       },
@@ -486,7 +506,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 348,
+        "total": 350,
         "required": true,
         "desc": "Date of birth"
       },
@@ -494,53 +514,53 @@
         "id": "D.d4",
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
-        "missing": 26,
-        "total": 348,
+        "missing": 27,
+        "total": 350,
         "required": false,
-        "desc": "Date of death \u2014 26 of 348 patients (7.5%) have a recorded death date"
+        "desc": "Date of death \u2014 27 of 350 patients (7.7%) have a recorded death date"
       },
       {
         "id": "D.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 348,
+        "total": 350,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "D.d7",
         "name": "ETHNICITY",
-        "pct_missing": 23.3,
+        "pct_missing": 23.1,
         "missing": 81,
-        "total": 348,
+        "total": 350,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "D.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 24.7,
+        "pct_missing": 24.6,
         "missing": 86,
-        "total": 348,
+        "total": 350,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "D.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 15.2,
-        "missing": 53,
-        "total": 348,
+        "pct_missing": 14.6,
+        "missing": 51,
+        "total": 350,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 53 of 348 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 51 of 350 patients missing"
       },
       {
         "id": "D.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 348,
+        "total": 350,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -548,39 +568,49 @@
         "id": "D.kf",
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
-        "missing": 167,
-        "total": 348,
+        "missing": 168,
+        "total": 350,
         "required": false,
-        "desc": "Kidney Failure \u2014 167 of 348 patients (48.0%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 168 of 350 patients (48.0%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "D.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 78,
-        "total": 348,
+        "total": 350,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 78 of 348"
+        "desc": "Patients with exactly 1 transplant \u2014 78 of 350"
       },
       {
         "id": "D.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 27,
-        "total": 348,
+        "total": 350,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 27 of 348"
+        "desc": "Patients with 2 or more transplants \u2014 27 of 350"
       },
       {
         "id": "D.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 348,
+        "total": 350,
         "required": false,
-        "desc": "Median follow-up: 7.0 yrs (IQR 4.0\u20139.1 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 7.0 yrs (IQR 4.1\u20139.1 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 57,
+        "total": 168
+      },
+      "proteinuria": {
+        "count": 0,
+        "total": 168
+      }
+    }
   },
   {
     "section": "E",
@@ -592,7 +622,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 9574,
+        "total": 9666,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -601,7 +631,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 9468,
+        "total": 9560,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -619,7 +649,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.1,
         "missing": 8,
-        "total": 9574,
+        "total": 9666,
         "required": true,
         "desc": "Patient first name"
       },
@@ -628,7 +658,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.1,
         "missing": 8,
-        "total": 9574,
+        "total": 9666,
         "required": true,
         "desc": "Patient last name"
       },
@@ -637,7 +667,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.1,
         "missing": 8,
-        "total": 9574,
+        "total": 9666,
         "required": true,
         "desc": "Date of birth"
       },
@@ -645,53 +675,53 @@
         "id": "E.d4",
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
-        "missing": 873,
-        "total": 9574,
+        "missing": 901,
+        "total": 9666,
         "required": false,
-        "desc": "Date of death \u2014 873 of 9,574 patients (9.1%) have a recorded death date"
+        "desc": "Date of death \u2014 901 of 9,666 patients (9.3%) have a recorded death date"
       },
       {
         "id": "E.d6",
         "name": "GENDER",
         "pct_missing": 0.1,
         "missing": 8,
-        "total": 9574,
+        "total": 9666,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "E.d7",
         "name": "ETHNICITY",
-        "pct_missing": 18.3,
-        "missing": 1749,
-        "total": 9574,
+        "pct_missing": 18.4,
+        "missing": 1781,
+        "total": 9666,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "E.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 27.3,
-        "missing": 2615,
-        "total": 9574,
+        "pct_missing": 27.2,
+        "missing": 2629,
+        "total": 9666,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "E.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 23.3,
-        "missing": 2233,
-        "total": 9574,
+        "pct_missing": 22.8,
+        "missing": 2205,
+        "total": 9666,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 2,233 of 9,574 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 2,205 of 9,666 patients missing"
       },
       {
         "id": "E.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.1,
         "missing": 9,
-        "total": 9574,
+        "total": 9666,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -699,39 +729,49 @@
         "id": "E.kf",
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
-        "missing": 3996,
-        "total": 9574,
+        "missing": 4011,
+        "total": 9666,
         "required": false,
-        "desc": "Kidney Failure \u2014 3,996 of 9,574 patients (41.7%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 4,011 of 9,666 patients (41.5%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "E.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
-        "missing": 2812,
-        "total": 9574,
+        "missing": 2818,
+        "total": 9666,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 2,812 of 9,574"
+        "desc": "Patients with exactly 1 transplant \u2014 2,818 of 9,666"
       },
       {
         "id": "E.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
-        "missing": 145,
-        "total": 9574,
+        "missing": 146,
+        "total": 9666,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 145 of 9,574"
+        "desc": "Patients with 2 or more transplants \u2014 146 of 9,666"
       },
       {
         "id": "E.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 9566,
+        "total": 9658,
         "required": false,
-        "desc": "Median follow-up: 6.5 yrs (IQR 3.1\u20138.3 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 6.5 yrs (IQR 3.1\u20138.4 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 2510,
+        "total": 4011
+      },
+      "proteinuria": {
+        "count": 186,
+        "total": 4011
+      }
+    }
   },
   {
     "section": "F",
@@ -743,7 +783,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 289,
+        "total": 295,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -752,7 +792,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 286,
+        "total": 292,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -770,7 +810,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.3,
         "missing": 1,
-        "total": 289,
+        "total": 295,
         "required": true,
         "desc": "Patient first name"
       },
@@ -779,7 +819,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.3,
         "missing": 1,
-        "total": 289,
+        "total": 295,
         "required": true,
         "desc": "Patient last name"
       },
@@ -788,7 +828,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.3,
         "missing": 1,
-        "total": 289,
+        "total": 295,
         "required": true,
         "desc": "Date of birth"
       },
@@ -797,52 +837,52 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 27,
-        "total": 289,
+        "total": 295,
         "required": false,
-        "desc": "Date of death \u2014 27 of 289 patients (9.3%) have a recorded death date"
+        "desc": "Date of death \u2014 27 of 295 patients (9.2%) have a recorded death date"
       },
       {
         "id": "F.d6",
         "name": "GENDER",
         "pct_missing": 0.3,
         "missing": 1,
-        "total": 289,
+        "total": 295,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "F.d7",
         "name": "ETHNICITY",
-        "pct_missing": 21.1,
-        "missing": 61,
-        "total": 289,
+        "pct_missing": 21.7,
+        "missing": 64,
+        "total": 295,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "F.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 27.7,
-        "missing": 80,
-        "total": 289,
+        "pct_missing": 27.5,
+        "missing": 81,
+        "total": 295,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "F.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 13.1,
+        "pct_missing": 12.9,
         "missing": 38,
-        "total": 289,
+        "total": 295,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 38 of 289 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 38 of 295 patients missing"
       },
       {
         "id": "F.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.3,
         "missing": 1,
-        "total": 289,
+        "total": 295,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -850,39 +890,49 @@
         "id": "F.kf",
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
-        "missing": 133,
-        "total": 289,
+        "missing": 134,
+        "total": 295,
         "required": false,
-        "desc": "Kidney Failure \u2014 133 of 289 patients (46.0%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 134 of 295 patients (45.4%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "F.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
-        "missing": 96,
-        "total": 289,
+        "missing": 97,
+        "total": 295,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 96 of 289"
+        "desc": "Patients with exactly 1 transplant \u2014 97 of 295"
       },
       {
         "id": "F.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 16,
-        "total": 289,
+        "total": 295,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 16 of 289"
+        "desc": "Patients with 2 or more transplants \u2014 16 of 295"
       },
       {
         "id": "F.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 288,
+        "total": 294,
         "required": false,
-        "desc": "Median follow-up: 5.7 yrs (IQR 2.3\u20138.7 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 5.7 yrs (IQR 2.3\u20138.8 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 67,
+        "total": 134
+      },
+      "proteinuria": {
+        "count": 3,
+        "total": 134
+      }
+    }
   },
   {
     "section": "G",
@@ -894,7 +944,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 356,
+        "total": 376,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -903,7 +953,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 280,
+        "total": 300,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -921,7 +971,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 356,
+        "total": 376,
         "required": true,
         "desc": "Patient first name"
       },
@@ -930,7 +980,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 356,
+        "total": 376,
         "required": true,
         "desc": "Patient last name"
       },
@@ -939,7 +989,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 356,
+        "total": 376,
         "required": true,
         "desc": "Date of birth"
       },
@@ -948,52 +998,52 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 24,
-        "total": 356,
+        "total": 376,
         "required": false,
-        "desc": "Date of death \u2014 24 of 356 patients (6.7%) have a recorded death date"
+        "desc": "Date of death \u2014 24 of 376 patients (6.4%) have a recorded death date"
       },
       {
         "id": "G.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 356,
+        "total": 376,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "G.d7",
         "name": "ETHNICITY",
-        "pct_missing": 7.6,
+        "pct_missing": 7.2,
         "missing": 27,
-        "total": 356,
+        "total": 376,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "G.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 17.1,
+        "pct_missing": 16.2,
         "missing": 61,
-        "total": 356,
+        "total": 376,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "G.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 10.7,
+        "pct_missing": 10.1,
         "missing": 38,
-        "total": 356,
+        "total": 376,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 38 of 356 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 38 of 376 patients missing"
       },
       {
         "id": "G.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 356,
+        "total": 376,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -1001,39 +1051,49 @@
         "id": "G.kf",
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
-        "missing": 144,
-        "total": 356,
+        "missing": 147,
+        "total": 376,
         "required": false,
-        "desc": "Kidney Failure \u2014 144 of 356 patients (40.4%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 147 of 376 patients (39.1%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "G.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 101,
-        "total": 356,
+        "total": 376,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 101 of 356"
+        "desc": "Patients with exactly 1 transplant \u2014 101 of 376"
       },
       {
         "id": "G.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
-        "missing": 21,
-        "total": 356,
+        "missing": 23,
+        "total": 376,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 21 of 356"
+        "desc": "Patients with 2 or more transplants \u2014 23 of 376"
       },
       {
         "id": "G.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 356,
+        "total": 376,
         "required": false,
-        "desc": "Median follow-up: 4.5 yrs (IQR 0.6\u20138.7 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 4.1 yrs (IQR 0.6\u20138.6 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 74,
+        "total": 147
+      },
+      "proteinuria": {
+        "count": 3,
+        "total": 147
+      }
+    }
   },
   {
     "section": "H",
@@ -1045,7 +1105,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 196,
+        "total": 205,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -1054,7 +1114,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 196,
+        "total": 205,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -1072,7 +1132,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.5,
         "missing": 1,
-        "total": 196,
+        "total": 205,
         "required": true,
         "desc": "Patient first name"
       },
@@ -1081,7 +1141,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.5,
         "missing": 1,
-        "total": 196,
+        "total": 205,
         "required": true,
         "desc": "Patient last name"
       },
@@ -1090,7 +1150,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.5,
         "missing": 1,
-        "total": 196,
+        "total": 205,
         "required": true,
         "desc": "Date of birth"
       },
@@ -1099,52 +1159,52 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 11,
-        "total": 196,
+        "total": 205,
         "required": false,
-        "desc": "Date of death \u2014 11 of 196 patients (5.6%) have a recorded death date"
+        "desc": "Date of death \u2014 11 of 205 patients (5.4%) have a recorded death date"
       },
       {
         "id": "H.d6",
         "name": "GENDER",
         "pct_missing": 0.5,
         "missing": 1,
-        "total": 196,
+        "total": 205,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "H.d7",
         "name": "ETHNICITY",
-        "pct_missing": 8.7,
+        "pct_missing": 8.3,
         "missing": 17,
-        "total": 196,
+        "total": 205,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "H.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 20.9,
+        "pct_missing": 20.0,
         "missing": 41,
-        "total": 196,
+        "total": 205,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "H.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 27.6,
-        "missing": 54,
-        "total": 196,
+        "pct_missing": 30.2,
+        "missing": 62,
+        "total": 205,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 54 of 196 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 62 of 205 patients missing"
       },
       {
         "id": "H.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.5,
         "missing": 1,
-        "total": 196,
+        "total": 205,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -1152,39 +1212,49 @@
         "id": "H.kf",
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
-        "missing": 167,
-        "total": 196,
+        "missing": 177,
+        "total": 205,
         "required": false,
-        "desc": "Kidney Failure \u2014 167 of 196 patients (85.2%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 177 of 205 patients (86.3%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "H.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
-        "missing": 137,
-        "total": 196,
+        "missing": 146,
+        "total": 205,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 137 of 196"
+        "desc": "Patients with exactly 1 transplant \u2014 146 of 205"
       },
       {
         "id": "H.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
-        "missing": 19,
-        "total": 196,
+        "missing": 20,
+        "total": 205,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 19 of 196"
+        "desc": "Patients with 2 or more transplants \u2014 20 of 205"
       },
       {
         "id": "H.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 195,
+        "total": 204,
         "required": false,
-        "desc": "Median follow-up: 3.1 yrs (IQR 1.7\u20134.9 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 3.1 yrs (IQR 1.8\u20134.9 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 116,
+        "total": 177
+      },
+      "proteinuria": {
+        "count": 5,
+        "total": 177
+      }
+    }
   },
   {
     "section": "I",
@@ -1205,7 +1275,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 83,
+        "total": 84,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -1214,7 +1284,7 @@
         "name": "CHILDREN",
         "pct_missing": null,
         "missing": null,
-        "total": 1,
+        "total": 0,
         "required": false,
         "desc": "Patients aged under 18"
       },
@@ -1249,10 +1319,10 @@
         "id": "I.d4",
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
-        "missing": 33,
+        "missing": 34,
         "total": 84,
         "required": false,
-        "desc": "Date of death \u2014 33 of 84 patients (39.3%) have a recorded death date"
+        "desc": "Date of death \u2014 34 of 84 patients (40.5%) have a recorded death date"
       },
       {
         "id": "I.d6",
@@ -1275,8 +1345,8 @@
       {
         "id": "I.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 52.4,
-        "missing": 44,
+        "pct_missing": 51.2,
+        "missing": 43,
         "total": 84,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
@@ -1284,11 +1354,11 @@
       {
         "id": "I.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 16.7,
-        "missing": 14,
+        "pct_missing": 15.5,
+        "missing": 13,
         "total": 84,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 14 of 84 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 13 of 84 patients missing"
       },
       {
         "id": "I.d11",
@@ -1333,9 +1403,19 @@
         "missing": null,
         "total": 84,
         "required": false,
-        "desc": "Median follow-up: 1.7 yrs (IQR 0.4\u20135.1 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 1.8 yrs (IQR 0.4\u20134.4 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 33,
+        "total": 68
+      },
+      "proteinuria": {
+        "count": 0,
+        "total": 68
+      }
+    }
   },
   {
     "section": "J",
@@ -1347,7 +1427,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 732,
+        "total": 743,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -1356,7 +1436,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 732,
+        "total": 743,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -1374,7 +1454,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 732,
+        "total": 743,
         "required": true,
         "desc": "Patient first name"
       },
@@ -1383,7 +1463,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 732,
+        "total": 743,
         "required": true,
         "desc": "Patient last name"
       },
@@ -1392,7 +1472,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 732,
+        "total": 743,
         "required": true,
         "desc": "Date of birth"
       },
@@ -1401,34 +1481,34 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 17,
-        "total": 732,
+        "total": 743,
         "required": false,
-        "desc": "Date of death \u2014 17 of 732 patients (2.3%) have a recorded death date"
+        "desc": "Date of death \u2014 17 of 743 patients (2.3%) have a recorded death date"
       },
       {
         "id": "J.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 732,
+        "total": 743,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "J.d7",
         "name": "ETHNICITY",
-        "pct_missing": 78.4,
-        "missing": 574,
-        "total": 732,
+        "pct_missing": 78.3,
+        "missing": 582,
+        "total": 743,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "J.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 38.3,
+        "pct_missing": 37.7,
         "missing": 280,
-        "total": 732,
+        "total": 743,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
@@ -1437,16 +1517,16 @@
         "name": "Primary Renal Diagnosis",
         "pct_missing": 1.1,
         "missing": 8,
-        "total": 732,
+        "total": 743,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 8 of 732 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 8 of 743 patients missing"
       },
       {
         "id": "J.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 732,
+        "total": 743,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -1455,38 +1535,48 @@
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
         "missing": 246,
-        "total": 732,
+        "total": 743,
         "required": false,
-        "desc": "Kidney Failure \u2014 246 of 732 patients (33.6%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 246 of 743 patients (33.1%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "J.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 109,
-        "total": 732,
+        "total": 743,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 109 of 732"
+        "desc": "Patients with exactly 1 transplant \u2014 109 of 743"
       },
       {
         "id": "J.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 5,
-        "total": 732,
+        "total": 743,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 5 of 732"
+        "desc": "Patients with 2 or more transplants \u2014 5 of 743"
       },
       {
         "id": "J.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 732,
+        "total": 743,
         "required": false,
-        "desc": "Median follow-up: 1.1 yrs (IQR 0.7\u20131.5 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 1.1 yrs (IQR 0.6\u20131.6 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 157,
+        "total": 246
+      },
+      "proteinuria": {
+        "count": 0,
+        "total": 246
+      }
+    }
   },
   {
     "section": "K",
@@ -1498,7 +1588,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 705,
+        "total": 706,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -1507,7 +1597,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 703,
+        "total": 704,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -1525,7 +1615,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.1,
         "missing": 1,
-        "total": 705,
+        "total": 706,
         "required": true,
         "desc": "Patient first name"
       },
@@ -1534,7 +1624,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.1,
         "missing": 1,
-        "total": 705,
+        "total": 706,
         "required": true,
         "desc": "Patient last name"
       },
@@ -1543,7 +1633,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.1,
         "missing": 1,
-        "total": 705,
+        "total": 706,
         "required": true,
         "desc": "Date of birth"
       },
@@ -1552,34 +1642,34 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 41,
-        "total": 705,
+        "total": 706,
         "required": false,
-        "desc": "Date of death \u2014 41 of 705 patients (5.8%) have a recorded death date"
+        "desc": "Date of death \u2014 41 of 706 patients (5.8%) have a recorded death date"
       },
       {
         "id": "K.d6",
         "name": "GENDER",
         "pct_missing": 0.1,
         "missing": 1,
-        "total": 705,
+        "total": 706,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "K.d7",
         "name": "ETHNICITY",
-        "pct_missing": 25.8,
-        "missing": 182,
-        "total": 705,
+        "pct_missing": 25.6,
+        "missing": 181,
+        "total": 706,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "K.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 15.5,
+        "pct_missing": 15.4,
         "missing": 109,
-        "total": 705,
+        "total": 706,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
@@ -1588,16 +1678,16 @@
         "name": "Primary Renal Diagnosis",
         "pct_missing": 14.6,
         "missing": 103,
-        "total": 705,
+        "total": 706,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 103 of 705 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 103 of 706 patients missing"
       },
       {
         "id": "K.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.1,
         "missing": 1,
-        "total": 705,
+        "total": 706,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -1606,38 +1696,48 @@
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
         "missing": 694,
-        "total": 705,
+        "total": 706,
         "required": false,
-        "desc": "Kidney Failure \u2014 694 of 705 patients (98.4%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 694 of 706 patients (98.3%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "K.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 612,
-        "total": 705,
+        "total": 706,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 612 of 705"
+        "desc": "Patients with exactly 1 transplant \u2014 612 of 706"
       },
       {
         "id": "K.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 81,
-        "total": 705,
+        "total": 706,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 81 of 705"
+        "desc": "Patients with 2 or more transplants \u2014 81 of 706"
       },
       {
         "id": "K.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 704,
+        "total": 705,
         "required": false,
-        "desc": "Median follow-up: 2.2 yrs (IQR 1.0\u20135.5 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 2.5 yrs (IQR 1.2\u20135.6 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 493,
+        "total": 694
+      },
+      "proteinuria": {
+        "count": 32,
+        "total": 694
+      }
+    }
   },
   {
     "section": "L",
@@ -1649,7 +1749,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 630,
+        "total": 668,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -1658,7 +1758,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 259,
+        "total": 267,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -1667,7 +1767,7 @@
         "name": "CHILDREN",
         "pct_missing": null,
         "missing": null,
-        "total": 371,
+        "total": 401,
         "required": false,
         "desc": "Patients aged under 18"
       },
@@ -1676,7 +1776,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 630,
+        "total": 668,
         "required": true,
         "desc": "Patient first name"
       },
@@ -1685,7 +1785,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 630,
+        "total": 668,
         "required": true,
         "desc": "Patient last name"
       },
@@ -1694,7 +1794,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 630,
+        "total": 668,
         "required": true,
         "desc": "Date of birth"
       },
@@ -1703,34 +1803,34 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 0,
-        "total": 630,
+        "total": 668,
         "required": false,
-        "desc": "Date of death \u2014 0 of 630 patients (0.0%) have a recorded death date"
+        "desc": "Date of death \u2014 0 of 668 patients (0.0%) have a recorded death date"
       },
       {
         "id": "L.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 630,
+        "total": 668,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "L.d7",
         "name": "ETHNICITY",
-        "pct_missing": 17.0,
-        "missing": 107,
-        "total": 630,
+        "pct_missing": 16.5,
+        "missing": 110,
+        "total": 668,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "L.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 17.0,
-        "missing": 107,
-        "total": 630,
+        "pct_missing": 16.3,
+        "missing": 109,
+        "total": 668,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
@@ -1739,16 +1839,16 @@
         "name": "Primary Renal Diagnosis",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 630,
+        "total": 668,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 0 of 630 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 0 of 668 patients missing"
       },
       {
         "id": "L.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 630,
+        "total": 668,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -1756,39 +1856,49 @@
         "id": "L.kf",
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
-        "missing": 103,
-        "total": 630,
+        "missing": 109,
+        "total": 668,
         "required": false,
-        "desc": "Kidney Failure \u2014 103 of 630 patients (16.3%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 109 of 668 patients (16.3%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "L.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
-        "missing": 61,
-        "total": 630,
+        "missing": 64,
+        "total": 668,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 61 of 630"
+        "desc": "Patients with exactly 1 transplant \u2014 64 of 668"
       },
       {
         "id": "L.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
-        "missing": 15,
-        "total": 630,
+        "missing": 17,
+        "total": 668,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 15 of 630"
+        "desc": "Patients with 2 or more transplants \u2014 17 of 668"
       },
       {
         "id": "L.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 630,
+        "total": 668,
         "required": false,
-        "desc": "Median follow-up: 0.9 yrs (IQR 0.2\u20131.5 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 0.9 yrs (IQR 0.2\u20131.6 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 44,
+        "total": 109
+      },
+      "proteinuria": {
+        "count": 2,
+        "total": 109
+      }
+    }
   },
   {
     "section": "M",
@@ -1800,7 +1910,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 210,
+        "total": 209,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -1818,7 +1928,7 @@
         "name": "CHILDREN",
         "pct_missing": null,
         "missing": null,
-        "total": 58,
+        "total": 57,
         "required": false,
         "desc": "Patients aged under 18"
       },
@@ -1827,7 +1937,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 210,
+        "total": 209,
         "required": true,
         "desc": "Patient first name"
       },
@@ -1836,7 +1946,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 210,
+        "total": 209,
         "required": true,
         "desc": "Patient last name"
       },
@@ -1845,7 +1955,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 210,
+        "total": 209,
         "required": true,
         "desc": "Date of birth"
       },
@@ -1854,52 +1964,52 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 14,
-        "total": 210,
+        "total": 209,
         "required": false,
-        "desc": "Date of death \u2014 14 of 210 patients (6.7%) have a recorded death date"
+        "desc": "Date of death \u2014 14 of 209 patients (6.7%) have a recorded death date"
       },
       {
         "id": "M.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 210,
+        "total": 209,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "M.d7",
         "name": "ETHNICITY",
-        "pct_missing": 19.5,
-        "missing": 41,
-        "total": 210,
+        "pct_missing": 18.2,
+        "missing": 38,
+        "total": 209,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "M.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 26.2,
-        "missing": 55,
-        "total": 210,
+        "pct_missing": 25.8,
+        "missing": 54,
+        "total": 209,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "M.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 1.9,
-        "missing": 4,
-        "total": 210,
+        "pct_missing": 1.4,
+        "missing": 3,
+        "total": 209,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 4 of 210 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 3 of 209 patients missing"
       },
       {
         "id": "M.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 210,
+        "total": 209,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -1908,38 +2018,48 @@
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
         "missing": 120,
-        "total": 210,
+        "total": 209,
         "required": false,
-        "desc": "Kidney Failure \u2014 120 of 210 patients (57.1%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 120 of 209 patients (57.4%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "M.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
-        "missing": 74,
-        "total": 210,
+        "missing": 73,
+        "total": 209,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 74 of 210"
+        "desc": "Patients with exactly 1 transplant \u2014 73 of 209"
       },
       {
         "id": "M.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 34,
-        "total": 210,
+        "total": 209,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 34 of 210"
+        "desc": "Patients with 2 or more transplants \u2014 34 of 209"
       },
       {
         "id": "M.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 210,
+        "total": 209,
         "required": false,
-        "desc": "Median follow-up: 7.7 yrs (IQR 2.9\u20139.6 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 7.7 yrs (IQR 2.9\u20139.7 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 51,
+        "total": 120
+      },
+      "proteinuria": {
+        "count": 4,
+        "total": 120
+      }
+    }
   },
   {
     "section": "N",
@@ -1951,7 +2071,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 553,
+        "total": 554,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -1960,7 +2080,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 530,
+        "total": 531,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -1978,7 +2098,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 553,
+        "total": 554,
         "required": true,
         "desc": "Patient first name"
       },
@@ -1987,7 +2107,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 553,
+        "total": 554,
         "required": true,
         "desc": "Patient last name"
       },
@@ -1996,7 +2116,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 553,
+        "total": 554,
         "required": true,
         "desc": "Date of birth"
       },
@@ -2005,52 +2125,52 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 16,
-        "total": 553,
+        "total": 554,
         "required": false,
-        "desc": "Date of death \u2014 16 of 553 patients (2.9%) have a recorded death date"
+        "desc": "Date of death \u2014 16 of 554 patients (2.9%) have a recorded death date"
       },
       {
         "id": "N.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 553,
+        "total": 554,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "N.d7",
         "name": "ETHNICITY",
-        "pct_missing": 52.3,
+        "pct_missing": 52.2,
         "missing": 289,
-        "total": 553,
+        "total": 554,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "N.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 43.4,
+        "pct_missing": 43.3,
         "missing": 240,
-        "total": 553,
+        "total": 554,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "N.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 10.7,
-        "missing": 59,
-        "total": 553,
+        "pct_missing": 9.9,
+        "missing": 55,
+        "total": 554,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 59 of 553 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 55 of 554 patients missing"
       },
       {
         "id": "N.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 553,
+        "total": 554,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -2059,38 +2179,48 @@
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
         "missing": 12,
-        "total": 553,
+        "total": 554,
         "required": false,
-        "desc": "Kidney Failure \u2014 12 of 553 patients (2.2%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 12 of 554 patients (2.2%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "N.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 5,
-        "total": 553,
+        "total": 554,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 5 of 553"
+        "desc": "Patients with exactly 1 transplant \u2014 5 of 554"
       },
       {
         "id": "N.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 2,
-        "total": 553,
+        "total": 554,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 2 of 553"
+        "desc": "Patients with 2 or more transplants \u2014 2 of 554"
       },
       {
         "id": "N.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 553,
+        "total": 554,
         "required": false,
-        "desc": "Median follow-up: 6.7 yrs (IQR 3.6\u20139.3 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 6.8 yrs (IQR 3.6\u20139.4 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 11,
+        "total": 12
+      },
+      "proteinuria": {
+        "count": 0,
+        "total": 12
+      }
+    }
   },
   {
     "section": "O",
@@ -2102,7 +2232,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 68,
+        "total": 69,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -2111,7 +2241,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 65,
+        "total": 66,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -2129,7 +2259,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 68,
+        "total": 69,
         "required": true,
         "desc": "Patient first name"
       },
@@ -2138,7 +2268,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 68,
+        "total": 69,
         "required": true,
         "desc": "Patient last name"
       },
@@ -2147,7 +2277,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 68,
+        "total": 69,
         "required": true,
         "desc": "Date of birth"
       },
@@ -2156,52 +2286,52 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 11,
-        "total": 68,
+        "total": 69,
         "required": false,
-        "desc": "Date of death \u2014 11 of 68 patients (16.2%) have a recorded death date"
+        "desc": "Date of death \u2014 11 of 69 patients (15.9%) have a recorded death date"
       },
       {
         "id": "O.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 68,
+        "total": 69,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "O.d7",
         "name": "ETHNICITY",
-        "pct_missing": 19.1,
+        "pct_missing": 18.8,
         "missing": 13,
-        "total": 68,
+        "total": 69,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "O.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 27.9,
+        "pct_missing": 27.5,
         "missing": 19,
-        "total": 68,
+        "total": 69,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "O.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 14.7,
-        "missing": 10,
-        "total": 68,
+        "pct_missing": 13.0,
+        "missing": 9,
+        "total": 69,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 10 of 68 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 9 of 69 patients missing"
       },
       {
         "id": "O.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 68,
+        "total": 69,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -2210,38 +2340,48 @@
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
         "missing": 28,
-        "total": 68,
+        "total": 69,
         "required": false,
-        "desc": "Kidney Failure \u2014 28 of 68 patients (41.2%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 28 of 69 patients (40.6%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "O.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
-        "missing": 19,
-        "total": 68,
+        "missing": 18,
+        "total": 69,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 19 of 68"
+        "desc": "Patients with exactly 1 transplant \u2014 18 of 69"
       },
       {
         "id": "O.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
-        "missing": 1,
-        "total": 68,
+        "missing": 2,
+        "total": 69,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 1 of 68"
+        "desc": "Patients with 2 or more transplants \u2014 2 of 69"
       },
       {
         "id": "O.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 68,
+        "total": 69,
         "required": false,
-        "desc": "Median follow-up: 4.5 yrs (IQR 2.0\u20138.1 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 4.4 yrs (IQR 2.1\u20138.0 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 18,
+        "total": 28
+      },
+      "proteinuria": {
+        "count": 1,
+        "total": 28
+      }
+    }
   },
   {
     "section": "P",
@@ -2253,7 +2393,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 141,
+        "total": 144,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -2262,7 +2402,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 141,
+        "total": 144,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -2280,7 +2420,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 141,
+        "total": 144,
         "required": true,
         "desc": "Patient first name"
       },
@@ -2289,7 +2429,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 141,
+        "total": 144,
         "required": true,
         "desc": "Patient last name"
       },
@@ -2298,7 +2438,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 141,
+        "total": 144,
         "required": true,
         "desc": "Date of birth"
       },
@@ -2306,53 +2446,53 @@
         "id": "P.d4",
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
-        "missing": 3,
-        "total": 141,
+        "missing": 5,
+        "total": 144,
         "required": false,
-        "desc": "Date of death \u2014 3 of 141 patients (2.1%) have a recorded death date"
+        "desc": "Date of death \u2014 5 of 144 patients (3.5%) have a recorded death date"
       },
       {
         "id": "P.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 141,
+        "total": 144,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "P.d7",
         "name": "ETHNICITY",
-        "pct_missing": 21.3,
-        "missing": 30,
-        "total": 141,
+        "pct_missing": 21.5,
+        "missing": 31,
+        "total": 144,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "P.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 30.5,
-        "missing": 43,
-        "total": 141,
+        "pct_missing": 30.6,
+        "missing": 44,
+        "total": 144,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "P.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 7.8,
+        "pct_missing": 7.6,
         "missing": 11,
-        "total": 141,
+        "total": 144,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 11 of 141 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 11 of 144 patients missing"
       },
       {
         "id": "P.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 141,
+        "total": 144,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -2361,38 +2501,48 @@
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
         "missing": 2,
-        "total": 141,
+        "total": 144,
         "required": false,
-        "desc": "Kidney Failure \u2014 2 of 141 patients (1.4%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 2 of 144 patients (1.4%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "P.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 0,
-        "total": 141,
+        "total": 144,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 0 of 141"
+        "desc": "Patients with exactly 1 transplant \u2014 0 of 144"
       },
       {
         "id": "P.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 0,
-        "total": 141,
+        "total": 144,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 0 of 141"
+        "desc": "Patients with 2 or more transplants \u2014 0 of 144"
       },
       {
         "id": "P.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 141,
+        "total": 144,
         "required": false,
-        "desc": "Median follow-up: 1.3 yrs (IQR 0.3\u20133.3 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 1.5 yrs (IQR 0.4\u20133.2 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 2,
+        "total": 2
+      },
+      "proteinuria": {
+        "count": 0,
+        "total": 2
+      }
+    }
   },
   {
     "section": "Q",
@@ -2404,7 +2554,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 146,
+        "total": 148,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -2413,7 +2563,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 82,
+        "total": 85,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -2422,7 +2572,7 @@
         "name": "CHILDREN",
         "pct_missing": null,
         "missing": null,
-        "total": 64,
+        "total": 63,
         "required": false,
         "desc": "Patients aged under 18"
       },
@@ -2431,7 +2581,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 146,
+        "total": 148,
         "required": true,
         "desc": "Patient first name"
       },
@@ -2440,7 +2590,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 146,
+        "total": 148,
         "required": true,
         "desc": "Patient last name"
       },
@@ -2449,7 +2599,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 146,
+        "total": 148,
         "required": true,
         "desc": "Date of birth"
       },
@@ -2458,52 +2608,52 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 4,
-        "total": 146,
+        "total": 148,
         "required": false,
-        "desc": "Date of death \u2014 4 of 146 patients (2.7%) have a recorded death date"
+        "desc": "Date of death \u2014 4 of 148 patients (2.7%) have a recorded death date"
       },
       {
         "id": "Q.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 146,
+        "total": 148,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "Q.d7",
         "name": "ETHNICITY",
-        "pct_missing": 16.4,
+        "pct_missing": 16.2,
         "missing": 24,
-        "total": 146,
+        "total": 148,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "Q.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 24.7,
+        "pct_missing": 24.3,
         "missing": 36,
-        "total": 146,
+        "total": 148,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "Q.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 8.2,
+        "pct_missing": 8.1,
         "missing": 12,
-        "total": 146,
+        "total": 148,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 12 of 146 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 12 of 148 patients missing"
       },
       {
         "id": "Q.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 146,
+        "total": 148,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -2511,39 +2661,49 @@
         "id": "Q.kf",
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
-        "missing": 22,
-        "total": 146,
+        "missing": 23,
+        "total": 148,
         "required": false,
-        "desc": "Kidney Failure \u2014 22 of 146 patients (15.1%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 23 of 148 patients (15.5%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "Q.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
-        "missing": 13,
-        "total": 146,
+        "missing": 14,
+        "total": 148,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 13 of 146"
+        "desc": "Patients with exactly 1 transplant \u2014 14 of 148"
       },
       {
         "id": "Q.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 1,
-        "total": 146,
+        "total": 148,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 1 of 146"
+        "desc": "Patients with 2 or more transplants \u2014 1 of 148"
       },
       {
         "id": "Q.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 146,
+        "total": 148,
         "required": false,
-        "desc": "Median follow-up: 4.9 yrs (IQR 1.2\u20138.9 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 4.7 yrs (IQR 1.2\u20139.0 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 10,
+        "total": 23
+      },
+      "proteinuria": {
+        "count": 2,
+        "total": 23
+      }
+    }
   },
   {
     "section": "R",
@@ -2555,7 +2715,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 157,
+        "total": 158,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -2573,7 +2733,7 @@
         "name": "CHILDREN",
         "pct_missing": null,
         "missing": null,
-        "total": 33,
+        "total": 34,
         "required": false,
         "desc": "Patients aged under 18"
       },
@@ -2582,7 +2742,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 157,
+        "total": 158,
         "required": true,
         "desc": "Patient first name"
       },
@@ -2591,7 +2751,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 157,
+        "total": 158,
         "required": true,
         "desc": "Patient last name"
       },
@@ -2600,7 +2760,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 157,
+        "total": 158,
         "required": true,
         "desc": "Date of birth"
       },
@@ -2608,53 +2768,53 @@
         "id": "R.d4",
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
-        "missing": 12,
-        "total": 157,
+        "missing": 13,
+        "total": 158,
         "required": false,
-        "desc": "Date of death \u2014 12 of 157 patients (7.6%) have a recorded death date"
+        "desc": "Date of death \u2014 13 of 158 patients (8.2%) have a recorded death date"
       },
       {
         "id": "R.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 157,
+        "total": 158,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "R.d7",
         "name": "ETHNICITY",
-        "pct_missing": 28.0,
+        "pct_missing": 27.8,
         "missing": 44,
-        "total": 157,
+        "total": 158,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "R.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 38.9,
-        "missing": 61,
-        "total": 157,
+        "pct_missing": 39.2,
+        "missing": 62,
+        "total": 158,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "R.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 12.7,
-        "missing": 20,
-        "total": 157,
+        "pct_missing": 10.8,
+        "missing": 17,
+        "total": 158,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 20 of 157 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 17 of 158 patients missing"
       },
       {
         "id": "R.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 157,
+        "total": 158,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -2663,38 +2823,48 @@
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
         "missing": 44,
-        "total": 157,
+        "total": 158,
         "required": false,
-        "desc": "Kidney Failure \u2014 44 of 157 patients (28.0%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 44 of 158 patients (27.8%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "R.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 26,
-        "total": 157,
+        "total": 158,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 26 of 157"
+        "desc": "Patients with exactly 1 transplant \u2014 26 of 158"
       },
       {
         "id": "R.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 8,
-        "total": 157,
+        "total": 158,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 8 of 157"
+        "desc": "Patients with 2 or more transplants \u2014 8 of 158"
       },
       {
         "id": "R.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 157,
+        "total": 158,
         "required": false,
-        "desc": "Median follow-up: 7.2 yrs (IQR 2.3\u20139.5 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 7.3 yrs (IQR 2.5\u20139.8 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 16,
+        "total": 44
+      },
+      "proteinuria": {
+        "count": 0,
+        "total": 44
+      }
+    }
   },
   {
     "section": "S",
@@ -2706,7 +2876,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 5283,
+        "total": 5326,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -2715,7 +2885,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 4462,
+        "total": 4503,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -2724,7 +2894,7 @@
         "name": "CHILDREN",
         "pct_missing": null,
         "missing": null,
-        "total": 821,
+        "total": 823,
         "required": false,
         "desc": "Patients aged under 18"
       },
@@ -2733,7 +2903,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 5283,
+        "total": 5326,
         "required": true,
         "desc": "Patient first name"
       },
@@ -2742,7 +2912,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 5283,
+        "total": 5326,
         "required": true,
         "desc": "Patient last name"
       },
@@ -2751,7 +2921,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 5283,
+        "total": 5326,
         "required": true,
         "desc": "Date of birth"
       },
@@ -2759,53 +2929,53 @@
         "id": "S.d4",
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
-        "missing": 389,
-        "total": 5283,
+        "missing": 409,
+        "total": 5326,
         "required": false,
-        "desc": "Date of death \u2014 389 of 5,283 patients (7.4%) have a recorded death date"
+        "desc": "Date of death \u2014 409 of 5,326 patients (7.7%) have a recorded death date"
       },
       {
         "id": "S.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 5283,
+        "total": 5326,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "S.d7",
         "name": "ETHNICITY",
-        "pct_missing": 16.0,
-        "missing": 843,
-        "total": 5283,
+        "pct_missing": 15.9,
+        "missing": 848,
+        "total": 5326,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "S.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 38.0,
-        "missing": 2009,
-        "total": 5283,
+        "pct_missing": 37.8,
+        "missing": 2012,
+        "total": 5326,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "S.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 3.3,
-        "missing": 172,
-        "total": 5283,
+        "pct_missing": 3.2,
+        "missing": 171,
+        "total": 5326,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 172 of 5,283 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 171 of 5,326 patients missing"
       },
       {
         "id": "S.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 5283,
+        "total": 5326,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -2813,39 +2983,49 @@
         "id": "S.kf",
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
-        "missing": 1270,
-        "total": 5283,
+        "missing": 1278,
+        "total": 5326,
         "required": false,
-        "desc": "Kidney Failure \u2014 1,270 of 5,283 patients (24.0%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 1,278 of 5,326 patients (24.0%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "S.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
-        "missing": 815,
-        "total": 5283,
+        "missing": 818,
+        "total": 5326,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 815 of 5,283"
+        "desc": "Patients with exactly 1 transplant \u2014 818 of 5,326"
       },
       {
         "id": "S.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 119,
-        "total": 5283,
+        "total": 5326,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 119 of 5,283"
+        "desc": "Patients with 2 or more transplants \u2014 119 of 5,326"
       },
       {
         "id": "S.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 5283,
+        "total": 5326,
         "required": false,
         "desc": "Median follow-up: 5.4 yrs (IQR 2.2\u20138.4 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 799,
+        "total": 1278
+      },
+      "proteinuria": {
+        "count": 156,
+        "total": 1278
+      }
+    }
   },
   {
     "section": "T",
@@ -2857,7 +3037,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 5663,
+        "total": 5741,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -2866,7 +3046,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 5615,
+        "total": 5692,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -2875,7 +3055,7 @@
         "name": "CHILDREN",
         "pct_missing": null,
         "missing": null,
-        "total": 48,
+        "total": 49,
         "required": false,
         "desc": "Patients aged under 18"
       },
@@ -2884,7 +3064,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 5663,
+        "total": 5741,
         "required": true,
         "desc": "Patient first name"
       },
@@ -2893,7 +3073,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 5663,
+        "total": 5741,
         "required": true,
         "desc": "Patient last name"
       },
@@ -2902,7 +3082,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 5663,
+        "total": 5741,
         "required": true,
         "desc": "Date of birth"
       },
@@ -2910,17 +3090,17 @@
         "id": "T.d4",
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
-        "missing": 482,
-        "total": 5663,
+        "missing": 500,
+        "total": 5741,
         "required": false,
-        "desc": "Date of death \u2014 482 of 5,663 patients (8.5%) have a recorded death date"
+        "desc": "Date of death \u2014 500 of 5,741 patients (8.7%) have a recorded death date"
       },
       {
         "id": "T.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 5663,
+        "total": 5741,
         "required": true,
         "desc": "Gender"
       },
@@ -2928,35 +3108,35 @@
         "id": "T.d7",
         "name": "ETHNICITY",
         "pct_missing": 12.0,
-        "missing": 680,
-        "total": 5663,
+        "missing": 690,
+        "total": 5741,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "T.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 25.5,
-        "missing": 1446,
-        "total": 5663,
+        "pct_missing": 25.3,
+        "missing": 1453,
+        "total": 5741,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "T.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 6.0,
+        "pct_missing": 5.9,
         "missing": 340,
-        "total": 5663,
+        "total": 5741,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 340 of 5,663 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 340 of 5,741 patients missing"
       },
       {
         "id": "T.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 5663,
+        "total": 5741,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -2964,39 +3144,49 @@
         "id": "T.kf",
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
-        "missing": 2827,
-        "total": 5663,
+        "missing": 2846,
+        "total": 5741,
         "required": false,
-        "desc": "Kidney Failure \u2014 2,827 of 5,663 patients (49.9%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 2,846 of 5,741 patients (49.6%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "T.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
-        "missing": 1936,
-        "total": 5663,
+        "missing": 1941,
+        "total": 5741,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 1,936 of 5,663"
+        "desc": "Patients with exactly 1 transplant \u2014 1,941 of 5,741"
       },
       {
         "id": "T.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
-        "missing": 249,
-        "total": 5663,
+        "missing": 250,
+        "total": 5741,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 249 of 5,663"
+        "desc": "Patients with 2 or more transplants \u2014 250 of 5,741"
       },
       {
         "id": "T.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 5664,
+        "total": 5742,
         "required": false,
-        "desc": "Median follow-up: 6.0 yrs (IQR 2.4\u20138.3 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 6.0 yrs (IQR 2.4\u20138.4 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 1817,
+        "total": 2846
+      },
+      "proteinuria": {
+        "count": 40,
+        "total": 2846
+      }
+    }
   },
   {
     "section": "U",
@@ -3008,7 +3198,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 480,
+        "total": 487,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -3017,7 +3207,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 405,
+        "total": 412,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -3035,7 +3225,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.2,
         "missing": 1,
-        "total": 480,
+        "total": 487,
         "required": true,
         "desc": "Patient first name"
       },
@@ -3044,7 +3234,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.2,
         "missing": 1,
-        "total": 480,
+        "total": 487,
         "required": true,
         "desc": "Patient last name"
       },
@@ -3053,7 +3243,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.2,
         "missing": 1,
-        "total": 480,
+        "total": 487,
         "required": true,
         "desc": "Date of birth"
       },
@@ -3062,34 +3252,34 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 7,
-        "total": 480,
+        "total": 487,
         "required": false,
-        "desc": "Date of death \u2014 7 of 480 patients (1.5%) have a recorded death date"
+        "desc": "Date of death \u2014 7 of 487 patients (1.4%) have a recorded death date"
       },
       {
         "id": "U.d6",
         "name": "GENDER",
         "pct_missing": 0.2,
         "missing": 1,
-        "total": 480,
+        "total": 487,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "U.d7",
         "name": "ETHNICITY",
-        "pct_missing": 58.8,
-        "missing": 282,
-        "total": 480,
+        "pct_missing": 58.3,
+        "missing": 284,
+        "total": 487,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "U.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 21.7,
+        "pct_missing": 21.4,
         "missing": 104,
-        "total": 480,
+        "total": 487,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
@@ -3098,16 +3288,16 @@
         "name": "Primary Renal Diagnosis",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 480,
+        "total": 487,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 0 of 480 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 0 of 487 patients missing"
       },
       {
         "id": "U.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.2,
         "missing": 1,
-        "total": 480,
+        "total": 487,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -3116,38 +3306,48 @@
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
         "missing": 5,
-        "total": 480,
+        "total": 487,
         "required": false,
-        "desc": "Kidney Failure \u2014 5 of 480 patients (1.0%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 5 of 487 patients (1.0%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "U.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 1,
-        "total": 480,
+        "total": 487,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 1 of 480"
+        "desc": "Patients with exactly 1 transplant \u2014 1 of 487"
       },
       {
         "id": "U.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 0,
-        "total": 480,
+        "total": 487,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 0 of 480"
+        "desc": "Patients with 2 or more transplants \u2014 0 of 487"
       },
       {
         "id": "U.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 479,
+        "total": 486,
         "required": false,
-        "desc": "Median follow-up: 2.6 yrs (IQR 1.6\u20133.7 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 2.8 yrs (IQR 1.7\u20133.9 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 4,
+        "total": 5
+      },
+      "proteinuria": {
+        "count": 0,
+        "total": 5
+      }
+    }
   },
   {
     "section": "V",
@@ -3159,7 +3359,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 392,
+        "total": 437,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -3168,7 +3368,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 384,
+        "total": 429,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -3186,7 +3386,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 392,
+        "total": 437,
         "required": true,
         "desc": "Patient first name"
       },
@@ -3195,7 +3395,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 392,
+        "total": 437,
         "required": true,
         "desc": "Patient last name"
       },
@@ -3204,7 +3404,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 392,
+        "total": 437,
         "required": true,
         "desc": "Date of birth"
       },
@@ -3213,52 +3413,52 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 0,
-        "total": 392,
+        "total": 437,
         "required": false,
-        "desc": "Date of death \u2014 0 of 392 patients (0.0%) have a recorded death date"
+        "desc": "Date of death \u2014 0 of 437 patients (0.0%) have a recorded death date"
       },
       {
         "id": "V.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 392,
+        "total": 437,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "V.d7",
         "name": "ETHNICITY",
-        "pct_missing": 21.2,
-        "missing": 83,
-        "total": 392,
+        "pct_missing": 21.1,
+        "missing": 92,
+        "total": 437,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "V.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 19.6,
-        "missing": 77,
-        "total": 392,
+        "pct_missing": 17.8,
+        "missing": 78,
+        "total": 437,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "V.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 1.3,
+        "pct_missing": 1.1,
         "missing": 5,
-        "total": 392,
+        "total": 437,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 5 of 392 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 5 of 437 patients missing"
       },
       {
         "id": "V.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 392,
+        "total": 437,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -3266,39 +3466,49 @@
         "id": "V.kf",
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
-        "missing": 27,
-        "total": 392,
+        "missing": 30,
+        "total": 437,
         "required": false,
-        "desc": "Kidney Failure \u2014 27 of 392 patients (6.9%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 30 of 437 patients (6.9%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "V.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 14,
-        "total": 392,
+        "total": 437,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 14 of 392"
+        "desc": "Patients with exactly 1 transplant \u2014 14 of 437"
       },
       {
         "id": "V.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 1,
-        "total": 392,
+        "total": 437,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 1 of 392"
+        "desc": "Patients with 2 or more transplants \u2014 1 of 437"
       },
       {
         "id": "V.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 392,
+        "total": 437,
         "required": false,
-        "desc": "Median follow-up: 0.9 yrs (IQR 0.4\u20131.4 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 1.0 yrs (IQR 0.3\u20131.5 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 21,
+        "total": 30
+      },
+      "proteinuria": {
+        "count": 1,
+        "total": 30
+      }
+    }
   },
   {
     "section": "W",
@@ -3310,7 +3520,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 1338,
+        "total": 1347,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -3319,7 +3529,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 1298,
+        "total": 1306,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -3328,7 +3538,7 @@
         "name": "CHILDREN",
         "pct_missing": null,
         "missing": null,
-        "total": 40,
+        "total": 41,
         "required": false,
         "desc": "Patients aged under 18"
       },
@@ -3337,7 +3547,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.1,
         "missing": 2,
-        "total": 1338,
+        "total": 1347,
         "required": true,
         "desc": "Patient first name"
       },
@@ -3346,7 +3556,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.1,
         "missing": 2,
-        "total": 1338,
+        "total": 1347,
         "required": true,
         "desc": "Patient last name"
       },
@@ -3355,7 +3565,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.1,
         "missing": 2,
-        "total": 1338,
+        "total": 1347,
         "required": true,
         "desc": "Date of birth"
       },
@@ -3363,17 +3573,17 @@
         "id": "W.d4",
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
-        "missing": 234,
-        "total": 1338,
+        "missing": 237,
+        "total": 1347,
         "required": false,
-        "desc": "Date of death \u2014 234 of 1,338 patients (17.5%) have a recorded death date"
+        "desc": "Date of death \u2014 237 of 1,347 patients (17.6%) have a recorded death date"
       },
       {
         "id": "W.d6",
         "name": "GENDER",
         "pct_missing": 0.1,
         "missing": 2,
-        "total": 1338,
+        "total": 1347,
         "required": true,
         "desc": "Gender"
       },
@@ -3381,35 +3591,35 @@
         "id": "W.d7",
         "name": "ETHNICITY",
         "pct_missing": 10.1,
-        "missing": 135,
-        "total": 1338,
+        "missing": 136,
+        "total": 1347,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "W.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 32.0,
-        "missing": 428,
-        "total": 1338,
+        "pct_missing": 31.9,
+        "missing": 430,
+        "total": 1347,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "W.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 2.8,
+        "pct_missing": 2.7,
         "missing": 37,
-        "total": 1338,
+        "total": 1347,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 37 of 1,338 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 37 of 1,347 patients missing"
       },
       {
         "id": "W.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.1,
         "missing": 2,
-        "total": 1338,
+        "total": 1347,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -3417,39 +3627,49 @@
         "id": "W.kf",
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
-        "missing": 663,
-        "total": 1338,
+        "missing": 670,
+        "total": 1347,
         "required": false,
-        "desc": "Kidney Failure \u2014 663 of 1,338 patients (49.6%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 670 of 1,347 patients (49.7%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "W.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
-        "missing": 360,
-        "total": 1338,
+        "missing": 362,
+        "total": 1347,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 360 of 1,338"
+        "desc": "Patients with exactly 1 transplant \u2014 362 of 1,347"
       },
       {
         "id": "W.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 108,
-        "total": 1338,
+        "total": 1347,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 108 of 1,338"
+        "desc": "Patients with 2 or more transplants \u2014 108 of 1,347"
       },
       {
         "id": "W.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 1337,
+        "total": 1346,
         "required": false,
-        "desc": "Median follow-up: 6.7 yrs (IQR 2.7\u20139.1 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 6.8 yrs (IQR 2.7\u20139.2 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 407,
+        "total": 670
+      },
+      "proteinuria": {
+        "count": 38,
+        "total": 670
+      }
+    }
   },
   {
     "section": "X",
@@ -3461,7 +3681,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 3098,
+        "total": 3118,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -3470,7 +3690,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 3091,
+        "total": 3112,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -3479,7 +3699,7 @@
         "name": "CHILDREN",
         "pct_missing": null,
         "missing": null,
-        "total": 7,
+        "total": 6,
         "required": false,
         "desc": "Patients aged under 18"
       },
@@ -3488,7 +3708,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 1,
-        "total": 3098,
+        "total": 3118,
         "required": true,
         "desc": "Patient first name"
       },
@@ -3497,7 +3717,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 1,
-        "total": 3098,
+        "total": 3118,
         "required": true,
         "desc": "Patient last name"
       },
@@ -3506,7 +3726,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 1,
-        "total": 3098,
+        "total": 3118,
         "required": true,
         "desc": "Date of birth"
       },
@@ -3514,53 +3734,53 @@
         "id": "X.d4",
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
-        "missing": 481,
-        "total": 3098,
+        "missing": 490,
+        "total": 3118,
         "required": false,
-        "desc": "Date of death \u2014 481 of 3,098 patients (15.5%) have a recorded death date"
+        "desc": "Date of death \u2014 490 of 3,118 patients (15.7%) have a recorded death date"
       },
       {
         "id": "X.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 1,
-        "total": 3098,
+        "total": 3118,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "X.d7",
         "name": "ETHNICITY",
-        "pct_missing": 16.6,
-        "missing": 515,
-        "total": 3098,
+        "pct_missing": 16.7,
+        "missing": 521,
+        "total": 3118,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "X.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 40.5,
-        "missing": 1254,
-        "total": 3098,
+        "pct_missing": 40.3,
+        "missing": 1257,
+        "total": 3118,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "X.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 14.1,
-        "missing": 438,
-        "total": 3098,
+        "pct_missing": 14.0,
+        "missing": 437,
+        "total": 3118,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 438 of 3,098 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 437 of 3,118 patients missing"
       },
       {
         "id": "X.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 1,
-        "total": 3098,
+        "total": 3118,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -3568,39 +3788,49 @@
         "id": "X.kf",
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
-        "missing": 650,
-        "total": 3098,
+        "missing": 653,
+        "total": 3118,
         "required": false,
-        "desc": "Kidney Failure \u2014 650 of 3,098 patients (21.0%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 653 of 3,118 patients (20.9%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "X.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
-        "missing": 298,
-        "total": 3098,
+        "missing": 299,
+        "total": 3118,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 298 of 3,098"
+        "desc": "Patients with exactly 1 transplant \u2014 299 of 3,118"
       },
       {
         "id": "X.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
-        "missing": 40,
-        "total": 3098,
+        "missing": 41,
+        "total": 3118,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 40 of 3,098"
+        "desc": "Patients with 2 or more transplants \u2014 41 of 3,118"
       },
       {
         "id": "X.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 3097,
+        "total": 3117,
         "required": false,
-        "desc": "Median follow-up: 5.9 yrs (IQR 2.4\u20138.6 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 5.9 yrs (IQR 2.4\u20138.7 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 400,
+        "total": 653
+      },
+      "proteinuria": {
+        "count": 9,
+        "total": 653
+      }
+    }
   },
   {
     "section": "Y",
@@ -3749,9 +3979,19 @@
         "missing": null,
         "total": 9,
         "required": false,
-        "desc": "Median follow-up: 1.3 yrs (IQR 0.0\u20134.3 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 1.3 yrs (IQR 0.2\u20134.4 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 0,
+        "total": 0
+      },
+      "proteinuria": {
+        "count": 0,
+        "total": 0
+      }
+    }
   },
   {
     "section": "Z",
@@ -3763,7 +4003,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 298,
+        "total": 304,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -3772,7 +4012,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 294,
+        "total": 300,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -3790,7 +4030,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.3,
         "missing": 1,
-        "total": 298,
+        "total": 304,
         "required": true,
         "desc": "Patient first name"
       },
@@ -3799,7 +4039,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.3,
         "missing": 1,
-        "total": 298,
+        "total": 304,
         "required": true,
         "desc": "Patient last name"
       },
@@ -3808,7 +4048,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.3,
         "missing": 1,
-        "total": 298,
+        "total": 304,
         "required": true,
         "desc": "Date of birth"
       },
@@ -3816,17 +4056,17 @@
         "id": "Z.d4",
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
-        "missing": 54,
-        "total": 298,
+        "missing": 56,
+        "total": 304,
         "required": false,
-        "desc": "Date of death \u2014 54 of 298 patients (18.1%) have a recorded death date"
+        "desc": "Date of death \u2014 56 of 304 patients (18.4%) have a recorded death date"
       },
       {
         "id": "Z.d6",
         "name": "GENDER",
         "pct_missing": 0.3,
         "missing": 1,
-        "total": 298,
+        "total": 304,
         "required": true,
         "desc": "Gender"
       },
@@ -3834,8 +4074,8 @@
         "id": "Z.d7",
         "name": "ETHNICITY",
         "pct_missing": 12.8,
-        "missing": 38,
-        "total": 298,
+        "missing": 39,
+        "total": 304,
         "required": true,
         "desc": "Ethnic origin"
       },
@@ -3843,26 +4083,26 @@
         "id": "Z.d9",
         "name": "EMAIL_ADDRESS",
         "pct_missing": 37.2,
-        "missing": 111,
-        "total": 298,
+        "missing": 113,
+        "total": 304,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "Z.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 8.7,
+        "pct_missing": 8.6,
         "missing": 26,
-        "total": 298,
+        "total": 304,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 26 of 298 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 26 of 304 patients missing"
       },
       {
         "id": "Z.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.3,
         "missing": 1,
-        "total": 298,
+        "total": 304,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -3871,38 +4111,48 @@
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
         "missing": 125,
-        "total": 298,
+        "total": 304,
         "required": false,
-        "desc": "Kidney Failure \u2014 125 of 298 patients (41.9%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 125 of 304 patients (41.1%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "Z.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 46,
-        "total": 298,
+        "total": 304,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 46 of 298"
+        "desc": "Patients with exactly 1 transplant \u2014 46 of 304"
       },
       {
         "id": "Z.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 2,
-        "total": 298,
+        "total": 304,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 2 of 298"
+        "desc": "Patients with 2 or more transplants \u2014 2 of 304"
       },
       {
         "id": "Z.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 297,
+        "total": 303,
         "required": false,
-        "desc": "Median follow-up: 3.2 yrs (IQR 1.5\u20136.3 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 3.2 yrs (IQR 1.4\u20136.4 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 77,
+        "total": 125
+      },
+      "proteinuria": {
+        "count": 2,
+        "total": 125
+      }
+    }
   },
   {
     "section": "AA",
@@ -3914,7 +4164,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 879,
+        "total": 885,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -3923,7 +4173,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 879,
+        "total": 885,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -3941,7 +4191,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 879,
+        "total": 885,
         "required": true,
         "desc": "Patient first name"
       },
@@ -3950,7 +4200,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 879,
+        "total": 885,
         "required": true,
         "desc": "Patient last name"
       },
@@ -3959,7 +4209,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 879,
+        "total": 885,
         "required": true,
         "desc": "Date of birth"
       },
@@ -3967,53 +4217,53 @@
         "id": "AA.d4",
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
-        "missing": 19,
-        "total": 879,
+        "missing": 20,
+        "total": 885,
         "required": false,
-        "desc": "Date of death \u2014 19 of 879 patients (2.2%) have a recorded death date"
+        "desc": "Date of death \u2014 20 of 885 patients (2.3%) have a recorded death date"
       },
       {
         "id": "AA.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 879,
+        "total": 885,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "AA.d7",
         "name": "ETHNICITY",
-        "pct_missing": 24.9,
-        "missing": 219,
-        "total": 879,
+        "pct_missing": 24.6,
+        "missing": 218,
+        "total": 885,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "AA.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 28.2,
-        "missing": 248,
-        "total": 879,
+        "pct_missing": 28.1,
+        "missing": 249,
+        "total": 885,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "AA.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 25.4,
-        "missing": 223,
-        "total": 879,
+        "pct_missing": 25.1,
+        "missing": 222,
+        "total": 885,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 223 of 879 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 222 of 885 patients missing"
       },
       {
         "id": "AA.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 879,
+        "total": 885,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -4021,39 +4271,49 @@
         "id": "AA.kf",
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
-        "missing": 278,
-        "total": 879,
+        "missing": 280,
+        "total": 885,
         "required": false,
-        "desc": "Kidney Failure \u2014 278 of 879 patients (31.6%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 280 of 885 patients (31.6%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "AA.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
-        "missing": 200,
-        "total": 879,
+        "missing": 201,
+        "total": 885,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 200 of 879"
+        "desc": "Patients with exactly 1 transplant \u2014 201 of 885"
       },
       {
         "id": "AA.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 31,
-        "total": 879,
+        "total": 885,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 31 of 879"
+        "desc": "Patients with 2 or more transplants \u2014 31 of 885"
       },
       {
         "id": "AA.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 882,
+        "total": 888,
         "required": false,
-        "desc": "Median follow-up: 6.4 yrs (IQR 2.7\u20138.7 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 6.5 yrs (IQR 2.7\u20138.8 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 155,
+        "total": 280
+      },
+      "proteinuria": {
+        "count": 3,
+        "total": 280
+      }
+    }
   },
   {
     "section": "AB",
@@ -4202,9 +4462,19 @@
         "missing": null,
         "total": 9,
         "required": false,
-        "desc": "Median follow-up: 5.4 yrs (IQR 3.2\u20137.7 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 5.4 yrs (IQR 3.3\u20137.7 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 2,
+        "total": 6
+      },
+      "proteinuria": {
+        "count": 0,
+        "total": 6
+      }
+    }
   },
   {
     "section": "AC",
@@ -4216,7 +4486,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 188,
+        "total": 189,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -4225,7 +4495,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 188,
+        "total": 189,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -4243,7 +4513,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 188,
+        "total": 189,
         "required": true,
         "desc": "Patient first name"
       },
@@ -4252,7 +4522,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 188,
+        "total": 189,
         "required": true,
         "desc": "Patient last name"
       },
@@ -4261,7 +4531,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 188,
+        "total": 189,
         "required": true,
         "desc": "Date of birth"
       },
@@ -4269,53 +4539,53 @@
         "id": "AC.d4",
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
-        "missing": 37,
-        "total": 188,
+        "missing": 38,
+        "total": 189,
         "required": false,
-        "desc": "Date of death \u2014 37 of 188 patients (19.7%) have a recorded death date"
+        "desc": "Date of death \u2014 38 of 189 patients (20.1%) have a recorded death date"
       },
       {
         "id": "AC.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 188,
+        "total": 189,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "AC.d7",
         "name": "ETHNICITY",
-        "pct_missing": 16.5,
+        "pct_missing": 16.4,
         "missing": 31,
-        "total": 188,
+        "total": 189,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "AC.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 46.8,
+        "pct_missing": 46.6,
         "missing": 88,
-        "total": 188,
+        "total": 189,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "AC.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 14.4,
+        "pct_missing": 14.3,
         "missing": 27,
-        "total": 188,
+        "total": 189,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 27 of 188 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 27 of 189 patients missing"
       },
       {
         "id": "AC.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 188,
+        "total": 189,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -4324,38 +4594,48 @@
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
         "missing": 24,
-        "total": 188,
+        "total": 189,
         "required": false,
-        "desc": "Kidney Failure \u2014 24 of 188 patients (12.8%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 24 of 189 patients (12.7%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "AC.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 5,
-        "total": 188,
+        "total": 189,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 5 of 188"
+        "desc": "Patients with exactly 1 transplant \u2014 5 of 189"
       },
       {
         "id": "AC.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 0,
-        "total": 188,
+        "total": 189,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 0 of 188"
+        "desc": "Patients with 2 or more transplants \u2014 0 of 189"
       },
       {
         "id": "AC.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 188,
+        "total": 189,
         "required": false,
-        "desc": "Median follow-up: 4.1 yrs (IQR 1.3\u20137.4 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 4.1 yrs (IQR 1.3\u20137.7 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 14,
+        "total": 24
+      },
+      "proteinuria": {
+        "count": 0,
+        "total": 24
+      }
+    }
   },
   {
     "section": "AD",
@@ -4367,7 +4647,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 208,
+        "total": 210,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -4376,7 +4656,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 95,
+        "total": 96,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -4385,7 +4665,7 @@
         "name": "CHILDREN",
         "pct_missing": null,
         "missing": null,
-        "total": 113,
+        "total": 114,
         "required": false,
         "desc": "Patients aged under 18"
       },
@@ -4394,7 +4674,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 208,
+        "total": 210,
         "required": true,
         "desc": "Patient first name"
       },
@@ -4403,7 +4683,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 208,
+        "total": 210,
         "required": true,
         "desc": "Patient last name"
       },
@@ -4412,7 +4692,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 208,
+        "total": 210,
         "required": true,
         "desc": "Date of birth"
       },
@@ -4421,52 +4701,52 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 3,
-        "total": 208,
+        "total": 210,
         "required": false,
-        "desc": "Date of death \u2014 3 of 208 patients (1.4%) have a recorded death date"
+        "desc": "Date of death \u2014 3 of 210 patients (1.4%) have a recorded death date"
       },
       {
         "id": "AD.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 208,
+        "total": 210,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "AD.d7",
         "name": "ETHNICITY",
-        "pct_missing": 36.1,
+        "pct_missing": 35.7,
         "missing": 75,
-        "total": 208,
+        "total": 210,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "AD.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 39.9,
+        "pct_missing": 39.5,
         "missing": 83,
-        "total": 208,
+        "total": 210,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "AD.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 5.8,
-        "missing": 12,
-        "total": 208,
+        "pct_missing": 5.2,
+        "missing": 11,
+        "total": 210,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 12 of 208 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 11 of 210 patients missing"
       },
       {
         "id": "AD.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 208,
+        "total": 210,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -4475,38 +4755,48 @@
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
         "missing": 95,
-        "total": 208,
+        "total": 210,
         "required": false,
-        "desc": "Kidney Failure \u2014 95 of 208 patients (45.7%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 95 of 210 patients (45.2%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "AD.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 22,
-        "total": 208,
+        "total": 210,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 22 of 208"
+        "desc": "Patients with exactly 1 transplant \u2014 22 of 210"
       },
       {
         "id": "AD.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 3,
-        "total": 208,
+        "total": 210,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 3 of 208"
+        "desc": "Patients with 2 or more transplants \u2014 3 of 210"
       },
       {
         "id": "AD.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 208,
+        "total": 210,
         "required": false,
-        "desc": "Median follow-up: 6.3 yrs (IQR 1.5\u20139.5 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 6.4 yrs (IQR 1.4\u20139.4 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 20,
+        "total": 95
+      },
+      "proteinuria": {
+        "count": 0,
+        "total": 95
+      }
+    }
   },
   {
     "section": "AE",
@@ -4518,7 +4808,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 340,
+        "total": 345,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -4527,7 +4817,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 294,
+        "total": 298,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -4536,7 +4826,7 @@
         "name": "CHILDREN",
         "pct_missing": null,
         "missing": null,
-        "total": 46,
+        "total": 47,
         "required": false,
         "desc": "Patients aged under 18"
       },
@@ -4545,7 +4835,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 340,
+        "total": 345,
         "required": true,
         "desc": "Patient first name"
       },
@@ -4554,7 +4844,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 340,
+        "total": 345,
         "required": true,
         "desc": "Patient last name"
       },
@@ -4563,7 +4853,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 340,
+        "total": 345,
         "required": true,
         "desc": "Date of birth"
       },
@@ -4572,52 +4862,52 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 9,
-        "total": 340,
+        "total": 345,
         "required": false,
-        "desc": "Date of death \u2014 9 of 340 patients (2.6%) have a recorded death date"
+        "desc": "Date of death \u2014 9 of 345 patients (2.6%) have a recorded death date"
       },
       {
         "id": "AE.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 340,
+        "total": 345,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "AE.d7",
         "name": "ETHNICITY",
-        "pct_missing": 20.9,
+        "pct_missing": 20.6,
         "missing": 71,
-        "total": 340,
+        "total": 345,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "AE.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 35.9,
-        "missing": 122,
-        "total": 340,
+        "pct_missing": 35.7,
+        "missing": 123,
+        "total": 345,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "AE.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 11.8,
-        "missing": 40,
-        "total": 340,
+        "pct_missing": 11.3,
+        "missing": 39,
+        "total": 345,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 40 of 340 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 39 of 345 patients missing"
       },
       {
         "id": "AE.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 340,
+        "total": 345,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -4625,39 +4915,49 @@
         "id": "AE.kf",
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
-        "missing": 25,
-        "total": 340,
+        "missing": 26,
+        "total": 345,
         "required": false,
-        "desc": "Kidney Failure \u2014 25 of 340 patients (7.4%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 26 of 345 patients (7.5%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "AE.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 15,
-        "total": 340,
+        "total": 345,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 15 of 340"
+        "desc": "Patients with exactly 1 transplant \u2014 15 of 345"
       },
       {
         "id": "AE.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 2,
-        "total": 340,
+        "total": 345,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 2 of 340"
+        "desc": "Patients with 2 or more transplants \u2014 2 of 345"
       },
       {
         "id": "AE.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 340,
+        "total": 345,
         "required": false,
         "desc": "Median follow-up: 5.0 yrs (IQR 2.0\u20137.6 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 19,
+        "total": 26
+      },
+      "proteinuria": {
+        "count": 0,
+        "total": 26
+      }
+    }
   },
   {
     "section": "AF",
@@ -4669,7 +4969,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 623,
+        "total": 629,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -4678,7 +4978,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 531,
+        "total": 532,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -4687,34 +4987,34 @@
         "name": "CHILDREN",
         "pct_missing": null,
         "missing": null,
-        "total": 92,
+        "total": 97,
         "required": false,
         "desc": "Patients aged under 18"
       },
       {
         "id": "AF.d1",
         "name": "FIRST_NAME",
-        "pct_missing": 0.8,
-        "missing": 5,
-        "total": 623,
+        "pct_missing": 0.6,
+        "missing": 4,
+        "total": 629,
         "required": true,
         "desc": "Patient first name"
       },
       {
         "id": "AF.d2",
         "name": "LAST_NAME",
-        "pct_missing": 0.8,
-        "missing": 5,
-        "total": 623,
+        "pct_missing": 0.6,
+        "missing": 4,
+        "total": 629,
         "required": true,
         "desc": "Patient last name"
       },
       {
         "id": "AF.d3",
         "name": "DATE_OF_BIRTH",
-        "pct_missing": 0.8,
-        "missing": 5,
-        "total": 623,
+        "pct_missing": 0.6,
+        "missing": 4,
+        "total": 629,
         "required": true,
         "desc": "Date of birth"
       },
@@ -4723,52 +5023,52 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 13,
-        "total": 623,
+        "total": 629,
         "required": false,
-        "desc": "Date of death \u2014 13 of 623 patients (2.1%) have a recorded death date"
+        "desc": "Date of death \u2014 13 of 629 patients (2.1%) have a recorded death date"
       },
       {
         "id": "AF.d6",
         "name": "GENDER",
-        "pct_missing": 0.8,
-        "missing": 5,
-        "total": 623,
+        "pct_missing": 0.6,
+        "missing": 4,
+        "total": 629,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "AF.d7",
         "name": "ETHNICITY",
-        "pct_missing": 32.3,
+        "pct_missing": 32.0,
         "missing": 201,
-        "total": 623,
+        "total": 629,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "AF.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 40.3,
-        "missing": 251,
-        "total": 623,
+        "pct_missing": 40.1,
+        "missing": 252,
+        "total": 629,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "AF.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 14.8,
-        "missing": 92,
-        "total": 623,
+        "pct_missing": 13.8,
+        "missing": 87,
+        "total": 629,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 92 of 623 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 87 of 629 patients missing"
       },
       {
         "id": "AF.d11",
         "name": "NHS_NUMBER",
-        "pct_missing": 0.8,
-        "missing": 5,
-        "total": 623,
+        "pct_missing": 0.6,
+        "missing": 4,
+        "total": 629,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -4776,39 +5076,49 @@
         "id": "AF.kf",
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
-        "missing": 32,
-        "total": 623,
+        "missing": 33,
+        "total": 629,
         "required": false,
-        "desc": "Kidney Failure \u2014 32 of 623 patients (5.1%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 33 of 629 patients (5.2%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "AF.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 22,
-        "total": 623,
+        "total": 629,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 22 of 623"
+        "desc": "Patients with exactly 1 transplant \u2014 22 of 629"
       },
       {
         "id": "AF.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 2,
-        "total": 623,
+        "total": 629,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 2 of 623"
+        "desc": "Patients with 2 or more transplants \u2014 2 of 629"
       },
       {
         "id": "AF.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 618,
+        "total": 625,
         "required": false,
-        "desc": "Median follow-up: 3.6 yrs (IQR 0.7\u20138.5 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 3.6 yrs (IQR 0.8\u20138.7 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 24,
+        "total": 33
+      },
+      "proteinuria": {
+        "count": 2,
+        "total": 33
+      }
+    }
   },
   {
     "section": "AG",
@@ -4820,7 +5130,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 6219,
+        "total": 6298,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -4829,7 +5139,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 6032,
+        "total": 6105,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -4838,7 +5148,7 @@
         "name": "CHILDREN",
         "pct_missing": null,
         "missing": null,
-        "total": 187,
+        "total": 193,
         "required": false,
         "desc": "Patients aged under 18"
       },
@@ -4847,7 +5157,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.1,
         "missing": 4,
-        "total": 6219,
+        "total": 6298,
         "required": true,
         "desc": "Patient first name"
       },
@@ -4856,7 +5166,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.1,
         "missing": 4,
-        "total": 6219,
+        "total": 6298,
         "required": true,
         "desc": "Patient last name"
       },
@@ -4865,7 +5175,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.1,
         "missing": 4,
-        "total": 6219,
+        "total": 6298,
         "required": true,
         "desc": "Date of birth"
       },
@@ -4873,53 +5183,53 @@
         "id": "AG.d4",
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
-        "missing": 1054,
-        "total": 6219,
+        "missing": 1089,
+        "total": 6298,
         "required": false,
-        "desc": "Date of death \u2014 1,054 of 6,219 patients (16.9%) have a recorded death date"
+        "desc": "Date of death \u2014 1,089 of 6,298 patients (17.3%) have a recorded death date"
       },
       {
         "id": "AG.d6",
         "name": "GENDER",
         "pct_missing": 0.1,
         "missing": 4,
-        "total": 6219,
+        "total": 6298,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "AG.d7",
         "name": "ETHNICITY",
-        "pct_missing": 17.9,
-        "missing": 1113,
-        "total": 6219,
+        "pct_missing": 17.8,
+        "missing": 1124,
+        "total": 6298,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "AG.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 40.2,
-        "missing": 2500,
-        "total": 6219,
+        "pct_missing": 40.0,
+        "missing": 2517,
+        "total": 6298,
         "required": false,
         "desc": "Email address (excluding placeholder/default emails)"
       },
       {
         "id": "AG.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 69.4,
-        "missing": 4318,
-        "total": 6219,
+        "pct_missing": 68.4,
+        "missing": 4308,
+        "total": 6298,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 4,318 of 6,219 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 4,308 of 6,298 patients missing"
       },
       {
         "id": "AG.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.1,
         "missing": 4,
-        "total": 6219,
+        "total": 6298,
         "required": true,
         "desc": "NHS number must exist in patient_numbers"
       },
@@ -4927,39 +5237,49 @@
         "id": "AG.kf",
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
-        "missing": 1350,
-        "total": 6219,
+        "missing": 1358,
+        "total": 6298,
         "required": false,
-        "desc": "Kidney Failure \u2014 1,350 of 6,219 patients (21.7%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
+        "desc": "Kidney Failure \u2014 1,358 of 6,298 patients (21.6%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery. Classified using data recorded in RaDaR (the same data submitted to UKRR) \u2014 not sourced from UKRR directly."
       },
       {
         "id": "AG.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 615,
-        "total": 6219,
+        "total": 6298,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 615 of 6,219"
+        "desc": "Patients with exactly 1 transplant \u2014 615 of 6,298"
       },
       {
         "id": "AG.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 72,
-        "total": 6219,
+        "total": 6298,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 72 of 6,219"
+        "desc": "Patients with 2 or more transplants \u2014 72 of 6,298"
       },
       {
         "id": "AG.followup",
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 6215,
+        "total": 6294,
         "required": false,
-        "desc": "Median follow-up: 5.5 yrs (IQR 2.1\u20138.5 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 5.5 yrs (IQR 2.1\u20138.6 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 673,
+        "total": 1358
+      },
+      "proteinuria": {
+        "count": 16,
+        "total": 1358
+      }
+    }
   },
   {
     "section": "AH",
@@ -5108,8 +5428,18 @@
         "missing": null,
         "total": 82,
         "required": false,
-        "desc": "Median follow-up: 7.4 yrs (IQR 2.4\u20139.7 yrs) \u2014 based on last activity in results or medications"
+        "desc": "Median follow-up: 7.5 yrs (IQR 2.7\u20139.9 yrs) \u2014 based on last activity in results or medications"
       }
-    ]
+    ],
+    "biochemistry": {
+      "creatinine": {
+        "count": 11,
+        "total": 17
+      },
+      "proteinuria": {
+        "count": 1,
+        "total": 17
+      }
+    }
   }
 ]

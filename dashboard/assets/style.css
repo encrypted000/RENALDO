@@ -346,6 +346,43 @@ body {
   padding: 0 !important;
 }
 
+/* ── Nested sub-accordion (e.g. Biochemistry Metadata) ── */
+.radar-accordion-sub {
+  margin: 0 16px 14px;
+}
+
+.radar-accordion-sub .accordion-item {
+  border:        1px solid var(--border) !important;
+  border-radius: 8px !important;
+  box-shadow:    none !important;
+}
+
+.radar-accordion-sub .accordion-button {
+  background:  var(--surface2) !important;
+  color:       var(--text2) !important;
+  font-size:   12px;
+  font-weight: 600;
+  padding:     8px 14px;
+  box-shadow:  none !important;
+}
+
+.radar-accordion-sub .accordion-button:not(.collapsed) {
+  background: var(--blue-pale) !important;
+  color:      var(--blue-dk) !important;
+}
+
+.radar-accordion-sub .accordion-button:hover {
+  filter: brightness(0.98);
+}
+
+.radar-accordion-sub .accordion-button::after {
+  filter: none;
+}
+
+.radar-accordion-sub .accordion-body {
+  padding: 0 !important;
+}
+
 /* ── Section header inner ── */
 .sec-head-inner {
   display:     flex;
