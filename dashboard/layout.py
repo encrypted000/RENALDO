@@ -21,44 +21,29 @@ def _description_box() -> html.Div:
     return html.Div([
 
         html.P([
-            "This page provides an interactive summary of data completeness for variables "
-            "collected in the ",
-            html.Strong("The National Registry of Rare Kidney Diseases (RaDaR)"),
-            ", a national registry for patients with rare kidney diseases in the UK, "
-            "managed by ",
-            html.Strong("The UK Kidney Association (UKKA)"),
-            ". RaDaR brings together clinical data from renal units across the UK to "
-            "support research, clinical audit, and the improvement of care for patients "
-            "with rare and complex kidney conditions.",
+            "This page provides an interactive summary of data completeness for key "
+            "variables collected within the National Registry of Rare Kidney Diseases "
+            "(RaDaR), a UK-wide registry owned and managed by the UK Kidney Association "
+            "(UKKA).",
         ], style={"marginBottom": "10px"}),
 
         html.P([
-            "Data completeness has been calculated for each variable across all patients "
-            "currently registered in RaDaR. A variable is considered missing if it has "
-            "not been recorded for a patient where it would be expected. For example, ",
-            html.Em("cause of death"),
-            " is only assessed among patients with a recorded date of death. "
-            "Variables marked ",
-            html.Span("Required", style={
-                "fontSize":     "10px",
-                "fontWeight":   "600",
-                "background":   "rgba(0,0,0,0.1)",
-                "padding":      "1px 6px",
-                "borderRadius": "10px",
-            }),
-            " are those that must be collected for every registered patient "
-            "as part of the RaDaR minimum dataset.",
+            "Data completeness has been assessed for each variable across all patients. "
+            "A variable is considered missing when no value has been recorded for a "
+            "patient for whom that information would be expected. Variables designated "
+            "as Required form part of the RaDaR minimum dataset and should be completed "
+            "for every patient.",
         ], style={"marginBottom": "10px"}),
 
         html.P([
-            "The following sections cover ",
-            html.Strong("Overall RaDaR"),
-            " and all ",
-            html.Strong("33 disease cohort groups"),
-            " currently active in RaDaR. "
-            "Each variable is colour-coded by the percentage of missing values — "
-            "green indicates good completeness, while orange and red highlight variables "
-            "where data collection requires attention.",
+            "This dashboard presents data completeness for the overall RaDaR cohort and "
+            "for each of the 33 active Rare Disease Groups (RDGs). Variables are "
+            "colour-coded according to the percentage of missing values: green indicates "
+            "high data completeness, while orange and red indicate lower levels of data "
+            "completeness. As RaDaR relies on data submitted by participating kidney "
+            "units as part of routine clinical practice, variation in completeness is "
+            "expected and may reflect differences in local capacity, resourcing, and "
+            "clinical priorities, rather than data quality alone.",
         ]),
 
     ], style={

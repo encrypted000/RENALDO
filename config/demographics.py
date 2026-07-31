@@ -50,7 +50,7 @@ DEMOGRAPHICS_VARIABLES = [
         "name":     "EMAIL_ADDRESS",
         "column":   "email_address",
         "required": False,
-        "desc":     "Email address (excluding placeholder/default emails)",
+        "desc":     "Email address",
     },
     {
         "id":       "A.10",
@@ -64,7 +64,7 @@ DEMOGRAPHICS_VARIABLES = [
         "name":     "NHS_NUMBER",
         "column":   None,
         "required": True,
-        "desc":     "NHS number must exist in patient_numbers",
+        "desc":     "NHS number",
     },
 ]
 

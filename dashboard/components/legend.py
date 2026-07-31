@@ -24,7 +24,7 @@ def create_legend():
         ],
         html.Div([
             html.Span(
-                "Required",
+                "REQ",
                 style={
                     "fontSize":       "10px",
                     "fontWeight":     "600",

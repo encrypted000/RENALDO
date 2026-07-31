@@ -213,7 +213,10 @@ def _build_items(data: list, active_all: bool = False, demo_open: bool = False):
         small_n    = n_patients < SMALL_N_THRESHOLD
 
         letter  = sec["section"]
-        pct_c   = _section_pct_complete(variables) if (variables and not small_n) else None
+        # Overall % complete is a single rolled-up figure across all variables —
+        # unlike the per-variable counts in the table, it doesn't reveal small
+        # numbers, so it's shown even for suppressed (low N) cohorts.
+        pct_c   = _section_pct_complete(variables) if variables else None
         closed  = sec.get("closed", False)
         item_id = f"item-{letter}"
         all_item_ids.append(item_id)

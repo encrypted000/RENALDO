@@ -80,25 +80,34 @@ def run():
         # ════════════════════════════════════════════════════════
         print("── Section A: Overall RaDaR ──")
         print("  Loading demographics data...")
+        # LEFT JOIN patient_demographics — a patient enrolled in a cohort but with
+        # NO RADAR demographics row must still appear (with NULL fields) so they're
+        # counted as missing below, not silently dropped from total/numerator alike.
+        # Mirrors the cohort-level population + no_demo logic used in STEP 3.
         demographics = pd.read_sql(f"""
             SELECT
-                pd.*,
+                base.patient_id,
+                pd.first_name, pd.last_name, pd.date_of_birth, pd.date_of_death,
+                pd.gender, pd.ethnicity_id, pd.email_address,
                 CASE WHEN pnum.patient_id IS NOT NULL
                      THEN TRUE ELSE FALSE END AS has_nhs_number
-            FROM patient_demographics pd
-            INNER JOIN patients p
-                ON  p.id = pd.patient_id
-               AND p.test    = FALSE
-               AND p.control = FALSE
-            INNER JOIN (
+            FROM (
                 SELECT DISTINCT gp2.patient_id
                 FROM group_patients gp2
                 JOIN groups g2 ON g2.id = gp2.group_id AND g2.type = 'COHORT'
+                JOIN patients p ON p.id = gp2.patient_id AND p.test = FALSE AND p.control = FALSE
                 WHERE gp2.group_id NOT IN ({excluded})
-            ) cohort_pts ON cohort_pts.patient_id = pd.patient_id
-            LEFT JOIN (SELECT DISTINCT patient_id FROM patient_numbers) pnum
-                ON pnum.patient_id = pd.patient_id
-            WHERE pd.source_type = 'RADAR'
+            ) base
+            LEFT JOIN patient_demographics pd
+                ON  pd.patient_id  = base.patient_id
+               AND  pd.source_type = 'RADAR'
+            LEFT JOIN (
+                SELECT DISTINCT patient_id
+                FROM patient_numbers
+                WHERE source_type IN ('RADAR', 'UKRDC')
+                  AND number_group_id IN (120, 121, 122)
+            ) pnum
+                ON pnum.patient_id = base.patient_id
         """, conn)
 
         # Use earliest cohort from_date as enrolment — fallback to patients.created_date
@@ -296,6 +305,16 @@ def run():
         all_cohort_pids       = set(cohort_patients_df["patient_id"])
         total_cohort_patients = len(all_cohort_pids)
 
+        # Same reasoning applies to demographics completeness: a bad death-before-
+        # enrolment date shouldn't make an otherwise fully-complete patient count as
+        # missing on every demographic field below. Capture per-cohort patient sets
+        # now, before the follow-up filter, not after.
+        cohort_pid_map = (
+            cohort_patients_df.groupby("group_id")["patient_id"]
+            .apply(set)
+            .to_dict()
+        )
+
         cohort_patients_df = cohort_patients_df[cohort_patients_df["follow_up_years"] >= 0]
 
         fu_map = (
@@ -325,7 +344,12 @@ def run():
                 ON  p.id = pd.patient_id
                AND p.test    = FALSE
                AND p.control = FALSE
-            LEFT JOIN (SELECT DISTINCT patient_id FROM patient_numbers) pnum
+            LEFT JOIN (
+                SELECT DISTINCT patient_id
+                FROM patient_numbers
+                WHERE source_type IN ('RADAR', 'UKRDC')
+                  AND number_group_id IN (120, 121, 122)
+            ) pnum
                 ON pnum.patient_id = pd.patient_id
             WHERE pd.source_type = 'RADAR'
         """, conn)
@@ -367,7 +391,7 @@ def run():
             "missing":     diag_missing_a,
             "total":       total,
             "required":    True,
-            "desc":        "Primary Renal Diagnosis — patient must have a diagnosis with type=PRIMARY in group_diagnoses matching their enrolled cohort",
+            "desc":        "Primary Renal Diagnosis",
         })
 
         # ── Kidney Failure patients (single query, reused for section A + all cohorts) ──
@@ -475,8 +499,7 @@ def run():
             "desc":        (
                 f"Kidney Failure — {kf_total_a:,} of {total_cohort_patients:,} patients ({kf_pct_a}%) "
                 f"have evidence of kidney failure based on transplant records, dialysis records, or eGFR "
-                f"below 15 ml/min/1.73m² on two occasions ≥28 days apart with no recovery. "
-                f"Classified using data recorded in RaDaR (the same data submitted to UKRR) — not sourced from UKRR directly."
+                f"below 15 ml/min/1.73m² on two occasions ≥28 days apart with no recovery."
             ),
         })
         print(f"  [ℹ] KIDNEY_FAILURE: {kf_total_a:,} / {total_cohort_patients:,} ({kf_pct_a}%)")
@@ -519,13 +542,6 @@ def run():
             },
         }
         print(f"  Section A done — {len(demo_results)} variables\n")
-
-        # Pre-build group_id → set(patient_ids) for fast per-cohort demographics filtering
-        cohort_pid_map = (
-            cohort_patients_df.groupby("group_id")["patient_id"]
-            .apply(set)
-            .to_dict()
-        )
 
         # Build cohort sections
         cohort_sections = []
@@ -649,8 +665,7 @@ def run():
                     "desc":        (
                         f"Kidney Failure — {kf_count:,} of {patient_count:,} patients ({kf_pct}%) "
                         f"have evidence of kidney failure based on transplant records, dialysis records, or eGFR "
-                        f"below 15 ml/min/1.73m² on two occasions ≥28 days apart with no recovery. "
-                        f"Classified using data recorded in RaDaR (the same data submitted to UKRR) — not sourced from UKRR directly."
+                        f"below 15 ml/min/1.73m² on two occasions ≥28 days apart with no recovery."
                     ),
                 },
                 {
