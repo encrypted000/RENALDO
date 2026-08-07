@@ -74,6 +74,51 @@ def run():
         enrolment_map = enrolment_df.set_index("patient_id")["enrolled"].to_dict()
         print(f"  Cohort recruitment date loaded for {len(enrolment_map):,} patients\n")
 
+        # ── Pre-aggregate diagnosis date per patient (for diagnosis-based follow-up) ──
+        # Strict match: patient's primary diagnosis must be tied to a cohort they
+        # actually belong to (diagnosis_id AND group_id both match), restricted to
+        # their active membership and active diagnosis record. A looser match (just
+        # "is this diagnosis primary somewhere") over-counts.
+        print("Pre-aggregating diagnosis dates...")
+        diagnosis_date_df = pd.read_sql(f"""
+            WITH base AS (
+                SELECT gp.patient_id, gp.group_id
+                FROM group_patients gp
+                JOIN groups g ON g.id = gp.group_id AND g.type = 'COHORT'
+                JOIN patients p ON p.id = gp.patient_id AND p.test = FALSE AND p.control = FALSE
+                WHERE gp.group_id NOT IN ({excluded})
+                  AND gp.to_date IS NULL
+            ),
+            cohort_prd AS (
+                SELECT group_id, diagnosis_id
+                FROM group_diagnoses
+                WHERE type = 'PRIMARY'
+            )
+            SELECT
+                pd.patient_id,
+                MIN(pd.from_date)::date AS diagnosis_date
+            FROM patient_diagnoses pd
+            JOIN cohort_prd ON cohort_prd.diagnosis_id = pd.diagnosis_id
+            JOIN base ON base.patient_id = pd.patient_id AND base.group_id = cohort_prd.group_id
+            WHERE pd.to_date IS NULL
+            GROUP BY pd.patient_id
+        """, conn)
+        diagnosis_date_df["diagnosis_date"] = pd.to_datetime(diagnosis_date_df["diagnosis_date"], errors="coerce")
+        diagnosis_date_map = diagnosis_date_df.set_index("patient_id")["diagnosis_date"].to_dict()
+        print(f"  Diagnosis date loaded for {len(diagnosis_date_map):,} patients")
+
+        # ── Pre-aggregate withdrawal date per patient (groups 152/182 = withdrawn) ──
+        print("Pre-aggregating withdrawal dates...")
+        withdrawal_df = pd.read_sql("""
+            SELECT patient_id, MIN(from_date)::date AS withdrawal_date
+            FROM group_patients
+            WHERE group_id IN (152, 182)
+            GROUP BY patient_id
+        """, conn)
+        withdrawal_df["withdrawal_date"] = pd.to_datetime(withdrawal_df["withdrawal_date"], errors="coerce")
+        withdrawal_date_map = withdrawal_df.set_index("patient_id")["withdrawal_date"].to_dict()
+        print(f"  Withdrawal date loaded for {len(withdrawal_date_map):,} patients\n")
+
 
         # ════════════════════════════════════════════════════════
         # STEP 2 — Patient Demographics (Section A)
@@ -151,12 +196,32 @@ def run():
         q1_fu     = round(fu.quantile(0.25), 1)
         q3_fu     = round(fu.quantile(0.75), 1)
 
+        # Diagnosis-based follow-up: diagnosis date → earliest of today, death, withdrawal
+        demographics["diagnosis_date"]  = demographics["patient_id"].map(diagnosis_date_map)
+        demographics["withdrawal_date"] = demographics["patient_id"].map(withdrawal_date_map)
+        demographics["diag_followup_end"] = demographics[
+            ["date_of_death", "withdrawal_date"]
+        ].apply(lambda r: min([d for d in [today, r["date_of_death"], r["withdrawal_date"]] if pd.notna(d)]), axis=1)
+        demographics["diag_follow_up_years"] = (
+            (demographics["diag_followup_end"] - demographics["diagnosis_date"]).dt.days / 365.25
+        )
+        bad_diag = int((demographics["diag_follow_up_years"] < 0).sum())
+        if bad_diag:
+            print(f"  WARNING: {bad_diag} patients excluded — diagnosis date after follow-up end (data error)")
+            logger.warning(f"Demographics: {bad_diag} patients with diagnosis date after follow-up end")
+        diag_fu = demographics["diag_follow_up_years"].dropna()
+        diag_fu = diag_fu[diag_fu >= 0]
+        diag_median_fu = round(diag_fu.median(), 1) if len(diag_fu) else 0.0
+        diag_q1_fu     = round(diag_fu.quantile(0.25), 1) if len(diag_fu) else 0.0
+        diag_q3_fu     = round(diag_fu.quantile(0.75), 1) if len(diag_fu) else 0.0
+
         print(f"  Total patients   : {total:,}")
         print(f"  Deceased         : {deceased_total:,}")
         print(f"  Adults           : {adults_total:,}  |  Children: {children_total:,}")
         if unknown_age:
             print(f"  Unknown age      : {unknown_age:,}")
-        print(f"  Median follow-up : {median_fu} yrs (IQR {q1_fu}–{q3_fu})")
+        print(f"  Median follow-up to last result : {median_fu} yrs (IQR {q1_fu}–{q3_fu})")
+        print(f"  Median follow-up (diagnosis)    : {diag_median_fu} yrs (IQR {diag_q1_fu}–{diag_q3_fu}) — {len(diag_fu):,} patients with a diagnosis date")
 
         # Completeness variables
         demo_results = []
@@ -299,6 +364,37 @@ def run():
         if not bad.empty:
             print(f"  WARNING: {bad.sum()} patients excluded across {len(bad)} cohort(s) — date_of_death before enrolment (data error)")
             logger.warning(f"Cohorts: {bad.sum()} patients with date_of_death before enrolment: {bad.to_dict()}")
+
+        # Diagnosis-based follow-up: diagnosis date → earliest of today, death, withdrawal.
+        # Computed here (before the enrolment-based filter below) so a bad enrolment
+        # follow-up doesn't also wrongly discard an otherwise-valid diagnosis follow-up.
+        cohort_patients_df["diagnosis_date"]  = cohort_patients_df["patient_id"].map(diagnosis_date_map)
+        cohort_patients_df["withdrawal_date"] = cohort_patients_df["patient_id"].map(withdrawal_date_map)
+        cohort_patients_df["diag_followup_end"] = cohort_patients_df.apply(
+            lambda r: min([d for d in [today, r["date_of_death"], r["withdrawal_date"]] if pd.notna(d)]),
+            axis=1,
+        )
+        cohort_patients_df["diag_follow_up_years"] = (
+            (cohort_patients_df["diag_followup_end"] - cohort_patients_df["diagnosis_date"]).dt.days / 365.25
+        )
+        bad_diag = cohort_patients_df[cohort_patients_df["diag_follow_up_years"] < 0].groupby("group_id").size()
+        if not bad_diag.empty:
+            print(f"  WARNING: {bad_diag.sum()} patients excluded across {len(bad_diag)} cohort(s) — diagnosis date after follow-up end (data error)")
+            logger.warning(f"Cohorts: {bad_diag.sum()} patients with diagnosis date after follow-up end: {bad_diag.to_dict()}")
+
+        diag_valid_df = cohort_patients_df[
+            cohort_patients_df["diag_follow_up_years"].notna() & (cohort_patients_df["diag_follow_up_years"] >= 0)
+        ]
+        diag_fu_map = (
+            diag_valid_df.groupby("group_id")["diag_follow_up_years"]
+            .agg(
+                diag_median_fu=lambda x: round(x.median(), 1),
+                diag_q1_fu    =lambda x: round(x.quantile(0.25), 1),
+                diag_q3_fu    =lambda x: round(x.quantile(0.75), 1),
+                diag_fu_count ="count",
+            )
+            .to_dict(orient="index")
+        )
 
         # Capture full cohort patient set BEFORE dropping negative follow-up rows
         # so KF / transplant denominators = 39,178, not 39,160
@@ -521,12 +617,24 @@ def run():
         print(f"  [ℹ] TRANSPLANT_SINGLE: {single_tx_a:,}  |  TRANSPLANT_MULTIPLE: {multi_tx_a:,}")
         demo_results.append({
             "id":          "A.16",
-            "name":        "FOLLOW_UP",
+            "name":        "FOLLOW_UP_TO_LAST_RESULT",
             "pct_missing": None,
             "missing":     None,
             "total":       len(fu),
             "required":    False,
-            "desc":        f"Median follow-up: {median_fu} yrs (IQR {q1_fu}–{q3_fu} yrs) — based on last activity in results or medications",
+            "desc":        f"Median follow-up to last result: {median_fu} yrs (IQR {q1_fu}–{q3_fu} yrs) — from cohort recruitment to last activity in results or medications",
+        })
+        demo_results.append({
+            "id":          "A.17",
+            "name":        "FOLLOW_UP",
+            "pct_missing": None,
+            "missing":     None,
+            "total":       len(diag_fu),
+            "required":    False,
+            "desc":        (
+                f"Median follow-up: {diag_median_fu} yrs (IQR {diag_q1_fu}–{diag_q3_fu} yrs) — "
+                f"from primary diagnosis date to the earliest of today, date of death, or withdrawal date"
+            ),
         })
 
         demo_section = {
@@ -560,6 +668,12 @@ def run():
             q1_fu     = fu_stats.get("q1_fu",     0)
             q3_fu     = fu_stats.get("q3_fu",     0)
             fu_count  = int(fu_stats.get("fu_count", 0))
+
+            diag_fu_stats  = diag_fu_map.get(group_id, {})
+            diag_median_fu = diag_fu_stats.get("diag_median_fu", 0)
+            diag_q1_fu     = diag_fu_stats.get("diag_q1_fu",     0)
+            diag_q3_fu     = diag_fu_stats.get("diag_q3_fu",     0)
+            diag_fu_count  = int(diag_fu_stats.get("diag_fu_count", 0))
 
             # ── Demographics completeness for this cohort ──
             cohort_pids     = cohort_pid_map.get(group_id, set())
@@ -681,10 +795,19 @@ def run():
                     "desc": f"Patients with 2 or more transplants — {multi_tx_c:,} of {patient_count:,}",
                 },
                 {
-                    "id": f"{letter}.followup", "name": "FOLLOW_UP",
+                    "id": f"{letter}.followup_last_result", "name": "FOLLOW_UP_TO_LAST_RESULT",
                     "pct_missing": None, "missing": None, "total": fu_count,
                     "required": False,
-                    "desc": f"Median follow-up: {median_fu} yrs (IQR {q1_fu}–{q3_fu} yrs) — based on last activity in results or medications",
+                    "desc": f"Median follow-up to last result: {median_fu} yrs (IQR {q1_fu}–{q3_fu} yrs) — from cohort recruitment to last activity in results or medications",
+                },
+                {
+                    "id": f"{letter}.followup", "name": "FOLLOW_UP",
+                    "pct_missing": None, "missing": None, "total": diag_fu_count,
+                    "required": False,
+                    "desc": (
+                        f"Median follow-up: {diag_median_fu} yrs (IQR {diag_q1_fu}–{diag_q3_fu} yrs) — "
+                        f"from primary diagnosis date to the earliest of today, date of death, or withdrawal date"
+                    ),
                 },
             ]
 
