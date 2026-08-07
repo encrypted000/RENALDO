@@ -8,7 +8,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 40255,
+        "total": 40256,
         "required": true,
         "desc": "Patient first name"
       },
@@ -17,7 +17,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 40255,
+        "total": 40256,
         "required": true,
         "desc": "Patient last name"
       },
@@ -26,7 +26,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 40255,
+        "total": 40256,
         "required": true,
         "desc": "Date of birth"
       },
@@ -35,16 +35,16 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 4047,
-        "total": 40255,
+        "total": 40256,
         "required": false,
-        "desc": "Date of death \u2014 4,047 of 40,255 patients (10.1%) have a recorded death date"
+        "desc": "Date of death \u2014 4,047 of 40,256 patients (10.1%) have a recorded death date"
       },
       {
         "id": "A.6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 40255,
+        "total": 40256,
         "required": true,
         "desc": "Gender"
       },
@@ -52,8 +52,8 @@
         "id": "A.7",
         "name": "ETHNICITY",
         "pct_missing": 19.3,
-        "missing": 7766,
-        "total": 40255,
+        "missing": 7767,
+        "total": 40256,
         "required": true,
         "desc": "Ethnic origin"
       },
@@ -62,7 +62,7 @@
         "name": "EMAIL_ADDRESS",
         "pct_missing": 31.9,
         "missing": 12839,
-        "total": 40255,
+        "total": 40256,
         "required": false,
         "desc": "Email address"
       },
@@ -71,7 +71,7 @@
         "name": "Primary Renal Diagnosis",
         "pct_missing": 19.9,
         "missing": 8027,
-        "total": 40255,
+        "total": 40256,
         "required": true,
         "desc": "Primary Renal Diagnosis"
       },
@@ -80,7 +80,7 @@
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 4,
-        "total": 40255,
+        "total": 40256,
         "required": true,
         "desc": "NHS number"
       },
@@ -89,34 +89,34 @@
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
         "missing": 13123,
-        "total": 40255,
+        "total": 40256,
         "required": false,
-        "desc": "Kidney Failure \u2014 13,123 of 40,255 patients (32.6%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery."
+        "desc": "Kidney Failure \u2014 13,123 of 40,256 patients (32.6%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery."
       },
       {
         "id": "A.14",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 8202,
-        "total": 40255,
+        "total": 40256,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 8,202 of 40,255"
+        "desc": "Patients with exactly 1 transplant \u2014 8,202 of 40,256"
       },
       {
         "id": "A.15",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 997,
-        "total": 40255,
+        "total": 40256,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 997 of 40,255"
+        "desc": "Patients with 2 or more transplants \u2014 997 of 40,256"
       },
       {
         "id": "A.16",
         "name": "FOLLOW_UP_TO_LAST_RESULT",
         "pct_missing": null,
         "missing": null,
-        "total": 40237,
+        "total": 40238,
         "required": false,
         "desc": "Median follow-up to last result: 5.5 yrs (IQR 2.0\u20138.4 yrs) \u2014 from cohort recruitment to last activity in results or medications"
       },
@@ -125,13 +125,13 @@
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 31309,
+        "total": 31310,
         "required": false,
         "desc": "Median follow-up: 11.8 yrs (IQR 7.3\u201319.2 yrs) \u2014 from primary diagnosis date to the earliest of today, date of death, or withdrawal date"
       }
     ],
     "stats": {
-      "adults": 37722,
+      "adults": 37723,
       "children": 2533,
       "median_fu": 5.5,
       "q1_fu": 2.0,
@@ -299,12 +299,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 225,
-        "total": 471
+        "count": 940,
+        "total": 1367,
+        "total_results": 21458,
+        "median_per_patient": 13.0,
+        "q1_per_patient": 5.0,
+        "q3_per_patient": 27.0
       },
       "proteinuria": {
-        "count": 12,
-        "total": 471
+        "count": 796,
+        "total": 1367,
+        "total_results": 8915,
+        "median_per_patient": 7.0,
+        "q1_per_patient": 3.0,
+        "q3_per_patient": 14.0
       }
     }
   },
@@ -469,12 +477,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 2,
-        "total": 2
+        "count": 10,
+        "total": 10,
+        "total_results": 223,
+        "median_per_patient": 10.0,
+        "q1_per_patient": 3.2,
+        "q3_per_patient": 33.0
       },
       "proteinuria": {
-        "count": 0,
-        "total": 2
+        "count": 6,
+        "total": 10,
+        "total_results": 27,
+        "median_per_patient": 2.0,
+        "q1_per_patient": 2.0,
+        "q3_per_patient": 2.8
       }
     }
   },
@@ -639,12 +655,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 57,
-        "total": 168
+        "count": 203,
+        "total": 351,
+        "total_results": 11006,
+        "median_per_patient": 29.0,
+        "q1_per_patient": 9.5,
+        "q3_per_patient": 75.0
       },
       "proteinuria": {
-        "count": 0,
-        "total": 168
+        "count": 153,
+        "total": 351,
+        "total_results": 2075,
+        "median_per_patient": 7.0,
+        "q1_per_patient": 2.0,
+        "q3_per_patient": 20.0
       }
     }
   },
@@ -658,7 +682,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 9704,
+        "total": 9705,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -667,7 +691,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 9596,
+        "total": 9597,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -685,7 +709,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 9704,
+        "total": 9705,
         "required": true,
         "desc": "Patient first name"
       },
@@ -694,7 +718,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 9704,
+        "total": 9705,
         "required": true,
         "desc": "Patient last name"
       },
@@ -703,7 +727,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 9704,
+        "total": 9705,
         "required": true,
         "desc": "Date of birth"
       },
@@ -712,16 +736,16 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 912,
-        "total": 9704,
+        "total": 9705,
         "required": false,
-        "desc": "Date of death \u2014 912 of 9,704 patients (9.4%) have a recorded death date"
+        "desc": "Date of death \u2014 912 of 9,705 patients (9.4%) have a recorded death date"
       },
       {
         "id": "E.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 9704,
+        "total": 9705,
         "required": true,
         "desc": "Gender"
       },
@@ -729,8 +753,8 @@
         "id": "E.d7",
         "name": "ETHNICITY",
         "pct_missing": 18.4,
-        "missing": 1781,
-        "total": 9704,
+        "missing": 1782,
+        "total": 9705,
         "required": true,
         "desc": "Ethnic origin"
       },
@@ -739,7 +763,7 @@
         "name": "EMAIL_ADDRESS",
         "pct_missing": 27.1,
         "missing": 2632,
-        "total": 9704,
+        "total": 9705,
         "required": false,
         "desc": "Email address"
       },
@@ -748,16 +772,16 @@
         "name": "Primary Renal Diagnosis",
         "pct_missing": 22.1,
         "missing": 2142,
-        "total": 9704,
+        "total": 9705,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 2,142 of 9,704 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 2,142 of 9,705 patients missing"
       },
       {
         "id": "E.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 2,
-        "total": 9704,
+        "total": 9705,
         "required": true,
         "desc": "NHS number"
       },
@@ -766,34 +790,34 @@
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
         "missing": 4030,
-        "total": 9704,
+        "total": 9705,
         "required": false,
-        "desc": "Kidney Failure \u2014 4,030 of 9,704 patients (41.5%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery."
+        "desc": "Kidney Failure \u2014 4,030 of 9,705 patients (41.5%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery."
       },
       {
         "id": "E.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 2823,
-        "total": 9704,
+        "total": 9705,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 2,823 of 9,704"
+        "desc": "Patients with exactly 1 transplant \u2014 2,823 of 9,705"
       },
       {
         "id": "E.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 147,
-        "total": 9704,
+        "total": 9705,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 147 of 9,704"
+        "desc": "Patients with 2 or more transplants \u2014 147 of 9,705"
       },
       {
         "id": "E.followup_last_result",
         "name": "FOLLOW_UP_TO_LAST_RESULT",
         "pct_missing": null,
         "missing": null,
-        "total": 9696,
+        "total": 9697,
         "required": false,
         "desc": "Median follow-up to last result: 6.5 yrs (IQR 3.1\u20138.5 yrs) \u2014 from cohort recruitment to last activity in results or medications"
       },
@@ -802,19 +826,27 @@
         "name": "FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 7350,
+        "total": 7351,
         "required": false,
         "desc": "Median follow-up: 16.0 yrs (IQR 9.6\u201324.8 yrs) \u2014 from primary diagnosis date to the earliest of today, date of death, or withdrawal date"
       }
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 2525,
-        "total": 4030
+        "count": 7160,
+        "total": 9705,
+        "total_results": 229370,
+        "median_per_patient": 23.0,
+        "q1_per_patient": 11.0,
+        "q3_per_patient": 44.0
       },
       "proteinuria": {
-        "count": 187,
-        "total": 4030
+        "count": 4664,
+        "total": 9705,
+        "total_results": 35955,
+        "median_per_patient": 4.0,
+        "q1_per_patient": 2.0,
+        "q3_per_patient": 9.0
       }
     }
   },
@@ -979,12 +1011,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 67,
-        "total": 135
+        "count": 186,
+        "total": 296,
+        "total_results": 5483,
+        "median_per_patient": 17.0,
+        "q1_per_patient": 7.0,
+        "q3_per_patient": 41.8
       },
       "proteinuria": {
-        "count": 3,
-        "total": 135
+        "count": 119,
+        "total": 296,
+        "total_results": 995,
+        "median_per_patient": 6.0,
+        "q1_per_patient": 2.0,
+        "q3_per_patient": 10.5
       }
     }
   },
@@ -1149,12 +1189,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 76,
-        "total": 150
+        "count": 291,
+        "total": 378,
+        "total_results": 9873,
+        "median_per_patient": 17.0,
+        "q1_per_patient": 6.5,
+        "q3_per_patient": 42.5
       },
       "proteinuria": {
-        "count": 3,
-        "total": 150
+        "count": 220,
+        "total": 378,
+        "total_results": 1505,
+        "median_per_patient": 4.0,
+        "q1_per_patient": 2.0,
+        "q3_per_patient": 8.0
       }
     }
   },
@@ -1319,12 +1367,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 116,
-        "total": 178
+        "count": 138,
+        "total": 207,
+        "total_results": 6604,
+        "median_per_patient": 31.0,
+        "q1_per_patient": 15.0,
+        "q3_per_patient": 53.0
       },
       "proteinuria": {
-        "count": 5,
-        "total": 178
+        "count": 105,
+        "total": 207,
+        "total_results": 1407,
+        "median_per_patient": 7.0,
+        "q1_per_patient": 2.0,
+        "q3_per_patient": 17.0
       }
     }
   },
@@ -1489,12 +1545,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 33,
-        "total": 68
+        "count": 47,
+        "total": 85,
+        "total_results": 2745,
+        "median_per_patient": 38.0,
+        "q1_per_patient": 20.0,
+        "q3_per_patient": 77.0
       },
       "proteinuria": {
-        "count": 0,
-        "total": 68
+        "count": 44,
+        "total": 85,
+        "total_results": 411,
+        "median_per_patient": 5.0,
+        "q1_per_patient": 2.0,
+        "q3_per_patient": 13.0
       }
     }
   },
@@ -1659,12 +1723,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 157,
-        "total": 246
+        "count": 532,
+        "total": 743,
+        "total_results": 17195,
+        "median_per_patient": 11.5,
+        "q1_per_patient": 5.0,
+        "q3_per_patient": 35.0
       },
       "proteinuria": {
-        "count": 0,
-        "total": 246
+        "count": 429,
+        "total": 743,
+        "total_results": 3425,
+        "median_per_patient": 4.0,
+        "q1_per_patient": 2.0,
+        "q3_per_patient": 9.0
       }
     }
   },
@@ -1829,12 +1901,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 494,
-        "total": 696
+        "count": 504,
+        "total": 707,
+        "total_results": 19833,
+        "median_per_patient": 29.0,
+        "q1_per_patient": 13.0,
+        "q3_per_patient": 48.2
       },
       "proteinuria": {
-        "count": 32,
-        "total": 696
+        "count": 389,
+        "total": 707,
+        "total_results": 4305,
+        "median_per_patient": 6.0,
+        "q1_per_patient": 2.0,
+        "q3_per_patient": 14.0
       }
     }
   },
@@ -1999,12 +2079,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 48,
-        "total": 115
+        "count": 474,
+        "total": 698,
+        "total_results": 22335,
+        "median_per_patient": 13.0,
+        "q1_per_patient": 3.0,
+        "q3_per_patient": 64.0
       },
       "proteinuria": {
-        "count": 2,
-        "total": 115
+        "count": 324,
+        "total": 698,
+        "total_results": 3840,
+        "median_per_patient": 4.0,
+        "q1_per_patient": 1.8,
+        "q3_per_patient": 15.0
       }
     }
   },
@@ -2169,12 +2257,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 51,
-        "total": 120
+        "count": 122,
+        "total": 209,
+        "total_results": 8403,
+        "median_per_patient": 44.5,
+        "q1_per_patient": 21.2,
+        "q3_per_patient": 79.5
       },
       "proteinuria": {
-        "count": 4,
-        "total": 120
+        "count": 91,
+        "total": 209,
+        "total_results": 1260,
+        "median_per_patient": 4.0,
+        "q1_per_patient": 2.0,
+        "q3_per_patient": 12.5
       }
     }
   },
@@ -2339,12 +2435,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 11,
-        "total": 12
+        "count": 412,
+        "total": 555,
+        "total_results": 9650,
+        "median_per_patient": 13.0,
+        "q1_per_patient": 5.0,
+        "q3_per_patient": 30.0
       },
       "proteinuria": {
-        "count": 0,
-        "total": 12
+        "count": 221,
+        "total": 555,
+        "total_results": 1636,
+        "median_per_patient": 3.0,
+        "q1_per_patient": 1.0,
+        "q3_per_patient": 7.0
       }
     }
   },
@@ -2509,12 +2613,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 0,
-        "total": 1
+        "count": 5,
+        "total": 6,
+        "total_results": 960,
+        "median_per_patient": 133.0,
+        "q1_per_patient": 115.0,
+        "q3_per_patient": 141.0
       },
       "proteinuria": {
-        "count": 0,
-        "total": 1
+        "count": 5,
+        "total": 6,
+        "total_results": 106,
+        "median_per_patient": 22.0,
+        "q1_per_patient": 21.0,
+        "q3_per_patient": 23.0
       }
     }
   },
@@ -2679,12 +2791,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 18,
-        "total": 28
+        "count": 50,
+        "total": 69,
+        "total_results": 1229,
+        "median_per_patient": 17.5,
+        "q1_per_patient": 6.5,
+        "q3_per_patient": 36.8
       },
       "proteinuria": {
-        "count": 1,
-        "total": 28
+        "count": 41,
+        "total": 69,
+        "total_results": 388,
+        "median_per_patient": 7.0,
+        "q1_per_patient": 3.0,
+        "q3_per_patient": 13.0
       }
     }
   },
@@ -2849,12 +2969,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 2,
-        "total": 2
+        "count": 73,
+        "total": 144,
+        "total_results": 1048,
+        "median_per_patient": 8.0,
+        "q1_per_patient": 4.0,
+        "q3_per_patient": 17.0
       },
       "proteinuria": {
-        "count": 0,
-        "total": 2
+        "count": 54,
+        "total": 144,
+        "total_results": 240,
+        "median_per_patient": 3.0,
+        "q1_per_patient": 1.0,
+        "q3_per_patient": 6.0
       }
     }
   },
@@ -3019,12 +3147,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 10,
-        "total": 23
+        "count": 105,
+        "total": 149,
+        "total_results": 2909,
+        "median_per_patient": 11.0,
+        "q1_per_patient": 4.0,
+        "q3_per_patient": 32.0
       },
       "proteinuria": {
-        "count": 2,
-        "total": 23
+        "count": 76,
+        "total": 149,
+        "total_results": 462,
+        "median_per_patient": 4.0,
+        "q1_per_patient": 1.0,
+        "q3_per_patient": 7.2
       }
     }
   },
@@ -3189,12 +3325,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 16,
-        "total": 44
+        "count": 108,
+        "total": 158,
+        "total_results": 2329,
+        "median_per_patient": 12.0,
+        "q1_per_patient": 6.0,
+        "q3_per_patient": 30.0
       },
       "proteinuria": {
-        "count": 0,
-        "total": 44
+        "count": 63,
+        "total": 158,
+        "total_results": 446,
+        "median_per_patient": 4.0,
+        "q1_per_patient": 1.0,
+        "q3_per_patient": 9.0
       }
     }
   },
@@ -3359,12 +3503,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 801,
-        "total": 1280
+        "count": 4129,
+        "total": 5343,
+        "total_results": 164138,
+        "median_per_patient": 27.0,
+        "q1_per_patient": 11.0,
+        "q3_per_patient": 54.0
       },
       "proteinuria": {
-        "count": 157,
-        "total": 1280
+        "count": 3572,
+        "total": 5343,
+        "total_results": 66670,
+        "median_per_patient": 12.0,
+        "q1_per_patient": 5.0,
+        "q3_per_patient": 25.0
       }
     }
   },
@@ -3529,12 +3681,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 1819,
-        "total": 2849
+        "count": 4089,
+        "total": 5805,
+        "total_results": 144091,
+        "median_per_patient": 24.0,
+        "q1_per_patient": 12.0,
+        "q3_per_patient": 45.0
       },
       "proteinuria": {
-        "count": 40,
-        "total": 2849
+        "count": 3254,
+        "total": 5805,
+        "total_results": 43406,
+        "median_per_patient": 10.0,
+        "q1_per_patient": 4.0,
+        "q3_per_patient": 18.0
       }
     }
   },
@@ -3699,12 +3859,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 4,
-        "total": 5
+        "count": 88,
+        "total": 487,
+        "total_results": 707,
+        "median_per_patient": 2.0,
+        "q1_per_patient": 1.0,
+        "q3_per_patient": 9.0
       },
       "proteinuria": {
-        "count": 0,
-        "total": 5
+        "count": 11,
+        "total": 487,
+        "total_results": 42,
+        "median_per_patient": 1.0,
+        "q1_per_patient": 1.0,
+        "q3_per_patient": 6.0
       }
     }
   },
@@ -3869,12 +4037,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 23,
-        "total": 32
+        "count": 269,
+        "total": 450,
+        "total_results": 15941,
+        "median_per_patient": 39.0,
+        "q1_per_patient": 18.0,
+        "q3_per_patient": 83.0
       },
       "proteinuria": {
-        "count": 1,
-        "total": 32
+        "count": 243,
+        "total": 450,
+        "total_results": 6308,
+        "median_per_patient": 18.0,
+        "q1_per_patient": 10.0,
+        "q3_per_patient": 36.0
       }
     }
   },
@@ -4039,12 +4215,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 406,
-        "total": 669
+        "count": 1005,
+        "total": 1352,
+        "total_results": 40793,
+        "median_per_patient": 26.0,
+        "q1_per_patient": 9.0,
+        "q3_per_patient": 54.0
       },
       "proteinuria": {
-        "count": 37,
-        "total": 669
+        "count": 830,
+        "total": 1352,
+        "total_results": 14608,
+        "median_per_patient": 11.0,
+        "q1_per_patient": 4.2,
+        "q3_per_patient": 23.0
       }
     }
   },
@@ -4209,12 +4393,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 399,
-        "total": 653
+        "count": 2364,
+        "total": 3124,
+        "total_results": 113221,
+        "median_per_patient": 37.0,
+        "q1_per_patient": 18.0,
+        "q3_per_patient": 64.0
       },
       "proteinuria": {
-        "count": 9,
-        "total": 653
+        "count": 2026,
+        "total": 3124,
+        "total_results": 43317,
+        "median_per_patient": 16.0,
+        "q1_per_patient": 8.0,
+        "q3_per_patient": 28.8
       }
     }
   },
@@ -4379,12 +4571,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 0,
-        "total": 0
+        "count": 4,
+        "total": 9,
+        "total_results": 113,
+        "median_per_patient": 5.5,
+        "q1_per_patient": 5.0,
+        "q3_per_patient": 28.8
       },
       "proteinuria": {
-        "count": 0,
-        "total": 0
+        "count": 4,
+        "total": 9,
+        "total_results": 39,
+        "median_per_patient": 5.0,
+        "q1_per_patient": 4.8,
+        "q3_per_patient": 10.0
       }
     }
   },
@@ -4549,12 +4749,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 77,
-        "total": 126
+        "count": 197,
+        "total": 307,
+        "total_results": 11827,
+        "median_per_patient": 40.0,
+        "q1_per_patient": 16.0,
+        "q3_per_patient": 93.0
       },
       "proteinuria": {
-        "count": 2,
-        "total": 126
+        "count": 142,
+        "total": 307,
+        "total_results": 1995,
+        "median_per_patient": 8.0,
+        "q1_per_patient": 4.0,
+        "q3_per_patient": 18.0
       }
     }
   },
@@ -4719,12 +4927,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 156,
-        "total": 281
+        "count": 663,
+        "total": 894,
+        "total_results": 24999,
+        "median_per_patient": 24.0,
+        "q1_per_patient": 12.0,
+        "q3_per_patient": 49.0
       },
       "proteinuria": {
-        "count": 3,
-        "total": 281
+        "count": 543,
+        "total": 894,
+        "total_results": 8310,
+        "median_per_patient": 11.0,
+        "q1_per_patient": 4.0,
+        "q3_per_patient": 21.0
       }
     }
   },
@@ -4889,12 +5105,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 2,
-        "total": 6
+        "count": 4,
+        "total": 9,
+        "total_results": 365,
+        "median_per_patient": 60.0,
+        "q1_per_patient": 6.2,
+        "q3_per_patient": 145.0
       },
       "proteinuria": {
-        "count": 0,
-        "total": 6
+        "count": 3,
+        "total": 9,
+        "total_results": 94,
+        "median_per_patient": 4.0,
+        "q1_per_patient": 3.5,
+        "q3_per_patient": 45.5
       }
     }
   },
@@ -5059,12 +5283,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 14,
-        "total": 24
+        "count": 139,
+        "total": 189,
+        "total_results": 6989,
+        "median_per_patient": 32.0,
+        "q1_per_patient": 16.5,
+        "q3_per_patient": 68.5
       },
       "proteinuria": {
-        "count": 0,
-        "total": 24
+        "count": 101,
+        "total": 189,
+        "total_results": 997,
+        "median_per_patient": 5.0,
+        "q1_per_patient": 3.0,
+        "q3_per_patient": 13.0
       }
     }
   },
@@ -5229,12 +5461,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 21,
-        "total": 98
+        "count": 101,
+        "total": 212,
+        "total_results": 1316,
+        "median_per_patient": 9.0,
+        "q1_per_patient": 3.0,
+        "q3_per_patient": 18.0
       },
       "proteinuria": {
-        "count": 0,
-        "total": 98
+        "count": 60,
+        "total": 212,
+        "total_results": 331,
+        "median_per_patient": 3.0,
+        "q1_per_patient": 1.0,
+        "q3_per_patient": 8.0
       }
     }
   },
@@ -5399,12 +5639,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 19,
-        "total": 26
+        "count": 247,
+        "total": 347,
+        "total_results": 5320,
+        "median_per_patient": 12.0,
+        "q1_per_patient": 4.5,
+        "q3_per_patient": 26.5
       },
       "proteinuria": {
-        "count": 0,
-        "total": 26
+        "count": 175,
+        "total": 347,
+        "total_results": 1203,
+        "median_per_patient": 4.0,
+        "q1_per_patient": 2.0,
+        "q3_per_patient": 8.0
       }
     }
   },
@@ -5569,12 +5817,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 24,
-        "total": 35
+        "count": 469,
+        "total": 633,
+        "total_results": 15800,
+        "median_per_patient": 17.0,
+        "q1_per_patient": 7.0,
+        "q3_per_patient": 39.0
       },
       "proteinuria": {
-        "count": 2,
-        "total": 35
+        "count": 264,
+        "total": 633,
+        "total_results": 1694,
+        "median_per_patient": 4.0,
+        "q1_per_patient": 2.0,
+        "q3_per_patient": 7.0
       }
     }
   },
@@ -5739,12 +5995,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 677,
-        "total": 1364
+        "count": 4304,
+        "total": 6348,
+        "total_results": 230656,
+        "median_per_patient": 41.5,
+        "q1_per_patient": 18.0,
+        "q3_per_patient": 76.0
       },
       "proteinuria": {
-        "count": 16,
-        "total": 1364
+        "count": 3390,
+        "total": 6348,
+        "total_results": 57732,
+        "median_per_patient": 12.0,
+        "q1_per_patient": 5.0,
+        "q3_per_patient": 23.0
       }
     }
   },
@@ -5909,12 +6173,20 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 11,
-        "total": 17
+        "count": 53,
+        "total": 82,
+        "total_results": 1601,
+        "median_per_patient": 13.0,
+        "q1_per_patient": 8.0,
+        "q3_per_patient": 29.0
       },
       "proteinuria": {
-        "count": 1,
-        "total": 17
+        "count": 44,
+        "total": 82,
+        "total_results": 424,
+        "median_per_patient": 4.0,
+        "q1_per_patient": 2.0,
+        "q3_per_patient": 12.2
       }
     }
   }

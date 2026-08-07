@@ -542,31 +542,53 @@ def run():
             FROM all_kf_dates
             GROUP BY patient_id
         """, conn)
-        kf_df["kf_date"] = pd.to_datetime(kf_df["kf_date"], errors="coerce")
+        # Source columns (transplants.date, dialysis.from_date, results.date) are
+        # timestamptz — normalise to tz-naive, same as every other date column in
+        # this file, so downstream comparisons don't mix aware/naive timestamps.
+        kf_df["kf_date"] = pd.to_datetime(kf_df["kf_date"], errors="coerce", utc=True).dt.tz_localize(None)
         # Restrict to the 39,178 cohort patients only (excludes excluded groups)
         kf_patient_ids = set(kf_df["patient_id"]) & all_cohort_pids
         kf_date_map    = kf_df.set_index("patient_id")["kf_date"].to_dict()
         print(f"  {len(kf_patient_ids):,} patients with Kidney Failure events (within cohort patients)")
 
-        # ── Biochemistry (creatinine/proteinuria) pre-KRT counts ──
-        # observation_id 46 = Creatinine, 17 = Proteinuria_DIP
-        print("  Loading biochemistry (creatinine/proteinuria) pre-KRT counts...")
-        biochem_df = pd.read_sql("""
-            SELECT patient_id, observation_id, MIN(date) AS first_date
+        # ── Biochemistry (creatinine/proteinuria) results, pre-KRT ──
+        # Creatinine = observation_id 46. Proteinuria = ACR (1) + PCR (2) combined.
+        # Only rows with a value, deduped to at most one result per patient per day.
+        print("  Loading biochemistry (creatinine/proteinuria) results...")
+        creatinine_days_df = pd.read_sql("""
+            SELECT DISTINCT patient_id, date::date AS result_date
             FROM results
-            WHERE observation_id IN (46, 17)
-            GROUP BY patient_id, observation_id
+            WHERE observation_id = 46
+              AND value IS NOT NULL
+              AND value::text <> ''
         """, conn)
-        biochem_df["first_date"] = pd.to_datetime(biochem_df["first_date"], errors="coerce")
-        creatinine_first_map  = biochem_df[biochem_df["observation_id"] == 46].set_index("patient_id")["first_date"].to_dict()
-        proteinuria_first_map = biochem_df[biochem_df["observation_id"] == 17].set_index("patient_id")["first_date"].to_dict()
+        proteinuria_days_df = pd.read_sql("""
+            SELECT DISTINCT patient_id, date::date AS result_date
+            FROM results
+            WHERE observation_id IN (1, 2)
+              AND value IS NOT NULL
+              AND value::text <> ''
+        """, conn)
+        creatinine_days_df["result_date"]  = pd.to_datetime(creatinine_days_df["result_date"],  errors="coerce")
+        proteinuria_days_df["result_date"] = pd.to_datetime(proteinuria_days_df["result_date"], errors="coerce")
 
-        def _pre_krt(pid, first_map):
-            kf_date = kf_date_map.get(pid)
-            first   = first_map.get(pid)
-            return bool(kf_date is not None and first is not None and first < kf_date)
+        # Cutoff per patient: their KF/KRT date if they've reached it, else today
+        # (denominator is ALL patients — those never reaching KRT are censored at today).
+        cutoff_map = {
+            pid: (kf_date_map.get(pid) if pd.notna(kf_date_map.get(pid)) else today)
+            for pid in all_cohort_pids
+        }
 
-        print(f"  Biochemistry pre-KRT lookups ready for {len(kf_patient_ids):,} KF patients")
+        def _pre_cutoff_counts(days_df):
+            df = days_df[days_df["patient_id"].isin(all_cohort_pids)].copy()
+            df["cutoff"] = df["patient_id"].map(cutoff_map)
+            df = df[df["result_date"] < df["cutoff"]]
+            return df.groupby("patient_id").size()
+
+        creatinine_pre_counts  = _pre_cutoff_counts(creatinine_days_df)
+        proteinuria_pre_counts = _pre_cutoff_counts(proteinuria_days_df)
+        print(f"  Creatinine pre-cutoff results for {len(creatinine_pre_counts):,} patients; "
+              f"Proteinuria (ACR+PCR) for {len(proteinuria_pre_counts):,} patients")
 
         # ── Transplant counts per patient (restricted to cohort patients) ──
         print("  Calculating transplant counts per patient...")
@@ -745,11 +767,24 @@ def run():
             single_tx_c = int(sum(1 for pid in cohort_pids if transplant_count_map.get(pid, 0) == 1))
             multi_tx_c  = int(sum(1 for pid in cohort_pids if transplant_count_map.get(pid, 0) >= 2))
 
-            # ── Biochemistry pre-KRT — among this cohort's KF patients only ──
-            cohort_kf_pids  = cohort_pids & kf_patient_ids
-            creatinine_n    = sum(1 for pid in cohort_kf_pids if _pre_krt(pid, creatinine_first_map))
-            proteinuria_n   = sum(1 for pid in cohort_kf_pids if _pre_krt(pid, proteinuria_first_map))
-            kf_denom        = len(cohort_kf_pids)
+            # ── Biochemistry pre-KRT — denominator is all patients in the cohort ──
+            cohort_pids_list  = list(cohort_pids)
+            cohort_creat_cnt  = creatinine_pre_counts.reindex(cohort_pids_list,  fill_value=0)
+            cohort_prot_cnt   = proteinuria_pre_counts.reindex(cohort_pids_list, fill_value=0)
+
+            creatinine_n_patients   = int((cohort_creat_cnt >= 1).sum())
+            proteinuria_n_patients  = int((cohort_prot_cnt  >= 1).sum())
+            creatinine_total_results  = int(cohort_creat_cnt.sum())
+            proteinuria_total_results = int(cohort_prot_cnt.sum())
+
+            creat_nonzero = cohort_creat_cnt[cohort_creat_cnt >= 1]
+            prot_nonzero  = cohort_prot_cnt[cohort_prot_cnt >= 1]
+            creat_median = round(creat_nonzero.median(), 1) if len(creat_nonzero) else 0
+            creat_q1     = round(creat_nonzero.quantile(0.25), 1) if len(creat_nonzero) else 0
+            creat_q3     = round(creat_nonzero.quantile(0.75), 1) if len(creat_nonzero) else 0
+            prot_median  = round(prot_nonzero.median(), 1) if len(prot_nonzero) else 0
+            prot_q1      = round(prot_nonzero.quantile(0.25), 1) if len(prot_nonzero) else 0
+            prot_q3      = round(prot_nonzero.quantile(0.75), 1) if len(prot_nonzero) else 0
 
             variables = [
                 {
@@ -815,8 +850,18 @@ def run():
                 "section": letter, "title": db_name,
                 "closed": closed,  "variables": variables,
                 "biochemistry": {
-                    "creatinine":  {"count": creatinine_n,  "total": kf_denom},
-                    "proteinuria": {"count": proteinuria_n, "total": kf_denom},
+                    "creatinine": {
+                        "count": creatinine_n_patients, "total": patient_count,
+                        "total_results": creatinine_total_results,
+                        "median_per_patient": creat_median,
+                        "q1_per_patient": creat_q1, "q3_per_patient": creat_q3,
+                    },
+                    "proteinuria": {
+                        "count": proteinuria_n_patients, "total": patient_count,
+                        "total_results": proteinuria_total_results,
+                        "median_per_patient": prot_median,
+                        "q1_per_patient": prot_q1, "q3_per_patient": prot_q3,
+                    },
                 },
             })
 

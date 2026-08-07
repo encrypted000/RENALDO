@@ -125,30 +125,45 @@ def _biochemistry_body(sec: dict, small_n: bool) -> html.Div:
             "background": "#fafaf8",
         })
 
-    rows = []
+    blocks = []
     for key, label in (("creatinine", "Creatinine"), ("proteinuria", "Proteinuria")):
         stat = biochem.get(key)
         if not stat:
             continue
-        count = stat.get("count", 0)
-        total = stat.get("total", 0)
+        count   = stat.get("count", 0)
+        total   = stat.get("total", 0)
+        n_results = stat.get("total_results", 0)
+        median  = stat.get("median_per_patient", 0)
+        q1      = stat.get("q1_per_patient", 0)
+        q3      = stat.get("q3_per_patient", 0)
 
         if total == 0:
-            detail = "No kidney failure patients recorded in this cohort"
-        elif total < SMALL_N_THRESHOLD:
-            detail = f"Fewer than {SMALL_N_THRESHOLD} kidney failure patients in this cohort — suppressed"
+            lines = [html.Div("No patients recorded in this cohort", style={"fontSize": "12px", "color": "var(--text2)"})]
         else:
             pct = round(count / total * 100, 1)
-            detail = f"{count:,} / {total:,} kidney failure patients ({pct}%) had a result recorded pre-KRT"
+            lines = [
+                html.Div(
+                    f"{count:,} / {total:,} patients ({pct}%) had at least one result pre-KRT",
+                    style={"fontSize": "12px", "color": "var(--text2)"},
+                ),
+                html.Div(
+                    f"{n_results:,} total results recorded pre-KRT across the cohort",
+                    style={"fontSize": "12px", "color": "var(--text2)", "marginTop": "2px"},
+                ),
+                html.Div(
+                    f"Median {median} results per patient (IQR {q1}–{q3}) among patients with a result",
+                    style={"fontSize": "12px", "color": "var(--text2)", "marginTop": "2px"},
+                ),
+            ]
 
-        rows.append(
+        blocks.append(
             html.Div([
-                html.Span(label, style={"fontWeight": "600", "minWidth": "110px", "display": "inline-block"}),
-                html.Span(detail, style={"fontSize": "12px", "color": "var(--text2)"}),
-            ], style={"padding": "6px 0"})
+                html.Div(label, style={"fontWeight": "600", "fontSize": "12.5px", "marginBottom": "4px"}),
+                *lines,
+            ], style={"padding": "8px 0"})
         )
 
-    return html.Div(rows, style={"padding": "14px 16px"})
+    return html.Div(blocks, style={"padding": "14px 16px"})
 
 
 def _biochemistry_dropdown(sec: dict, letter: str, small_n: bool) -> dbc.Accordion:
