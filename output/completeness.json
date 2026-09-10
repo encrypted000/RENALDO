@@ -8,7 +8,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 1,
-        "total": 40595,
+        "total": 40596,
         "required": true,
         "desc": "Patient first name"
       },
@@ -17,7 +17,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 1,
-        "total": 40595,
+        "total": 40596,
         "required": true,
         "desc": "Patient last name"
       },
@@ -26,7 +26,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 40595,
+        "total": 40596,
         "required": true,
         "desc": "Date of birth"
       },
@@ -35,25 +35,25 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 4064,
-        "total": 40595,
+        "total": 40596,
         "required": false,
-        "desc": "Date of death \u2014 4,064 of 40,595 patients (10.0%) have a recorded death date"
+        "desc": "Date of death \u2014 4,064 of 40,596 patients (10.0%) have a recorded death date"
       },
       {
         "id": "A.6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 40595,
+        "total": 40596,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "A.7",
         "name": "ETHNICITY",
         "pct_missing": 19.4,
-        "missing": 7866,
-        "total": 40595,
+        "missing": 7867,
+        "total": 40596,
         "required": true,
         "desc": "Ethnic origin"
       },
@@ -62,7 +62,7 @@
         "name": "EMAIL_ADDRESS",
         "pct_missing": 31.7,
         "missing": 12871,
-        "total": 40595,
+        "total": 40596,
         "required": false,
         "desc": "Email address"
       },
@@ -71,7 +71,7 @@
         "name": "Primary Renal Diagnosis",
         "pct_missing": 19.7,
         "missing": 7990,
-        "total": 40595,
+        "total": 40596,
         "required": true,
         "desc": "Primary Renal Diagnosis"
       },
@@ -80,7 +80,7 @@
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 4,
-        "total": 40595,
+        "total": 40596,
         "required": true,
         "desc": "NHS number"
       },
@@ -89,34 +89,34 @@
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
         "missing": 13150,
-        "total": 40595,
+        "total": 40596,
         "required": false,
-        "desc": "Kidney Failure \u2014 13,150 of 40,595 patients (32.4%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery."
+        "desc": "Kidney Failure \u2014 13,150 of 40,596 patients (32.4%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery."
       },
       {
         "id": "A.14",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 8223,
-        "total": 40595,
+        "total": 40596,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 8,223 of 40,595"
+        "desc": "Patients with exactly 1 transplant \u2014 8,223 of 40,596"
       },
       {
         "id": "A.15",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 1001,
-        "total": 40595,
+        "total": 40596,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 1,001 of 40,595"
+        "desc": "Patients with 2 or more transplants \u2014 1,001 of 40,596"
       },
       {
         "id": "A.16",
         "name": "OVERALL_FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 40130,
+        "total": 40131,
         "required": false,
         "desc": "Median follow-up: 10.2 yrs (IQR 6.8\u201316.7 yrs) \u2014 from diagnosis date (or cohort entry if unavailable) until death or the current date"
       },
@@ -125,13 +125,13 @@
         "name": "FOLLOW_UP_PRE_KRT",
         "pct_missing": null,
         "missing": null,
-        "total": 36200,
+        "total": 36201,
         "required": false,
         "desc": "Median follow-up: 8.8 yrs (IQR 4.2\u201313.7 yrs) \u2014 from diagnosis (or cohort entry if unavailable) until KRT/death or the current date"
       }
     ],
     "stats": {
-      "adults": 37993,
+      "adults": 37994,
       "children": 2602,
       "median_fu": 10.2,
       "q1_fu": 6.8,
@@ -208,12 +208,12 @@
       },
       {
         "id": "B.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 1387,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "B.d7",
@@ -398,12 +398,12 @@
       },
       {
         "id": "C.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 10,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "C.d7",
@@ -588,12 +588,12 @@
       },
       {
         "id": "D.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 354,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "D.d7",
@@ -778,12 +778,12 @@
       },
       {
         "id": "E.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 9764,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "E.d7",
@@ -968,12 +968,12 @@
       },
       {
         "id": "F.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 300,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "F.d7",
@@ -1158,12 +1158,12 @@
       },
       {
         "id": "G.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 381,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "G.d7",
@@ -1348,12 +1348,12 @@
       },
       {
         "id": "H.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 210,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "H.d7",
@@ -1499,12 +1499,12 @@
       },
       {
         "id": "I.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 86,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "I.d7",
@@ -1689,12 +1689,12 @@
       },
       {
         "id": "J.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 748,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "J.d7",
@@ -1879,12 +1879,12 @@
       },
       {
         "id": "K.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 709,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "K.d7",
@@ -2030,12 +2030,12 @@
       },
       {
         "id": "L.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 751,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "L.d7",
@@ -2220,12 +2220,12 @@
       },
       {
         "id": "M.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 209,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "M.d7",
@@ -2350,7 +2350,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 562,
+        "total": 563,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -2359,7 +2359,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 541,
+        "total": 542,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -2377,7 +2377,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 562,
+        "total": 563,
         "required": true,
         "desc": "Patient first name"
       },
@@ -2386,7 +2386,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 562,
+        "total": 563,
         "required": true,
         "desc": "Patient last name"
       },
@@ -2395,7 +2395,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 562,
+        "total": 563,
         "required": true,
         "desc": "Date of birth"
       },
@@ -2404,52 +2404,52 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 16,
-        "total": 562,
+        "total": 563,
         "required": false,
-        "desc": "Date of death \u2014 16 of 562 patients (2.8%) have a recorded death date"
+        "desc": "Date of death \u2014 16 of 563 patients (2.8%) have a recorded death date"
       },
       {
         "id": "N.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 562,
+        "total": 563,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "N.d7",
         "name": "ETHNICITY",
-        "pct_missing": 52.5,
-        "missing": 295,
-        "total": 562,
+        "pct_missing": 52.6,
+        "missing": 296,
+        "total": 563,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "N.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 42.7,
+        "pct_missing": 42.6,
         "missing": 240,
-        "total": 562,
+        "total": 563,
         "required": false,
         "desc": "Email address"
       },
       {
         "id": "N.d10",
         "name": "Primary Renal Diagnosis",
-        "pct_missing": 9.3,
+        "pct_missing": 9.2,
         "missing": 52,
-        "total": 562,
+        "total": 563,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 52 of 562 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 52 of 563 patients missing"
       },
       {
         "id": "N.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 562,
+        "total": 563,
         "required": true,
         "desc": "NHS number"
       },
@@ -2458,43 +2458,43 @@
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
         "missing": 11,
-        "total": 562,
+        "total": 563,
         "required": false,
-        "desc": "Kidney Failure \u2014 11 of 562 patients (2.0%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery."
+        "desc": "Kidney Failure \u2014 11 of 563 patients (2.0%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery."
       },
       {
         "id": "N.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 5,
-        "total": 562,
+        "total": 563,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 5 of 562"
+        "desc": "Patients with exactly 1 transplant \u2014 5 of 563"
       },
       {
         "id": "N.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 2,
-        "total": 562,
+        "total": 563,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 2 of 562"
+        "desc": "Patients with 2 or more transplants \u2014 2 of 563"
       },
       {
         "id": "N.overall_followup",
         "name": "OVERALL_FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 558,
+        "total": 559,
         "required": false,
-        "desc": "Median follow-up: 11.9 yrs (IQR 8.9\u201317.5 yrs) \u2014 from diagnosis date (or cohort entry if unavailable) until death or the current date"
+        "desc": "Median follow-up: 11.8 yrs (IQR 8.8\u201317.5 yrs) \u2014 from diagnosis date (or cohort entry if unavailable) until death or the current date"
       },
       {
         "id": "N.followup_pre_krt",
         "name": "FOLLOW_UP_PRE_KRT",
         "pct_missing": null,
         "missing": null,
-        "total": 553,
+        "total": 554,
         "required": false,
         "desc": "Median follow-up: 11.9 yrs (IQR 8.9\u201317.4 yrs) \u2014 from diagnosis (or cohort entry if unavailable) until KRT/death or the current date"
       }
@@ -2502,7 +2502,7 @@
     "biochemistry": {
       "creatinine": {
         "count": 413,
-        "total": 562,
+        "total": 563,
         "total_results": 9658,
         "median_per_patient": 13.0,
         "q1_per_patient": 5.0,
@@ -2516,7 +2516,7 @@
       },
       "proteinuria": {
         "count": 221,
-        "total": 562,
+        "total": 563,
         "total_results": 1641,
         "median_per_patient": 3.0,
         "q1_per_patient": 1.0,
@@ -2600,12 +2600,12 @@
       },
       {
         "id": "O.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 69,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "O.d7",
@@ -2790,12 +2790,12 @@
       },
       {
         "id": "P.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 151,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "P.d7",
@@ -2980,12 +2980,12 @@
       },
       {
         "id": "Q.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 153,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "Q.d7",
@@ -3170,12 +3170,12 @@
       },
       {
         "id": "R.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 158,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "R.d7",
@@ -3360,12 +3360,12 @@
       },
       {
         "id": "S.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 5371,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "S.d7",
@@ -3550,12 +3550,12 @@
       },
       {
         "id": "T.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 5868,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "T.d7",
@@ -3740,12 +3740,12 @@
       },
       {
         "id": "U.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 489,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "U.d7",
@@ -3930,12 +3930,12 @@
       },
       {
         "id": "V.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 467,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "V.d7",
@@ -4120,12 +4120,12 @@
       },
       {
         "id": "W.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 1359,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "W.d7",
@@ -4310,12 +4310,12 @@
       },
       {
         "id": "X.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 3131,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "X.d7",
@@ -4500,12 +4500,12 @@
       },
       {
         "id": "Y.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 9,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "Y.d7",
@@ -4690,12 +4690,12 @@
       },
       {
         "id": "Z.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 309,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "Z.d7",
@@ -4880,12 +4880,12 @@
       },
       {
         "id": "AA.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 895,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "AA.d7",
@@ -5070,12 +5070,12 @@
       },
       {
         "id": "AB.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 9,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "AB.d7",
@@ -5260,12 +5260,12 @@
       },
       {
         "id": "AC.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 189,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "AC.d7",
@@ -5450,12 +5450,12 @@
       },
       {
         "id": "AD.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 214,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "AD.d7",
@@ -5640,12 +5640,12 @@
       },
       {
         "id": "AE.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 350,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "AE.d7",
@@ -5830,12 +5830,12 @@
       },
       {
         "id": "AF.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 641,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "AF.d7",
@@ -6020,12 +6020,12 @@
       },
       {
         "id": "AG.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 6378,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "AG.d7",
@@ -6210,12 +6210,12 @@
       },
       {
         "id": "AH.d6",
-        "name": "GENDER",
+        "name": "SEX",
         "pct_missing": 0.0,
         "missing": 0,
         "total": 82,
         "required": true,
-        "desc": "Gender"
+        "desc": "Sex"
       },
       {
         "id": "AH.d7",
