@@ -39,18 +39,17 @@ RENALDO monitors the quality and completeness of patient data across **33 rare k
 ```
 RENALDO/
 ├── app.py                          ← Dash app entry point
-├── requirements.txt
+├── requirements.txt                ← production dependencies (pinned)
+├── requirements-dev.txt            ← + pytest, python-docx (local/dev only)
 ├── output/
 │   └── completeness.json           ← generated data (never edit manually)
 ├── analytics/
-│   ├── run_all.py                  ← main script — runs everything in one go
-│   ├── demographics_completeness.py
-│   ├── cohorts_completeness.py
+│   ├── run_all.py                  ← the pipeline — DB → output/completeness.json
 │   └── utils.py
 ├── config/
 │   ├── settings.py                 ← SSH tunnel + DB connection (uses env vars)
 │   ├── demographics.py             ← demographics variable definitions
-│   └── cohorts.py                  ← excluded group IDs + cohort letters
+│   └── cohorts.py                  ← excluded/withdrawn group rules, cohort letters
 ├── dashboard/
 │   ├── __init__.py
 │   ├── layout.py
@@ -65,8 +64,10 @@ RENALDO/
 │   └── callbacks/
 │       ├── data_callbacks.py
 │       └── render_callbacks.py
+├── scripts/
+│   └── generate_report.py          ← one-off Word doc generator, not part of the app
 └── tests/
-    ├── test_analytics.py
+    ├── test_utils.py
     └── test_connection.py
 ```
 
@@ -77,6 +78,9 @@ RENALDO/
 ### 1. Install dependencies
 ```bash
 pip install -r requirements.txt
+
+# For running tests or scripts/generate_report.py locally:
+pip install -r requirements-dev.txt
 ```
 
 ### 2. Set environment variables
@@ -129,21 +133,22 @@ git push
 |------|--------|
 | Source | Only `source_type = 'RADAR'` records |
 | Excluded patients | `test = TRUE` or `control = TRUE` |
-| Excluded cohorts | NURTuRE-CKD, NephroS, NaHUS, withdrawn consent, and other non-standard groups |
+| Excluded cohorts | NURTuRE-CKD, NephroS, NaHUS, withdrawn consent, Data Completeness (internal QA), and other non-standard groups — see `config/cohorts.py` |
 | Email completeness | Excludes known placeholder/default emails |
 | NHS number | Checked against `patient_numbers` table |
 | Diagnosis | Checked against `patient_diagnoses` table |
-| Kidney Failure | Transplant OR dialysis OR eGFR < 15 confirmed twice ≥ 28 days apart |
-| Follow-up | Enrolment to last activity (results/medications) or date of death |
-| Enrolment date | `group_patients.from_date` (matches "Recruited On" in RaDaR front end) |
+| Kidney Failure (KF/KRT) | Transplant OR dialysis OR eGFR < 15 confirmed twice ≥ 28 days apart |
+| Overall follow-up | Diagnosis date (or cohort entry if unavailable) to death or today — withdrawn patients excluded |
+| Follow-up pre KRT | Diagnosis date (or cohort entry if unavailable) to KRT/death/today — not shown for CMV Post Transplant or BK Nephropathy |
+| Cohort entry | `group_patients.from_date` (matches "Recruited On" in RaDaR front end) |
 
 ---
 
 ## Running Tests
 
 ```bash
-# Unit tests — no DB needed
-python -m pytest tests/test_analytics.py -v
+# Unit tests — no DB needed (requires requirements-dev.txt)
+python -m pytest tests/test_utils.py -v
 
 # Connection tests — requires DB access
 python -m pytest tests/test_connection.py -v
