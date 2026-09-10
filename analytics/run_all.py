@@ -18,7 +18,14 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from config.settings import get_tunnel, get_connection
 from config.demographics import DEMOGRAPHICS_VARIABLES, DEFAULT_EMAILS
-from config.cohorts import EXCLUDED_GROUP_IDS, COHORT_LETTERS
+from config.cohorts import (
+    EXCLUDED_GROUP_IDS,
+    EXCLUDED_GROUP_NAMES,
+    WITHDRAWN_GROUP_IDS,
+    NO_PRE_KRT_FOLLOWUP_COHORTS,
+    NO_BIOCHEMISTRY_COHORTS,
+    COHORT_LETTERS,
+)
 from analytics.utils import build_result, logger
 
 
@@ -37,26 +44,24 @@ def run():
         conn = get_connection()
         print("Connected to PostgreSQL!\n")
 
-        excluded = ",".join(str(i) for i in EXCLUDED_GROUP_IDS)
-        today    = pd.Timestamp.today().normalize()
+        # Resolve name-based exclusions (e.g. "Data Completeness") to group IDs
+        # and merge with the static ID-based exclusion list. Doing this once,
+        # up front, means every downstream query's existing "NOT IN (excluded)"
+        # filter picks it up automatically.
+        excluded_by_name_df = pd.read_sql(
+            "SELECT id FROM groups WHERE type = 'COHORT' AND LOWER(name) = ANY(%(names)s)",
+            conn,
+            params={"names": [n.lower() for n in EXCLUDED_GROUP_NAMES]},
+        )
+        excluded_ids = set(EXCLUDED_GROUP_IDS) | set(excluded_by_name_df["id"].tolist())
+        excluded      = ",".join(str(i) for i in sorted(excluded_ids))
+        withdrawn_ids = ",".join(str(i) for i in WITHDRAWN_GROUP_IDS)
+        today         = pd.Timestamp.today().normalize()
 
         # ════════════════════════════════════════════════════════
-        # STEP 1 — Pre-aggregate last activity per patient ONCE
-        #          (avoids slow full-table joins in every query)
+        # STEP 1 — Pre-aggregate cohort recruitment / diagnosis / withdrawal
+        #          dates per patient ONCE (avoids slow full-table joins later)
         # ════════════════════════════════════════════════════════
-        print("Pre-aggregating last activity per patient...")
-        last_activity_df = pd.read_sql("""
-            SELECT patient_id, MAX(last_date) AS last_activity
-            FROM (
-                SELECT patient_id, MAX(date::date)         AS last_date FROM results     GROUP BY patient_id
-                UNION ALL
-                SELECT patient_id, MAX(created_date::date) AS last_date FROM medications GROUP BY patient_id
-            ) sub
-            GROUP BY patient_id
-        """, conn)
-        last_activity_df["last_activity"] = pd.to_datetime(last_activity_df["last_activity"], errors="coerce")
-        last_activity_map = last_activity_df.set_index("patient_id")["last_activity"].to_dict()
-        print(f"  Last activity loaded for {len(last_activity_map):,} patients")
 
         # ── Pre-aggregate cohort recruitment date per patient ──
         # group_patients.from_date where group type = COHORT is the "Recruited On" date
@@ -107,12 +112,12 @@ def run():
         diagnosis_date_map = diagnosis_date_df.set_index("patient_id")["diagnosis_date"].to_dict()
         print(f"  Diagnosis date loaded for {len(diagnosis_date_map):,} patients")
 
-        # ── Pre-aggregate withdrawal date per patient (groups 152/182 = withdrawn) ──
+        # ── Pre-aggregate withdrawal date per patient (withdrawn-consent groups) ──
         print("Pre-aggregating withdrawal dates...")
-        withdrawal_df = pd.read_sql("""
+        withdrawal_df = pd.read_sql(f"""
             SELECT patient_id, MIN(from_date)::date AS withdrawal_date
             FROM group_patients
-            WHERE group_id IN (152, 182)
+            WHERE group_id IN ({withdrawn_ids})
             GROUP BY patient_id
         """, conn)
         withdrawal_df["withdrawal_date"] = pd.to_datetime(withdrawal_df["withdrawal_date"], errors="coerce")
@@ -169,59 +174,40 @@ def run():
         children_total = int((age <  18).sum())
         unknown_age    = int(age.isna().sum())
 
-        # Follow-up using pre-aggregated last_activity
         demographics["enrolled"]      = pd.to_datetime(demographics["enrolled"],      errors="coerce", utc=True).dt.tz_localize(None)
         demographics["date_of_death"] = pd.to_datetime(demographics["date_of_death"], errors="coerce", utc=True).dt.tz_localize(None)
-        demographics["last_activity"] = demographics["patient_id"].map(last_activity_map)
-        # last_activity before enrolment = batch upload of historical data → use today
-        # death before enrolment = genuine data error → exclude
-        demographics["last_activity_adj"] = demographics.apply(
-            lambda r: today if pd.notna(r["last_activity"]) and r["last_activity"] < r["enrolled"] else r["last_activity"],
-            axis=1,
-        )
-        demographics["end_date"] = demographics["date_of_death"].fillna(
-            demographics["last_activity_adj"].fillna(today)
-        )
-        demographics["follow_up_years"] = (
-            (demographics["end_date"] - demographics["enrolled"]).dt.days / 365.25
-        )
-        # Only negative remaining = death before enrolment (real error) → exclude
-        bad_death = int((demographics["follow_up_years"] < 0).sum())
-        if bad_death:
-            print(f"  WARNING: {bad_death} patients excluded — date_of_death before enrolment (data error)")
-            logger.warning(f"Demographics: {bad_death} patients with date_of_death before enrolment")
-        fu = demographics["follow_up_years"].dropna()
-        fu = fu[fu >= 0]
-        median_fu = round(fu.median(), 1)
-        q1_fu     = round(fu.quantile(0.25), 1)
-        q3_fu     = round(fu.quantile(0.75), 1)
 
-        # Diagnosis-based follow-up: diagnosis date → earliest of today, death, withdrawal
+        # ── Start date for follow-up: diagnosis date, falling back to cohort
+        #    entry (recruitment date) when no diagnosis date is recorded ──
         demographics["diagnosis_date"]  = demographics["patient_id"].map(diagnosis_date_map)
         demographics["withdrawal_date"] = demographics["patient_id"].map(withdrawal_date_map)
-        demographics["diag_followup_end"] = demographics[
-            ["date_of_death", "withdrawal_date"]
-        ].apply(lambda r: min([d for d in [today, r["date_of_death"], r["withdrawal_date"]] if pd.notna(d)]), axis=1)
-        demographics["diag_follow_up_years"] = (
-            (demographics["diag_followup_end"] - demographics["diagnosis_date"]).dt.days / 365.25
+        demographics["start_date"]      = demographics["diagnosis_date"].fillna(demographics["enrolled"])
+        withdrawn_mask = demographics["withdrawal_date"].notna()
+
+        # ── Overall follow-up: start date → death or today. Withdrawn patients
+        #    are excluded from the population entirely (not censored at their
+        #    withdrawal date), so the denominator = total patients - withdrawn. ──
+        overall_pop = demographics[~withdrawn_mask].copy()
+        overall_pop["overall_end"] = overall_pop["date_of_death"].fillna(today)
+        overall_pop["overall_follow_up_years"] = (
+            (overall_pop["overall_end"] - overall_pop["start_date"]).dt.days / 365.25
         )
-        bad_diag = int((demographics["diag_follow_up_years"] < 0).sum())
-        if bad_diag:
-            print(f"  WARNING: {bad_diag} patients excluded — diagnosis date after follow-up end (data error)")
-            logger.warning(f"Demographics: {bad_diag} patients with diagnosis date after follow-up end")
-        diag_fu = demographics["diag_follow_up_years"].dropna()
-        diag_fu = diag_fu[diag_fu >= 0]
-        diag_median_fu = round(diag_fu.median(), 1) if len(diag_fu) else 0.0
-        diag_q1_fu     = round(diag_fu.quantile(0.25), 1) if len(diag_fu) else 0.0
-        diag_q3_fu     = round(diag_fu.quantile(0.75), 1) if len(diag_fu) else 0.0
+        bad_overall = int((overall_pop["overall_follow_up_years"] < 0).sum())
+        if bad_overall:
+            print(f"  WARNING: {bad_overall} patients excluded from Overall follow-up — start date after follow-up end (data error)")
+            logger.warning(f"Demographics: {bad_overall} patients with start date after Overall follow-up end")
+        overall_fu = overall_pop["overall_follow_up_years"].dropna()
+        overall_fu = overall_fu[overall_fu >= 0]
+        overall_median_fu = round(overall_fu.median(), 1) if len(overall_fu) else 0.0
+        overall_q1_fu     = round(overall_fu.quantile(0.25), 1) if len(overall_fu) else 0.0
+        overall_q3_fu     = round(overall_fu.quantile(0.75), 1) if len(overall_fu) else 0.0
 
         print(f"  Total patients   : {total:,}")
         print(f"  Deceased         : {deceased_total:,}")
         print(f"  Adults           : {adults_total:,}  |  Children: {children_total:,}")
         if unknown_age:
             print(f"  Unknown age      : {unknown_age:,}")
-        print(f"  Median follow-up to last result : {median_fu} yrs (IQR {q1_fu}–{q3_fu})")
-        print(f"  Median follow-up (diagnosis)    : {diag_median_fu} yrs (IQR {diag_q1_fu}–{diag_q3_fu}) — {len(diag_fu):,} patients with a diagnosis date")
+        print(f"  Median Overall follow-up : {overall_median_fu} yrs (IQR {overall_q1_fu}–{overall_q3_fu}) — {len(overall_fu):,} patients")
 
         # Completeness variables
         demo_results = []
@@ -317,7 +303,7 @@ def run():
         """, conn)
         counts_map = counts_df.set_index("group_id").to_dict(orient="index")
 
-        # Follow-up per cohort — join pre-aggregated last_activity, no big table joins
+        # Follow-up per cohort — enrolment/death per patient per cohort membership
         print("  Calculating cohort follow-up...")
         cohort_patients_df = pd.read_sql(f"""
             SELECT
@@ -346,80 +332,44 @@ def run():
             cohort_patients_df["patient_id"].map(enrolment_map)
         )
         cohort_patients_df["date_of_death"] = pd.to_datetime(cohort_patients_df["date_of_death"], errors="coerce", utc=True).dt.tz_localize(None)
-        cohort_patients_df["last_activity"] = cohort_patients_df["patient_id"].map(last_activity_map)
-        # last_activity before enrolment = batch upload of historical data → use today
-        # death before enrolment = genuine data error → exclude and warn
-        cohort_patients_df["last_activity_adj"] = cohort_patients_df.apply(
-            lambda r: today if pd.notna(r["last_activity"]) and r["last_activity"] < r["enrolled"] else r["last_activity"],
-            axis=1,
-        )
-        cohort_patients_df["end_date"] = cohort_patients_df["date_of_death"].fillna(
-            cohort_patients_df["last_activity_adj"].fillna(today)
-        )
-        cohort_patients_df["follow_up_years"] = (
-            (cohort_patients_df["end_date"] - cohort_patients_df["enrolled"]).dt.days / 365.25
-        )
-        # Warn per cohort if any genuine errors remain (death before enrolment)
-        bad = cohort_patients_df[cohort_patients_df["follow_up_years"] < 0].groupby("group_id").size()
-        if not bad.empty:
-            print(f"  WARNING: {bad.sum()} patients excluded across {len(bad)} cohort(s) — date_of_death before enrolment (data error)")
-            logger.warning(f"Cohorts: {bad.sum()} patients with date_of_death before enrolment: {bad.to_dict()}")
 
-        # Diagnosis-based follow-up: diagnosis date → earliest of today, death, withdrawal.
-        # Computed here (before the enrolment-based filter below) so a bad enrolment
-        # follow-up doesn't also wrongly discard an otherwise-valid diagnosis follow-up.
-        cohort_patients_df["diagnosis_date"]  = cohort_patients_df["patient_id"].map(diagnosis_date_map)
-        cohort_patients_df["withdrawal_date"] = cohort_patients_df["patient_id"].map(withdrawal_date_map)
-        cohort_patients_df["diag_followup_end"] = cohort_patients_df.apply(
-            lambda r: min([d for d in [today, r["date_of_death"], r["withdrawal_date"]] if pd.notna(d)]),
-            axis=1,
-        )
-        cohort_patients_df["diag_follow_up_years"] = (
-            (cohort_patients_df["diag_followup_end"] - cohort_patients_df["diagnosis_date"]).dt.days / 365.25
-        )
-        bad_diag = cohort_patients_df[cohort_patients_df["diag_follow_up_years"] < 0].groupby("group_id").size()
-        if not bad_diag.empty:
-            print(f"  WARNING: {bad_diag.sum()} patients excluded across {len(bad_diag)} cohort(s) — diagnosis date after follow-up end (data error)")
-            logger.warning(f"Cohorts: {bad_diag.sum()} patients with diagnosis date after follow-up end: {bad_diag.to_dict()}")
-
-        diag_valid_df = cohort_patients_df[
-            cohort_patients_df["diag_follow_up_years"].notna() & (cohort_patients_df["diag_follow_up_years"] >= 0)
-        ]
-        diag_fu_map = (
-            diag_valid_df.groupby("group_id")["diag_follow_up_years"]
-            .agg(
-                diag_median_fu=lambda x: round(x.median(), 1),
-                diag_q1_fu    =lambda x: round(x.quantile(0.25), 1),
-                diag_q3_fu    =lambda x: round(x.quantile(0.75), 1),
-                diag_fu_count ="count",
-            )
-            .to_dict(orient="index")
-        )
-
-        # Capture full cohort patient set BEFORE dropping negative follow-up rows
-        # so KF / transplant denominators = 39,178, not 39,160
+        # Full cohort patient set (all patients, including withdrawn) — this is
+        # the true membership universe used for KF / transplant denominators.
         all_cohort_pids       = set(cohort_patients_df["patient_id"])
         total_cohort_patients = len(all_cohort_pids)
-
-        # Same reasoning applies to demographics completeness: a bad death-before-
-        # enrolment date shouldn't make an otherwise fully-complete patient count as
-        # missing on every demographic field below. Capture per-cohort patient sets
-        # now, before the follow-up filter, not after.
         cohort_pid_map = (
             cohort_patients_df.groupby("group_id")["patient_id"]
             .apply(set)
             .to_dict()
         )
 
-        cohort_patients_df = cohort_patients_df[cohort_patients_df["follow_up_years"] >= 0]
+        # ── Start date per patient per cohort: diagnosis date, else cohort entry ──
+        cohort_patients_df["diagnosis_date"]  = cohort_patients_df["patient_id"].map(diagnosis_date_map)
+        cohort_patients_df["withdrawal_date"] = cohort_patients_df["patient_id"].map(withdrawal_date_map)
+        cohort_patients_df["start_date"]      = cohort_patients_df["diagnosis_date"].fillna(cohort_patients_df["enrolled"])
+        cohort_withdrawn_mask = cohort_patients_df["withdrawal_date"].notna()
 
-        fu_map = (
-            cohort_patients_df.groupby("group_id")["follow_up_years"]
+        # ── Overall follow-up per cohort: start date → death or today, withdrawn excluded ──
+        overall_cohort_df = cohort_patients_df[~cohort_withdrawn_mask].copy()
+        overall_cohort_df["overall_end"] = overall_cohort_df["date_of_death"].fillna(today)
+        overall_cohort_df["overall_follow_up_years"] = (
+            (overall_cohort_df["overall_end"] - overall_cohort_df["start_date"]).dt.days / 365.25
+        )
+        bad_overall = overall_cohort_df[overall_cohort_df["overall_follow_up_years"] < 0].groupby("group_id").size()
+        if not bad_overall.empty:
+            print(f"  WARNING: {bad_overall.sum()} patients excluded from Overall follow-up across {len(bad_overall)} cohort(s) — start date after follow-up end (data error)")
+            logger.warning(f"Cohorts: {bad_overall.sum()} patients with start date after Overall follow-up end: {bad_overall.to_dict()}")
+
+        overall_valid_df = overall_cohort_df[
+            overall_cohort_df["overall_follow_up_years"].notna() & (overall_cohort_df["overall_follow_up_years"] >= 0)
+        ]
+        overall_fu_map = (
+            overall_valid_df.groupby("group_id")["overall_follow_up_years"]
             .agg(
-                median_fu=lambda x: round(x.median(), 1),
-                q1_fu    =lambda x: round(x.quantile(0.25), 1),
-                q3_fu    =lambda x: round(x.quantile(0.75), 1),
-                fu_count ="count",
+                overall_median_fu=lambda x: round(x.median(), 1),
+                overall_q1_fu    =lambda x: round(x.quantile(0.25), 1),
+                overall_q3_fu    =lambda x: round(x.quantile(0.75), 1),
+                overall_fu_count ="count",
             )
             .to_dict(orient="index")
         )
@@ -546,10 +496,55 @@ def run():
         # timestamptz — normalise to tz-naive, same as every other date column in
         # this file, so downstream comparisons don't mix aware/naive timestamps.
         kf_df["kf_date"] = pd.to_datetime(kf_df["kf_date"], errors="coerce", utc=True).dt.tz_localize(None)
-        # Restrict to the 39,178 cohort patients only (excludes excluded groups)
+        # Restrict to the cohort patients only (excludes excluded groups)
         kf_patient_ids = set(kf_df["patient_id"]) & all_cohort_pids
         kf_date_map    = kf_df.set_index("patient_id")["kf_date"].to_dict()
         print(f"  {len(kf_patient_ids):,} patients with Kidney Failure events (within cohort patients)")
+
+        # ── Follow-up pre-KRT: start date → KRT (kidney failure)/death/today,
+        #    withdrawn excluded. Patients already at/past KRT by their start date
+        #    (diagnosis or cohort entry) yield a negative window and are excluded
+        #    from the count — this is expected, not a data error. ──
+        print("  Calculating Follow-up pre-KRT...")
+
+        demographics["kf_date"] = demographics["patient_id"].map(kf_date_map)
+        pre_krt_pop = demographics[~withdrawn_mask].copy()
+        pre_krt_pop["pre_krt_end"] = pre_krt_pop.apply(
+            lambda r: min([d for d in [today, r["date_of_death"], r["kf_date"]] if pd.notna(d)]),
+            axis=1,
+        )
+        pre_krt_pop["pre_krt_follow_up_years"] = (
+            (pre_krt_pop["pre_krt_end"] - pre_krt_pop["start_date"]).dt.days / 365.25
+        )
+        pre_krt_fu = pre_krt_pop["pre_krt_follow_up_years"].dropna()
+        pre_krt_fu = pre_krt_fu[pre_krt_fu >= 0]
+        pre_krt_median_fu = round(pre_krt_fu.median(), 1) if len(pre_krt_fu) else 0.0
+        pre_krt_q1_fu     = round(pre_krt_fu.quantile(0.25), 1) if len(pre_krt_fu) else 0.0
+        pre_krt_q3_fu     = round(pre_krt_fu.quantile(0.75), 1) if len(pre_krt_fu) else 0.0
+
+        cohort_patients_df["kf_date"] = cohort_patients_df["patient_id"].map(kf_date_map)
+        pre_krt_cohort_df = cohort_patients_df[~cohort_withdrawn_mask].copy()
+        pre_krt_cohort_df["pre_krt_end"] = pre_krt_cohort_df.apply(
+            lambda r: min([d for d in [today, r["date_of_death"], r["kf_date"]] if pd.notna(d)]),
+            axis=1,
+        )
+        pre_krt_cohort_df["pre_krt_follow_up_years"] = (
+            (pre_krt_cohort_df["pre_krt_end"] - pre_krt_cohort_df["start_date"]).dt.days / 365.25
+        )
+        pre_krt_valid_df = pre_krt_cohort_df[
+            pre_krt_cohort_df["pre_krt_follow_up_years"].notna() & (pre_krt_cohort_df["pre_krt_follow_up_years"] >= 0)
+        ]
+        pre_krt_fu_map = (
+            pre_krt_valid_df.groupby("group_id")["pre_krt_follow_up_years"]
+            .agg(
+                pre_krt_median_fu=lambda x: round(x.median(), 1),
+                pre_krt_q1_fu    =lambda x: round(x.quantile(0.25), 1),
+                pre_krt_q3_fu    =lambda x: round(x.quantile(0.75), 1),
+                pre_krt_fu_count ="count",
+            )
+            .to_dict(orient="index")
+        )
+        print(f"  Overall RaDaR — {len(pre_krt_fu):,} patients with a valid Follow-up pre-KRT window")
 
         # ── Biochemistry (creatinine/proteinuria) results, pre-KRT ──
         # Creatinine = observation_id 46. Proteinuria = ACR (1) + PCR (2) combined.
@@ -639,23 +634,26 @@ def run():
         print(f"  [ℹ] TRANSPLANT_SINGLE: {single_tx_a:,}  |  TRANSPLANT_MULTIPLE: {multi_tx_a:,}")
         demo_results.append({
             "id":          "A.16",
-            "name":        "FOLLOW_UP_TO_LAST_RESULT",
+            "name":        "OVERALL_FOLLOW_UP",
             "pct_missing": None,
             "missing":     None,
-            "total":       len(fu),
+            "total":       len(overall_fu),
             "required":    False,
-            "desc":        f"Median follow-up to last result: {median_fu} yrs (IQR {q1_fu}–{q3_fu} yrs) — from cohort recruitment to last activity in results or medications",
+            "desc":        (
+                f"Median follow-up: {overall_median_fu} yrs (IQR {overall_q1_fu}–{overall_q3_fu} yrs) — "
+                f"from diagnosis date (or cohort entry if unavailable) until death or the current date"
+            ),
         })
         demo_results.append({
             "id":          "A.17",
-            "name":        "FOLLOW_UP",
+            "name":        "FOLLOW_UP_PRE_KRT",
             "pct_missing": None,
             "missing":     None,
-            "total":       len(diag_fu),
+            "total":       len(pre_krt_fu),
             "required":    False,
             "desc":        (
-                f"Median follow-up: {diag_median_fu} yrs (IQR {diag_q1_fu}–{diag_q3_fu} yrs) — "
-                f"from primary diagnosis date to the earliest of today, date of death, or withdrawal date"
+                f"Median follow-up: {pre_krt_median_fu} yrs (IQR {pre_krt_q1_fu}–{pre_krt_q3_fu} yrs) — "
+                f"from diagnosis (or cohort entry if unavailable) until KRT/death or the current date"
             ),
         })
 
@@ -666,12 +664,16 @@ def run():
             "stats": {
                 "adults":    adults_total,
                 "children":  children_total,
-                "median_fu": median_fu,
-                "q1_fu":     q1_fu,
-                "q3_fu":     q3_fu,
+                "median_fu": overall_median_fu,
+                "q1_fu":     overall_q1_fu,
+                "q3_fu":     overall_q3_fu,
             },
         }
         print(f"  Section A done — {len(demo_results)} variables\n")
+
+        # Cohorts excluded from "Follow up pre KRT" / Biochemistry Metadata
+        no_pre_krt_names = {n.strip().lower() for n in NO_PRE_KRT_FOLLOWUP_COHORTS}
+        no_biochem_names = {n.strip().lower() for n in NO_BIOCHEMISTRY_COHORTS}
 
         # Build cohort sections
         cohort_sections = []
@@ -679,23 +681,26 @@ def run():
             group_id = int(row["id"])
             db_name  = row["name"]
             closed   = db_name.lower().startswith("z ")
+            name_lower        = db_name.strip().lower()
+            skip_pre_krt      = name_lower in no_pre_krt_names
+            skip_biochemistry = name_lower in no_biochem_names
 
             counts        = counts_map.get(group_id, {})
             patient_count = int(counts.get("patient_count", 0))
             adults        = int(counts.get("adults",        0))
             children      = int(counts.get("children",      0))
 
-            fu_stats  = fu_map.get(group_id, {})
-            median_fu = fu_stats.get("median_fu", 0)
-            q1_fu     = fu_stats.get("q1_fu",     0)
-            q3_fu     = fu_stats.get("q3_fu",     0)
-            fu_count  = int(fu_stats.get("fu_count", 0))
+            overall_stats  = overall_fu_map.get(group_id, {})
+            overall_median = overall_stats.get("overall_median_fu", 0)
+            overall_q1     = overall_stats.get("overall_q1_fu",     0)
+            overall_q3     = overall_stats.get("overall_q3_fu",     0)
+            overall_count  = int(overall_stats.get("overall_fu_count", 0))
 
-            diag_fu_stats  = diag_fu_map.get(group_id, {})
-            diag_median_fu = diag_fu_stats.get("diag_median_fu", 0)
-            diag_q1_fu     = diag_fu_stats.get("diag_q1_fu",     0)
-            diag_q3_fu     = diag_fu_stats.get("diag_q3_fu",     0)
-            diag_fu_count  = int(diag_fu_stats.get("diag_fu_count", 0))
+            pre_krt_stats  = pre_krt_fu_map.get(group_id, {})
+            pre_krt_median = pre_krt_stats.get("pre_krt_median_fu", 0)
+            pre_krt_q1     = pre_krt_stats.get("pre_krt_q1_fu",     0)
+            pre_krt_q3     = pre_krt_stats.get("pre_krt_q3_fu",     0)
+            pre_krt_count  = int(pre_krt_stats.get("pre_krt_fu_count", 0))
 
             # ── Demographics completeness for this cohort ──
             cohort_pids     = cohort_pid_map.get(group_id, set())
@@ -767,25 +772,6 @@ def run():
             single_tx_c = int(sum(1 for pid in cohort_pids if transplant_count_map.get(pid, 0) == 1))
             multi_tx_c  = int(sum(1 for pid in cohort_pids if transplant_count_map.get(pid, 0) >= 2))
 
-            # ── Biochemistry pre-KRT — denominator is all patients in the cohort ──
-            cohort_pids_list  = list(cohort_pids)
-            cohort_creat_cnt  = creatinine_pre_counts.reindex(cohort_pids_list,  fill_value=0)
-            cohort_prot_cnt   = proteinuria_pre_counts.reindex(cohort_pids_list, fill_value=0)
-
-            creatinine_n_patients   = int((cohort_creat_cnt >= 1).sum())
-            proteinuria_n_patients  = int((cohort_prot_cnt  >= 1).sum())
-            creatinine_total_results  = int(cohort_creat_cnt.sum())
-            proteinuria_total_results = int(cohort_prot_cnt.sum())
-
-            creat_nonzero = cohort_creat_cnt[cohort_creat_cnt >= 1]
-            prot_nonzero  = cohort_prot_cnt[cohort_prot_cnt >= 1]
-            creat_median = round(creat_nonzero.median(), 1) if len(creat_nonzero) else 0
-            creat_q1     = round(creat_nonzero.quantile(0.25), 1) if len(creat_nonzero) else 0
-            creat_q3     = round(creat_nonzero.quantile(0.75), 1) if len(creat_nonzero) else 0
-            prot_median  = round(prot_nonzero.median(), 1) if len(prot_nonzero) else 0
-            prot_q1      = round(prot_nonzero.quantile(0.25), 1) if len(prot_nonzero) else 0
-            prot_q3      = round(prot_nonzero.quantile(0.75), 1) if len(prot_nonzero) else 0
-
             variables = [
                 {
                     "id": f"{letter}.total",   "name": "TOTAL_PATIENTS",
@@ -830,26 +816,53 @@ def run():
                     "desc": f"Patients with 2 or more transplants — {multi_tx_c:,} of {patient_count:,}",
                 },
                 {
-                    "id": f"{letter}.followup_last_result", "name": "FOLLOW_UP_TO_LAST_RESULT",
-                    "pct_missing": None, "missing": None, "total": fu_count,
-                    "required": False,
-                    "desc": f"Median follow-up to last result: {median_fu} yrs (IQR {q1_fu}–{q3_fu} yrs) — from cohort recruitment to last activity in results or medications",
-                },
-                {
-                    "id": f"{letter}.followup", "name": "FOLLOW_UP",
-                    "pct_missing": None, "missing": None, "total": diag_fu_count,
+                    "id": f"{letter}.overall_followup", "name": "OVERALL_FOLLOW_UP",
+                    "pct_missing": None, "missing": None, "total": overall_count,
                     "required": False,
                     "desc": (
-                        f"Median follow-up: {diag_median_fu} yrs (IQR {diag_q1_fu}–{diag_q3_fu} yrs) — "
-                        f"from primary diagnosis date to the earliest of today, date of death, or withdrawal date"
+                        f"Median follow-up: {overall_median} yrs (IQR {overall_q1}–{overall_q3} yrs) — "
+                        f"from diagnosis date (or cohort entry if unavailable) until death or the current date"
                     ),
                 },
             ]
 
-            cohort_sections.append({
+            if not skip_pre_krt:
+                variables.append({
+                    "id": f"{letter}.followup_pre_krt", "name": "FOLLOW_UP_PRE_KRT",
+                    "pct_missing": None, "missing": None, "total": pre_krt_count,
+                    "required": False,
+                    "desc": (
+                        f"Median follow-up: {pre_krt_median} yrs (IQR {pre_krt_q1}–{pre_krt_q3} yrs) — "
+                        f"from diagnosis (or cohort entry if unavailable) until KRT/death or the current date"
+                    ),
+                })
+
+            section = {
                 "section": letter, "title": db_name,
                 "closed": closed,  "variables": variables,
-                "biochemistry": {
+            }
+
+            if not skip_biochemistry:
+                # ── Biochemistry pre-KRT — denominator is all patients in the cohort ──
+                cohort_pids_list  = list(cohort_pids)
+                cohort_creat_cnt  = creatinine_pre_counts.reindex(cohort_pids_list,  fill_value=0)
+                cohort_prot_cnt   = proteinuria_pre_counts.reindex(cohort_pids_list, fill_value=0)
+
+                creatinine_n_patients   = int((cohort_creat_cnt >= 1).sum())
+                proteinuria_n_patients  = int((cohort_prot_cnt  >= 1).sum())
+                creatinine_total_results  = int(cohort_creat_cnt.sum())
+                proteinuria_total_results = int(cohort_prot_cnt.sum())
+
+                creat_nonzero = cohort_creat_cnt[cohort_creat_cnt >= 1]
+                prot_nonzero  = cohort_prot_cnt[cohort_prot_cnt >= 1]
+                creat_median = round(creat_nonzero.median(), 1) if len(creat_nonzero) else 0
+                creat_q1     = round(creat_nonzero.quantile(0.25), 1) if len(creat_nonzero) else 0
+                creat_q3     = round(creat_nonzero.quantile(0.75), 1) if len(creat_nonzero) else 0
+                prot_median  = round(prot_nonzero.median(), 1) if len(prot_nonzero) else 0
+                prot_q1      = round(prot_nonzero.quantile(0.25), 1) if len(prot_nonzero) else 0
+                prot_q3      = round(prot_nonzero.quantile(0.75), 1) if len(prot_nonzero) else 0
+
+                section["biochemistry"] = {
                     "creatinine": {
                         "count": creatinine_n_patients, "total": patient_count,
                         "total_results": creatinine_total_results,
@@ -862,8 +875,9 @@ def run():
                         "median_per_patient": prot_median,
                         "q1_per_patient": prot_q1, "q3_per_patient": prot_q3,
                     },
-                },
-            })
+                }
+
+            cohort_sections.append(section)
 
             closed_tag = " [CLOSED]" if closed else ""
             print(f"  {letter:>2}  {db_name[:50]:<50}  {patient_count:>5} total  {adults:>5} adults  {children:>4} children{closed_tag}")

@@ -31,8 +31,8 @@ def render_content(data, _expand, _collapse):
                 html.Span("Run the analytics script first:"),
                 html.Br(),
                 html.Code(
-                    "python -m analytics.demographics_completeness",
-                    style={"background": "#f0efe9", "padding": "4px 8px",
+                    "python -m analytics.run_all",
+                    style={"background": "var(--surface-2)", "padding": "4px 8px",
                            "borderRadius": "4px", "fontSize": "12px"},
                 ),
             ], className="state-box"),

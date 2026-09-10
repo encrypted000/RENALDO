@@ -43,7 +43,7 @@ def _total_patients(data: list) -> str:
 def load_data(_n_clicks):
     data = _load_json()
     if not data:
-        return None, "No data found", "—", "Run: python -m analytics.demographics_completeness"
+        return None, "No data found", "—", "Run: python -m analytics.run_all"
     now       = datetime.now().strftime("%d/%m/%Y %H:%M")
     total_str = _total_patients(data)
     return data, now, total_str, f"Last loaded: {now}"
