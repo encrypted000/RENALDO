@@ -21,16 +21,7 @@ def _section_pct_complete(variables: list) -> int:
 def _section_header(letter: str, title: str, n_vars: int,
                     pct_complete: int = None, closed: bool = False,
                     small_n: bool = False) -> html.Div:
-    closed_badge = html.Span(
-        "CLOSED",
-        style={
-            "fontSize": "11px",
-            "background": "rgba(255,255,255,0.2)",
-            "padding": "1px 6px",
-            "borderRadius": "3px",
-            "marginLeft": "6px",
-        }
-    ) if closed else None
+    closed_badge = html.Span("CLOSED", className="status-badge closed") if closed else None
 
     bar = html.Div([
         html.Div(className="sec-bar-bg", children=[
@@ -61,48 +52,22 @@ def _section_header(letter: str, title: str, n_vars: int,
 def _coming_soon_body() -> html.Div:
     return html.Div([
         html.Strong("Variables coming soon"),
-        html.Div(
-            "Data completeness for this cohort will be added in a future update.",
-            style={"fontSize": "11px", "marginTop": "4px"},
-        ),
-    ], style={
-        "padding":    "28px 16px",
-        "textAlign":  "center",
-        "color":      "#6b6b6b",
-        "borderTop":  "0.5px solid #e0ddd8",
-        "background": "#fafaf8",
-    })
+        html.P("Data completeness for this cohort will be added in a future update."),
+    ], className="empty-state")
 
 
 def _small_n_body() -> html.Div:
     return html.Div([
         html.Strong(f"Cohort has fewer than {SMALL_N_THRESHOLD} patients"),
-        html.Div(
+        html.P(
             "To protect patient confidentiality, detailed completeness data is not "
-            "shown for cohorts this small.",
-            style={"fontSize": "11px", "marginTop": "4px"},
+            "shown for cohorts this small."
         ),
-    ], style={
-        "padding":    "28px 16px",
-        "textAlign":  "center",
-        "color":      "#6b46c1",
-        "borderTop":  "0.5px solid #ddd3f5",
-        "background": "#f5f0ff",
-    })
+    ], className="empty-state low-n")
 
 
 def _small_n_badge() -> html.Span:
-    return html.Span(
-        "LOW N",
-        style={
-            "fontSize":     "11px",
-            "background":   "#6b46c1",
-            "color":        "#fff",
-            "padding":      "1px 6px",
-            "borderRadius": "3px",
-            "marginLeft":   "6px",
-        }
-    )
+    return html.Span("LOW N", className="status-badge low-n")
 
 
 def _biochemistry_body(sec: dict, small_n: bool) -> html.Div:
@@ -113,17 +78,8 @@ def _biochemistry_body(sec: dict, small_n: bool) -> html.Div:
     if not biochem:
         return html.Div([
             html.Strong("Biochemistry metadata coming soon"),
-            html.Div(
-                "Creatinine and proteinuria counts pre-KRT for this cohort will be "
-                "added in a future update.",
-                style={"fontSize": "11px", "marginTop": "4px"},
-            ),
-        ], style={
-            "padding":    "20px 16px",
-            "textAlign":  "center",
-            "color":      "#6b6b6b",
-            "background": "#fafaf8",
-        })
+            html.P("Creatinine and proteinuria counts pre-KRT for this cohort will be added in a future update."),
+        ], className="empty-state")
 
     blocks = []
     for key, label in (("creatinine", "Creatinine"), ("proteinuria", "Proteinuria")):
@@ -138,32 +94,23 @@ def _biochemistry_body(sec: dict, small_n: bool) -> html.Div:
         q3      = stat.get("q3_per_patient", 0)
 
         if total == 0:
-            lines = [html.Div("No patients recorded in this cohort", style={"fontSize": "12px", "color": "var(--text2)"})]
+            lines = [html.Div("No patients recorded in this cohort", className="biochem-line")]
         else:
             pct = round(count / total * 100, 1)
             lines = [
-                html.Div(
-                    f"{count:,} / {total:,} patients ({pct}%) had at least one result pre-KRT",
-                    style={"fontSize": "12px", "color": "var(--text2)"},
-                ),
-                html.Div(
-                    f"{n_results:,} total results recorded pre-KRT across the cohort",
-                    style={"fontSize": "12px", "color": "var(--text2)", "marginTop": "2px"},
-                ),
-                html.Div(
-                    f"Median {median} results per patient (IQR {q1}–{q3}) among patients with a result",
-                    style={"fontSize": "12px", "color": "var(--text2)", "marginTop": "2px"},
-                ),
+                html.Div(f"{count:,} / {total:,} patients ({pct}%) had at least one result pre-KRT", className="biochem-line"),
+                html.Div(f"{n_results:,} total results recorded pre-KRT across the cohort", className="biochem-line"),
+                html.Div(f"Median {median} results per patient (IQR {q1}–{q3}) among patients with a result", className="biochem-line"),
             ]
 
         blocks.append(
             html.Div([
-                html.Div(label, style={"fontWeight": "600", "fontSize": "12.5px", "marginBottom": "4px"}),
+                html.Div(label, className="biochem-label"),
                 *lines,
-            ], style={"padding": "8px 0"})
+            ], className="biochem-block")
         )
 
-    return html.Div(blocks, style={"padding": "14px 16px"})
+    return html.Div(blocks, style={"padding": "6px 16px 14px"})
 
 
 def _biochemistry_dropdown(sec: dict, letter: str, small_n: bool) -> dbc.Accordion:
@@ -183,22 +130,10 @@ def _biochemistry_dropdown(sec: dict, letter: str, small_n: bool) -> dbc.Accordi
 
 def _cohort_divider(n: int) -> html.Div:
     return html.Div([
-        html.Div(style={"flex": "1", "height": "1px", "background": "#e2e6ea"}),
-        html.Span(f"Cohort Groups ({n})", style={
-            "fontSize":      "11px",
-            "fontWeight":    "600",
-            "color":         "#8a97a8",
-            "textTransform": "uppercase",
-            "letterSpacing": "0.08em",
-            "padding":       "0 12px",
-            "whiteSpace":    "nowrap",
-        }),
-        html.Div(style={"flex": "1", "height": "1px", "background": "#e2e6ea"}),
-    ], style={
-        "display":    "flex",
-        "alignItems": "center",
-        "margin":     "28px 0 16px",
-    })
+        html.Div(className="section-divider-line"),
+        html.Span(f"Cohort Groups ({n})", className="section-divider-label"),
+        html.Div(className="section-divider-line"),
+    ], className="section-divider")
 
 
 def _build_items(data: list, active_all: bool = False, demo_open: bool = False):
@@ -243,7 +178,8 @@ def _build_items(data: list, active_all: bool = False, demo_open: bool = False):
         else:
             body = _coming_soon_body()
 
-        body = html.Div([body, _biochemistry_dropdown(sec, letter, small_n)])
+        if sec.get("biochemistry") is not None:
+            body = html.Div([body, _biochemistry_dropdown(sec, letter, small_n)])
 
         cohort_items.append(
             dbc.AccordionItem(
