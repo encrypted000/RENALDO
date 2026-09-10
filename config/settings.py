@@ -1,7 +1,14 @@
 from sshtunnel import SSHTunnelForwarder
+from dotenv import load_dotenv
 import paramiko
 import psycopg2
 import os
+
+# Loads a local .env file if one exists (see .env.example) — a no-op if it
+# doesn't, so this is safe in production where Render injects env vars
+# directly rather than via a file.
+load_dotenv()
+
 
 def get_tunnel():
     tunnel = SSHTunnelForwarder(

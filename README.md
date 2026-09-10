@@ -84,7 +84,15 @@ pip install -r requirements-dev.txt
 ```
 
 ### 2. Set environment variables
-The analytics pipeline connects to RaDaR via SSH tunnel. Set these once:
+The analytics pipeline connects to RaDaR via SSH tunnel.
+
+**Option A — `.env` file (recommended for local dev):**
+```bash
+cp .env.example .env
+# then fill in real values in .env — it's gitignored, never committed
+```
+
+**Option B — permanent Windows environment variables:**
 ```bash
 setx RADAR_SSH_HOST "your_ssh_host"
 setx RADAR_SSH_PORT "22"
