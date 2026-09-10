@@ -75,18 +75,10 @@ body {
 }
 
 .logo-badge {
-  width:            52px;
-  height:           52px;
-  background:       var(--accent);
-  border-radius:    var(--radius);
-  display:          flex;
-  align-items:      center;
-  justify-content:  center;
-  font-size:        17px;
-  font-weight:      700;
-  letter-spacing:   -0.3px;
-  color:            #fff;
-  flex-shrink:      0;
+  width:       60px;
+  height:      60px;
+  object-fit:  contain;
+  flex-shrink: 0;
 }
 
 .header h1 {
@@ -559,9 +551,8 @@ body {
   .header-logo { gap: var(--space-2); }
 
   .logo-badge {
-    width:  32px;
-    height: 32px;
-    font-size: 11px;
+    width:  40px;
+    height: 40px;
   }
 
   .header h1 { font-size: 17px; }

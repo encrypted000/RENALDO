@@ -5,10 +5,10 @@ def create_header():
     return html.Div([
         html.Div([
             html.Div([
-                html.Div("RD", className="logo-badge"),
+                html.Img(src="/assets/logo.png", className="logo-badge"),
                 html.Div([
                     html.H1("RENALDO"),
-                    html.Div("RaDaR Data Completeness · UK Kidney Association", className="header-sub"),
+                    html.Div("RarE kidNey dAta compLeteness DashbOard · UK Kidney Association", className="header-sub"),
                 ]),
             ], className="header-logo"),
 
