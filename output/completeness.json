@@ -8,7 +8,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 1,
-        "total": 40592,
+        "total": 40595,
         "required": true,
         "desc": "Patient first name"
       },
@@ -17,7 +17,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 1,
-        "total": 40592,
+        "total": 40595,
         "required": true,
         "desc": "Patient last name"
       },
@@ -26,7 +26,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 40592,
+        "total": 40595,
         "required": true,
         "desc": "Date of birth"
       },
@@ -35,16 +35,16 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 4064,
-        "total": 40592,
+        "total": 40595,
         "required": false,
-        "desc": "Date of death \u2014 4,064 of 40,592 patients (10.0%) have a recorded death date"
+        "desc": "Date of death \u2014 4,064 of 40,595 patients (10.0%) have a recorded death date"
       },
       {
         "id": "A.6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 40592,
+        "total": 40595,
         "required": true,
         "desc": "Gender"
       },
@@ -52,8 +52,8 @@
         "id": "A.7",
         "name": "ETHNICITY",
         "pct_missing": 19.4,
-        "missing": 7865,
-        "total": 40592,
+        "missing": 7866,
+        "total": 40595,
         "required": true,
         "desc": "Ethnic origin"
       },
@@ -62,7 +62,7 @@
         "name": "EMAIL_ADDRESS",
         "pct_missing": 31.7,
         "missing": 12871,
-        "total": 40592,
+        "total": 40595,
         "required": false,
         "desc": "Email address"
       },
@@ -71,7 +71,7 @@
         "name": "Primary Renal Diagnosis",
         "pct_missing": 19.7,
         "missing": 7990,
-        "total": 40592,
+        "total": 40595,
         "required": true,
         "desc": "Primary Renal Diagnosis"
       },
@@ -80,7 +80,7 @@
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 4,
-        "total": 40592,
+        "total": 40595,
         "required": true,
         "desc": "NHS number"
       },
@@ -89,34 +89,34 @@
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
         "missing": 13150,
-        "total": 40592,
+        "total": 40595,
         "required": false,
-        "desc": "Kidney Failure \u2014 13,150 of 40,592 patients (32.4%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery."
+        "desc": "Kidney Failure \u2014 13,150 of 40,595 patients (32.4%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery."
       },
       {
         "id": "A.14",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 8223,
-        "total": 40592,
+        "total": 40595,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 8,223 of 40,592"
+        "desc": "Patients with exactly 1 transplant \u2014 8,223 of 40,595"
       },
       {
         "id": "A.15",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 1001,
-        "total": 40592,
+        "total": 40595,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 1,001 of 40,592"
+        "desc": "Patients with 2 or more transplants \u2014 1,001 of 40,595"
       },
       {
         "id": "A.16",
         "name": "OVERALL_FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 40127,
+        "total": 40130,
         "required": false,
         "desc": "Median follow-up: 10.2 yrs (IQR 6.8\u201316.7 yrs) \u2014 from diagnosis date (or cohort entry if unavailable) until death or the current date"
       },
@@ -125,14 +125,14 @@
         "name": "FOLLOW_UP_PRE_KRT",
         "pct_missing": null,
         "missing": null,
-        "total": 36197,
+        "total": 36200,
         "required": false,
         "desc": "Median follow-up: 8.8 yrs (IQR 4.2\u201313.7 yrs) \u2014 from diagnosis (or cohort entry if unavailable) until KRT/death or the current date"
       }
     ],
     "stats": {
-      "adults": 37991,
-      "children": 2601,
+      "adults": 37993,
+      "children": 2602,
       "median_fu": 10.2,
       "q1_fu": 6.8,
       "q3_fu": 16.7
@@ -304,7 +304,13 @@
         "total_results": 21524,
         "median_per_patient": 13.0,
         "q1_per_patient": 5.0,
-        "q3_per_patient": 27.0
+        "q3_per_patient": 27.0,
+        "time_to_krt": {
+          "median": 8.2,
+          "q1": 3.5,
+          "q3": 11.8,
+          "count": 955
+        }
       },
       "proteinuria": {
         "count": 810,
@@ -312,7 +318,13 @@
         "total_results": 9019,
         "median_per_patient": 7.0,
         "q1_per_patient": 3.0,
-        "q3_per_patient": 14.0
+        "q3_per_patient": 14.0,
+        "time_to_krt": {
+          "median": 7.8,
+          "q1": 3.8,
+          "q3": 11.3,
+          "count": 810
+        }
       }
     }
   },
@@ -482,7 +494,13 @@
         "total_results": 223,
         "median_per_patient": 10.0,
         "q1_per_patient": 3.2,
-        "q3_per_patient": 33.0
+        "q3_per_patient": 33.0,
+        "time_to_krt": {
+          "median": 9.5,
+          "q1": 8.1,
+          "q3": 11.2,
+          "count": 10
+        }
       },
       "proteinuria": {
         "count": 6,
@@ -490,7 +508,13 @@
         "total_results": 27,
         "median_per_patient": 2.0,
         "q1_per_patient": 2.0,
-        "q3_per_patient": 2.8
+        "q3_per_patient": 2.8,
+        "time_to_krt": {
+          "median": 6.8,
+          "q1": 1.9,
+          "q3": 10.0,
+          "count": 6
+        }
       }
     }
   },
@@ -660,7 +684,13 @@
         "total_results": 11264,
         "median_per_patient": 30.0,
         "q1_per_patient": 10.0,
-        "q3_per_patient": 75.0
+        "q3_per_patient": 75.0,
+        "time_to_krt": {
+          "median": 7.1,
+          "q1": 2.4,
+          "q3": 11.1,
+          "count": 205
+        }
       },
       "proteinuria": {
         "count": 155,
@@ -668,7 +698,13 @@
         "total_results": 2163,
         "median_per_patient": 7.0,
         "q1_per_patient": 2.0,
-        "q3_per_patient": 20.0
+        "q3_per_patient": 20.0,
+        "time_to_krt": {
+          "median": 6.5,
+          "q1": 2.4,
+          "q3": 9.9,
+          "count": 155
+        }
       }
     }
   },
@@ -835,10 +871,16 @@
       "creatinine": {
         "count": 7187,
         "total": 9764,
-        "total_results": 229289,
+        "total_results": 229288,
         "median_per_patient": 23.0,
         "q1_per_patient": 11.0,
-        "q3_per_patient": 43.0
+        "q3_per_patient": 43.0,
+        "time_to_krt": {
+          "median": 8.7,
+          "q1": 4.4,
+          "q3": 12.9,
+          "count": 7187
+        }
       },
       "proteinuria": {
         "count": 4699,
@@ -846,7 +888,13 @@
         "total_results": 36103,
         "median_per_patient": 4.0,
         "q1_per_patient": 2.0,
-        "q3_per_patient": 9.0
+        "q3_per_patient": 9.0,
+        "time_to_krt": {
+          "median": 6.7,
+          "q1": 3.2,
+          "q3": 10.3,
+          "count": 4699
+        }
       }
     }
   },
@@ -1016,7 +1064,13 @@
         "total_results": 5503,
         "median_per_patient": 16.5,
         "q1_per_patient": 7.0,
-        "q3_per_patient": 41.2
+        "q3_per_patient": 41.2,
+        "time_to_krt": {
+          "median": 7.6,
+          "q1": 3.0,
+          "q3": 12.9,
+          "count": 188
+        }
       },
       "proteinuria": {
         "count": 120,
@@ -1024,7 +1078,13 @@
         "total_results": 996,
         "median_per_patient": 5.5,
         "q1_per_patient": 2.0,
-        "q3_per_patient": 10.2
+        "q3_per_patient": 10.2,
+        "time_to_krt": {
+          "median": 6.7,
+          "q1": 2.7,
+          "q3": 11.7,
+          "count": 120
+        }
       }
     }
   },
@@ -1194,7 +1254,13 @@
         "total_results": 9869,
         "median_per_patient": 17.0,
         "q1_per_patient": 6.5,
-        "q3_per_patient": 42.5
+        "q3_per_patient": 42.5,
+        "time_to_krt": {
+          "median": 8.9,
+          "q1": 3.1,
+          "q3": 12.6,
+          "count": 291
+        }
       },
       "proteinuria": {
         "count": 220,
@@ -1202,7 +1268,13 @@
         "total_results": 1506,
         "median_per_patient": 4.0,
         "q1_per_patient": 2.0,
-        "q3_per_patient": 8.0
+        "q3_per_patient": 8.0,
+        "time_to_krt": {
+          "median": 6.5,
+          "q1": 2.8,
+          "q3": 10.4,
+          "count": 220
+        }
       }
     }
   },
@@ -1523,7 +1595,13 @@
         "total_results": 2759,
         "median_per_patient": 36.5,
         "q1_per_patient": 17.5,
-        "q3_per_patient": 75.5
+        "q3_per_patient": 75.5,
+        "time_to_krt": {
+          "median": 3.8,
+          "q1": 1.8,
+          "q3": 8.4,
+          "count": 48
+        }
       },
       "proteinuria": {
         "count": 44,
@@ -1531,7 +1609,13 @@
         "total_results": 411,
         "median_per_patient": 5.0,
         "q1_per_patient": 2.0,
-        "q3_per_patient": 13.0
+        "q3_per_patient": 13.0,
+        "time_to_krt": {
+          "median": 5.0,
+          "q1": 2.3,
+          "q3": 8.6,
+          "count": 44
+        }
       }
     }
   },
@@ -1701,7 +1785,13 @@
         "total_results": 17265,
         "median_per_patient": 11.0,
         "q1_per_patient": 5.0,
-        "q3_per_patient": 35.0
+        "q3_per_patient": 35.0,
+        "time_to_krt": {
+          "median": 2.8,
+          "q1": 2.2,
+          "q3": 4.7,
+          "count": 535
+        }
       },
       "proteinuria": {
         "count": 430,
@@ -1709,7 +1799,13 @@
         "total_results": 3435,
         "median_per_patient": 4.0,
         "q1_per_patient": 2.0,
-        "q3_per_patient": 9.0
+        "q3_per_patient": 9.0,
+        "time_to_krt": {
+          "median": 2.8,
+          "q1": 2.3,
+          "q3": 5.1,
+          "count": 430
+        }
       }
     }
   },
@@ -1874,7 +1970,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 750,
+        "total": 751,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -1892,7 +1988,7 @@
         "name": "CHILDREN",
         "pct_missing": null,
         "missing": null,
-        "total": 467,
+        "total": 468,
         "required": false,
         "desc": "Patients aged under 18"
       },
@@ -1901,7 +1997,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 750,
+        "total": 751,
         "required": true,
         "desc": "Patient first name"
       },
@@ -1910,7 +2006,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 750,
+        "total": 751,
         "required": true,
         "desc": "Patient last name"
       },
@@ -1919,7 +2015,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 750,
+        "total": 751,
         "required": true,
         "desc": "Date of birth"
       },
@@ -1928,16 +2024,16 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 0,
-        "total": 750,
+        "total": 751,
         "required": false,
-        "desc": "Date of death \u2014 0 of 750 patients (0.0%) have a recorded death date"
+        "desc": "Date of death \u2014 0 of 751 patients (0.0%) have a recorded death date"
       },
       {
         "id": "L.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 750,
+        "total": 751,
         "required": true,
         "desc": "Gender"
       },
@@ -1946,7 +2042,7 @@
         "name": "ETHNICITY",
         "pct_missing": 16.8,
         "missing": 126,
-        "total": 750,
+        "total": 751,
         "required": true,
         "desc": "Ethnic origin"
       },
@@ -1955,7 +2051,7 @@
         "name": "EMAIL_ADDRESS",
         "pct_missing": 15.3,
         "missing": 115,
-        "total": 750,
+        "total": 751,
         "required": false,
         "desc": "Email address"
       },
@@ -1964,16 +2060,16 @@
         "name": "Primary Renal Diagnosis",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 750,
+        "total": 751,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 0 of 750 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 0 of 751 patients missing"
       },
       {
         "id": "L.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 750,
+        "total": 751,
         "required": true,
         "desc": "NHS number"
       },
@@ -1982,34 +2078,34 @@
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
         "missing": 126,
-        "total": 750,
+        "total": 751,
         "required": false,
-        "desc": "Kidney Failure \u2014 126 of 750 patients (16.8%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery."
+        "desc": "Kidney Failure \u2014 126 of 751 patients (16.8%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery."
       },
       {
         "id": "L.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 73,
-        "total": 750,
+        "total": 751,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 73 of 750"
+        "desc": "Patients with exactly 1 transplant \u2014 73 of 751"
       },
       {
         "id": "L.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 18,
-        "total": 750,
+        "total": 751,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 18 of 750"
+        "desc": "Patients with 2 or more transplants \u2014 18 of 751"
       },
       {
         "id": "L.overall_followup",
         "name": "OVERALL_FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 749,
+        "total": 750,
         "required": false,
         "desc": "Median follow-up: 10.3 yrs (IQR 5.6\u201317.8 yrs) \u2014 from diagnosis date (or cohort entry if unavailable) until death or the current date"
       },
@@ -2018,7 +2114,7 @@
         "name": "FOLLOW_UP_PRE_KRT",
         "pct_missing": null,
         "missing": null,
-        "total": 740,
+        "total": 741,
         "required": false,
         "desc": "Median follow-up: 8.8 yrs (IQR 4.2\u201315.3 yrs) \u2014 from diagnosis (or cohort entry if unavailable) until KRT/death or the current date"
       }
@@ -2026,19 +2122,31 @@
     "biochemistry": {
       "creatinine": {
         "count": 496,
-        "total": 750,
+        "total": 751,
         "total_results": 22185,
         "median_per_patient": 13.0,
         "q1_per_patient": 3.0,
-        "q3_per_patient": 55.5
+        "q3_per_patient": 55.5,
+        "time_to_krt": {
+          "median": 4.9,
+          "q1": 2.0,
+          "q3": 10.7,
+          "count": 496
+        }
       },
       "proteinuria": {
         "count": 337,
-        "total": 750,
+        "total": 751,
         "total_results": 3874,
         "median_per_patient": 4.0,
         "q1_per_patient": 2.0,
-        "q3_per_patient": 14.0
+        "q3_per_patient": 14.0,
+        "time_to_krt": {
+          "median": 4.0,
+          "q1": 1.7,
+          "q3": 9.2,
+          "count": 337
+        }
       }
     }
   },
@@ -2208,7 +2316,13 @@
         "total_results": 8416,
         "median_per_patient": 44.0,
         "q1_per_patient": 21.5,
-        "q3_per_patient": 79.0
+        "q3_per_patient": 79.0,
+        "time_to_krt": {
+          "median": 9.0,
+          "q1": 4.7,
+          "q3": 13.6,
+          "count": 123
+        }
       },
       "proteinuria": {
         "count": 93,
@@ -2216,7 +2330,13 @@
         "total_results": 1264,
         "median_per_patient": 4.0,
         "q1_per_patient": 2.0,
-        "q3_per_patient": 12.0
+        "q3_per_patient": 12.0,
+        "time_to_krt": {
+          "median": 7.3,
+          "q1": 2.6,
+          "q3": 11.2,
+          "count": 93
+        }
       }
     }
   },
@@ -2230,7 +2350,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 561,
+        "total": 562,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -2239,7 +2359,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 540,
+        "total": 541,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -2257,7 +2377,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 561,
+        "total": 562,
         "required": true,
         "desc": "Patient first name"
       },
@@ -2266,7 +2386,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 561,
+        "total": 562,
         "required": true,
         "desc": "Patient last name"
       },
@@ -2275,7 +2395,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 561,
+        "total": 562,
         "required": true,
         "desc": "Date of birth"
       },
@@ -2284,34 +2404,34 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 16,
-        "total": 561,
+        "total": 562,
         "required": false,
-        "desc": "Date of death \u2014 16 of 561 patients (2.9%) have a recorded death date"
+        "desc": "Date of death \u2014 16 of 562 patients (2.8%) have a recorded death date"
       },
       {
         "id": "N.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 561,
+        "total": 562,
         "required": true,
         "desc": "Gender"
       },
       {
         "id": "N.d7",
         "name": "ETHNICITY",
-        "pct_missing": 52.4,
-        "missing": 294,
-        "total": 561,
+        "pct_missing": 52.5,
+        "missing": 295,
+        "total": 562,
         "required": true,
         "desc": "Ethnic origin"
       },
       {
         "id": "N.d9",
         "name": "EMAIL_ADDRESS",
-        "pct_missing": 42.8,
+        "pct_missing": 42.7,
         "missing": 240,
-        "total": 561,
+        "total": 562,
         "required": false,
         "desc": "Email address"
       },
@@ -2320,16 +2440,16 @@
         "name": "Primary Renal Diagnosis",
         "pct_missing": 9.3,
         "missing": 52,
-        "total": 561,
+        "total": 562,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 52 of 561 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 52 of 562 patients missing"
       },
       {
         "id": "N.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 561,
+        "total": 562,
         "required": true,
         "desc": "NHS number"
       },
@@ -2338,34 +2458,34 @@
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
         "missing": 11,
-        "total": 561,
+        "total": 562,
         "required": false,
-        "desc": "Kidney Failure \u2014 11 of 561 patients (2.0%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery."
+        "desc": "Kidney Failure \u2014 11 of 562 patients (2.0%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery."
       },
       {
         "id": "N.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 5,
-        "total": 561,
+        "total": 562,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 5 of 561"
+        "desc": "Patients with exactly 1 transplant \u2014 5 of 562"
       },
       {
         "id": "N.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 2,
-        "total": 561,
+        "total": 562,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 2 of 561"
+        "desc": "Patients with 2 or more transplants \u2014 2 of 562"
       },
       {
         "id": "N.overall_followup",
         "name": "OVERALL_FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 557,
+        "total": 558,
         "required": false,
         "desc": "Median follow-up: 11.9 yrs (IQR 8.9\u201317.5 yrs) \u2014 from diagnosis date (or cohort entry if unavailable) until death or the current date"
       },
@@ -2374,7 +2494,7 @@
         "name": "FOLLOW_UP_PRE_KRT",
         "pct_missing": null,
         "missing": null,
-        "total": 552,
+        "total": 553,
         "required": false,
         "desc": "Median follow-up: 11.9 yrs (IQR 8.9\u201317.4 yrs) \u2014 from diagnosis (or cohort entry if unavailable) until KRT/death or the current date"
       }
@@ -2382,19 +2502,31 @@
     "biochemistry": {
       "creatinine": {
         "count": 413,
-        "total": 561,
+        "total": 562,
         "total_results": 9658,
         "median_per_patient": 13.0,
         "q1_per_patient": 5.0,
-        "q3_per_patient": 30.0
+        "q3_per_patient": 30.0,
+        "time_to_krt": {
+          "median": 11.5,
+          "q1": 8.0,
+          "q3": 14.7,
+          "count": 413
+        }
       },
       "proteinuria": {
         "count": 221,
-        "total": 561,
+        "total": 562,
         "total_results": 1641,
         "median_per_patient": 3.0,
         "q1_per_patient": 1.0,
-        "q3_per_patient": 7.0
+        "q3_per_patient": 7.0,
+        "time_to_krt": {
+          "median": 8.8,
+          "q1": 5.8,
+          "q3": 13.3,
+          "count": 221
+        }
       }
     }
   },
@@ -2564,7 +2696,13 @@
         "total_results": 1249,
         "median_per_patient": 17.0,
         "q1_per_patient": 5.5,
-        "q3_per_patient": 36.2
+        "q3_per_patient": 36.2,
+        "time_to_krt": {
+          "median": 5.6,
+          "q1": 3.1,
+          "q3": 10.6,
+          "count": 52
+        }
       },
       "proteinuria": {
         "count": 42,
@@ -2572,7 +2710,13 @@
         "total_results": 394,
         "median_per_patient": 6.5,
         "q1_per_patient": 3.0,
-        "q3_per_patient": 12.8
+        "q3_per_patient": 12.8,
+        "time_to_krt": {
+          "median": 6.3,
+          "q1": 3.5,
+          "q3": 10.6,
+          "count": 42
+        }
       }
     }
   },
@@ -2742,7 +2886,13 @@
         "total_results": 1050,
         "median_per_patient": 8.0,
         "q1_per_patient": 4.0,
-        "q3_per_patient": 17.0
+        "q3_per_patient": 17.0,
+        "time_to_krt": {
+          "median": 7.1,
+          "q1": 3.0,
+          "q3": 9.7,
+          "count": 73
+        }
       },
       "proteinuria": {
         "count": 54,
@@ -2750,7 +2900,13 @@
         "total_results": 240,
         "median_per_patient": 3.0,
         "q1_per_patient": 1.0,
-        "q3_per_patient": 6.0
+        "q3_per_patient": 6.0,
+        "time_to_krt": {
+          "median": 7.1,
+          "q1": 3.1,
+          "q3": 9.2,
+          "count": 54
+        }
       }
     }
   },
@@ -2920,7 +3076,13 @@
         "total_results": 2916,
         "median_per_patient": 11.0,
         "q1_per_patient": 4.0,
-        "q3_per_patient": 32.0
+        "q3_per_patient": 32.0,
+        "time_to_krt": {
+          "median": 8.7,
+          "q1": 4.1,
+          "q3": 12.8,
+          "count": 105
+        }
       },
       "proteinuria": {
         "count": 76,
@@ -2928,7 +3090,13 @@
         "total_results": 463,
         "median_per_patient": 4.0,
         "q1_per_patient": 1.0,
-        "q3_per_patient": 7.2
+        "q3_per_patient": 7.2,
+        "time_to_krt": {
+          "median": 4.8,
+          "q1": 2.7,
+          "q3": 11.1,
+          "count": 76
+        }
       }
     }
   },
@@ -3098,7 +3266,13 @@
         "total_results": 2339,
         "median_per_patient": 12.0,
         "q1_per_patient": 6.0,
-        "q3_per_patient": 30.0
+        "q3_per_patient": 30.0,
+        "time_to_krt": {
+          "median": 8.9,
+          "q1": 4.2,
+          "q3": 12.6,
+          "count": 109
+        }
       },
       "proteinuria": {
         "count": 63,
@@ -3106,7 +3280,13 @@
         "total_results": 445,
         "median_per_patient": 4.0,
         "q1_per_patient": 1.0,
-        "q3_per_patient": 9.0
+        "q3_per_patient": 9.0,
+        "time_to_krt": {
+          "median": 5.5,
+          "q1": 2.8,
+          "q3": 10.4,
+          "count": 63
+        }
       }
     }
   },
@@ -3276,7 +3456,13 @@
         "total_results": 164305,
         "median_per_patient": 27.0,
         "q1_per_patient": 11.0,
-        "q3_per_patient": 54.0
+        "q3_per_patient": 54.0,
+        "time_to_krt": {
+          "median": 8.7,
+          "q1": 4.6,
+          "q3": 12.5,
+          "count": 4144
+        }
       },
       "proteinuria": {
         "count": 3587,
@@ -3284,7 +3470,13 @@
         "total_results": 66872,
         "median_per_patient": 12.0,
         "q1_per_patient": 5.0,
-        "q3_per_patient": 25.0
+        "q3_per_patient": 25.0,
+        "time_to_krt": {
+          "median": 8.0,
+          "q1": 4.1,
+          "q3": 11.7,
+          "count": 3587
+        }
       }
     }
   },
@@ -3298,7 +3490,7 @@
         "name": "TOTAL_PATIENTS",
         "pct_missing": null,
         "missing": null,
-        "total": 5867,
+        "total": 5868,
         "required": false,
         "desc": "Total patients enrolled in this cohort (test and control patients excluded)"
       },
@@ -3307,7 +3499,7 @@
         "name": "ADULTS",
         "pct_missing": null,
         "missing": null,
-        "total": 5815,
+        "total": 5816,
         "required": false,
         "desc": "Patients aged 18 or over"
       },
@@ -3325,7 +3517,7 @@
         "name": "FIRST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 5867,
+        "total": 5868,
         "required": true,
         "desc": "Patient first name"
       },
@@ -3334,7 +3526,7 @@
         "name": "LAST_NAME",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 5867,
+        "total": 5868,
         "required": true,
         "desc": "Patient last name"
       },
@@ -3343,7 +3535,7 @@
         "name": "DATE_OF_BIRTH",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 5867,
+        "total": 5868,
         "required": true,
         "desc": "Date of birth"
       },
@@ -3352,16 +3544,16 @@
         "name": "DATE_OF_DEATH",
         "pct_missing": null,
         "missing": 503,
-        "total": 5867,
+        "total": 5868,
         "required": false,
-        "desc": "Date of death \u2014 503 of 5,867 patients (8.6%) have a recorded death date"
+        "desc": "Date of death \u2014 503 of 5,868 patients (8.6%) have a recorded death date"
       },
       {
         "id": "T.d6",
         "name": "GENDER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 5867,
+        "total": 5868,
         "required": true,
         "desc": "Gender"
       },
@@ -3370,7 +3562,7 @@
         "name": "ETHNICITY",
         "pct_missing": 11.9,
         "missing": 697,
-        "total": 5867,
+        "total": 5868,
         "required": true,
         "desc": "Ethnic origin"
       },
@@ -3379,7 +3571,7 @@
         "name": "EMAIL_ADDRESS",
         "pct_missing": 25.0,
         "missing": 1466,
-        "total": 5867,
+        "total": 5868,
         "required": false,
         "desc": "Email address"
       },
@@ -3388,16 +3580,16 @@
         "name": "Primary Renal Diagnosis",
         "pct_missing": 5.8,
         "missing": 343,
-        "total": 5867,
+        "total": 5868,
         "required": true,
-        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 343 of 5,867 patients missing"
+        "desc": "Primary Renal Diagnosis for enrolled cohort \u2014 343 of 5,868 patients missing"
       },
       {
         "id": "T.d11",
         "name": "NHS_NUMBER",
         "pct_missing": 0.0,
         "missing": 0,
-        "total": 5867,
+        "total": 5868,
         "required": true,
         "desc": "NHS number"
       },
@@ -3406,34 +3598,34 @@
         "name": "KIDNEY_FAILURE",
         "pct_missing": null,
         "missing": 2860,
-        "total": 5867,
+        "total": 5868,
         "required": false,
-        "desc": "Kidney Failure \u2014 2,860 of 5,867 patients (48.7%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery."
+        "desc": "Kidney Failure \u2014 2,860 of 5,868 patients (48.7%) have evidence of kidney failure based on transplant records, dialysis records, or eGFR below 15 ml/min/1.73m\u00b2 on two occasions \u226528 days apart with no recovery."
       },
       {
         "id": "T.tx1",
         "name": "TRANSPLANT_SINGLE",
         "pct_missing": null,
         "missing": 1956,
-        "total": 5867,
+        "total": 5868,
         "required": false,
-        "desc": "Patients with exactly 1 transplant \u2014 1,956 of 5,867"
+        "desc": "Patients with exactly 1 transplant \u2014 1,956 of 5,868"
       },
       {
         "id": "T.tx2",
         "name": "TRANSPLANT_MULTIPLE",
         "pct_missing": null,
         "missing": 250,
-        "total": 5867,
+        "total": 5868,
         "required": false,
-        "desc": "Patients with 2 or more transplants \u2014 250 of 5,867"
+        "desc": "Patients with 2 or more transplants \u2014 250 of 5,868"
       },
       {
         "id": "T.overall_followup",
         "name": "OVERALL_FOLLOW_UP",
         "pct_missing": null,
         "missing": null,
-        "total": 5844,
+        "total": 5845,
         "required": false,
         "desc": "Median follow-up: 11.5 yrs (IQR 7.5\u201318.7 yrs) \u2014 from diagnosis date (or cohort entry if unavailable) until death or the current date"
       },
@@ -3442,27 +3634,39 @@
         "name": "FOLLOW_UP_PRE_KRT",
         "pct_missing": null,
         "missing": null,
-        "total": 5233,
+        "total": 5234,
         "required": false,
-        "desc": "Median follow-up: 7.4 yrs (IQR 2.7\u201312.8 yrs) \u2014 from diagnosis (or cohort entry if unavailable) until KRT/death or the current date"
+        "desc": "Median follow-up: 7.3 yrs (IQR 2.7\u201312.8 yrs) \u2014 from diagnosis (or cohort entry if unavailable) until KRT/death or the current date"
       }
     ],
     "biochemistry": {
       "creatinine": {
         "count": 4113,
-        "total": 5867,
+        "total": 5868,
         "total_results": 143401,
         "median_per_patient": 24.0,
         "q1_per_patient": 12.0,
-        "q3_per_patient": 44.0
+        "q3_per_patient": 44.0,
+        "time_to_krt": {
+          "median": 6.8,
+          "q1": 2.6,
+          "q3": 11.2,
+          "count": 4113
+        }
       },
       "proteinuria": {
         "count": 3280,
-        "total": 5867,
+        "total": 5868,
         "total_results": 43340,
         "median_per_patient": 10.0,
         "q1_per_patient": 4.0,
-        "q3_per_patient": 18.0
+        "q3_per_patient": 18.0,
+        "time_to_krt": {
+          "median": 6.2,
+          "q1": 2.7,
+          "q3": 10.3,
+          "count": 3280
+        }
       }
     }
   },
@@ -3632,7 +3836,13 @@
         "total_results": 707,
         "median_per_patient": 2.0,
         "q1_per_patient": 1.0,
-        "q3_per_patient": 9.0
+        "q3_per_patient": 9.0,
+        "time_to_krt": {
+          "median": 5.6,
+          "q1": 3.6,
+          "q3": 7.3,
+          "count": 88
+        }
       },
       "proteinuria": {
         "count": 12,
@@ -3640,7 +3850,13 @@
         "total_results": 44,
         "median_per_patient": 1.0,
         "q1_per_patient": 1.0,
-        "q3_per_patient": 5.5
+        "q3_per_patient": 5.5,
+        "time_to_krt": {
+          "median": 5.0,
+          "q1": 2.7,
+          "q3": 9.5,
+          "count": 12
+        }
       }
     }
   },
@@ -3810,7 +4026,13 @@
         "total_results": 15920,
         "median_per_patient": 39.0,
         "q1_per_patient": 17.8,
-        "q3_per_patient": 80.2
+        "q3_per_patient": 80.2,
+        "time_to_krt": {
+          "median": 4.9,
+          "q1": 2.5,
+          "q3": 11.2,
+          "count": 272
+        }
       },
       "proteinuria": {
         "count": 245,
@@ -3818,7 +4040,13 @@
         "total_results": 6336,
         "median_per_patient": 18.0,
         "q1_per_patient": 10.0,
-        "q3_per_patient": 36.0
+        "q3_per_patient": 36.0,
+        "time_to_krt": {
+          "median": 4.9,
+          "q1": 2.5,
+          "q3": 10.5,
+          "count": 245
+        }
       }
     }
   },
@@ -3988,7 +4216,13 @@
         "total_results": 40788,
         "median_per_patient": 26.0,
         "q1_per_patient": 9.0,
-        "q3_per_patient": 54.0
+        "q3_per_patient": 54.0,
+        "time_to_krt": {
+          "median": 8.9,
+          "q1": 3.3,
+          "q3": 13.9,
+          "count": 1007
+        }
       },
       "proteinuria": {
         "count": 832,
@@ -3996,7 +4230,13 @@
         "total_results": 14626,
         "median_per_patient": 11.0,
         "q1_per_patient": 4.0,
-        "q3_per_patient": 23.2
+        "q3_per_patient": 23.2,
+        "time_to_krt": {
+          "median": 8.6,
+          "q1": 3.5,
+          "q3": 13.5,
+          "count": 832
+        }
       }
     }
   },
@@ -4166,7 +4406,13 @@
         "total_results": 113065,
         "median_per_patient": 37.0,
         "q1_per_patient": 18.0,
-        "q3_per_patient": 64.0
+        "q3_per_patient": 64.0,
+        "time_to_krt": {
+          "median": 9.0,
+          "q1": 5.2,
+          "q3": 12.6,
+          "count": 2367
+        }
       },
       "proteinuria": {
         "count": 2031,
@@ -4174,7 +4420,13 @@
         "total_results": 43361,
         "median_per_patient": 16.0,
         "q1_per_patient": 8.0,
-        "q3_per_patient": 28.5
+        "q3_per_patient": 28.5,
+        "time_to_krt": {
+          "median": 8.3,
+          "q1": 4.5,
+          "q3": 11.7,
+          "count": 2031
+        }
       }
     }
   },
@@ -4344,7 +4596,13 @@
         "total_results": 115,
         "median_per_patient": 5.5,
         "q1_per_patient": 5.0,
-        "q3_per_patient": 29.2
+        "q3_per_patient": 29.2,
+        "time_to_krt": {
+          "median": 4.1,
+          "q1": 2.7,
+          "q3": 6.9,
+          "count": 4
+        }
       },
       "proteinuria": {
         "count": 4,
@@ -4352,7 +4610,13 @@
         "total_results": 44,
         "median_per_patient": 5.0,
         "q1_per_patient": 4.8,
-        "q3_per_patient": 11.2
+        "q3_per_patient": 11.2,
+        "time_to_krt": {
+          "median": 3.8,
+          "q1": 2.7,
+          "q3": 5.7,
+          "count": 4
+        }
       }
     }
   },
@@ -4522,7 +4786,13 @@
         "total_results": 11786,
         "median_per_patient": 40.0,
         "q1_per_patient": 16.0,
-        "q3_per_patient": 92.0
+        "q3_per_patient": 92.0,
+        "time_to_krt": {
+          "median": 5.9,
+          "q1": 1.7,
+          "q3": 9.4,
+          "count": 197
+        }
       },
       "proteinuria": {
         "count": 142,
@@ -4530,7 +4800,13 @@
         "total_results": 1994,
         "median_per_patient": 8.0,
         "q1_per_patient": 4.0,
-        "q3_per_patient": 18.0
+        "q3_per_patient": 18.0,
+        "time_to_krt": {
+          "median": 5.4,
+          "q1": 2.0,
+          "q3": 8.4,
+          "count": 142
+        }
       }
     }
   },
@@ -4700,7 +4976,13 @@
         "total_results": 24909,
         "median_per_patient": 24.0,
         "q1_per_patient": 12.0,
-        "q3_per_patient": 49.0
+        "q3_per_patient": 49.0,
+        "time_to_krt": {
+          "median": 10.1,
+          "q1": 5.7,
+          "q3": 12.3,
+          "count": 663
+        }
       },
       "proteinuria": {
         "count": 543,
@@ -4708,7 +4990,13 @@
         "total_results": 8292,
         "median_per_patient": 11.0,
         "q1_per_patient": 4.0,
-        "q3_per_patient": 21.0
+        "q3_per_patient": 21.0,
+        "time_to_krt": {
+          "median": 9.4,
+          "q1": 5.2,
+          "q3": 11.7,
+          "count": 543
+        }
       }
     }
   },
@@ -4878,7 +5166,13 @@
         "total_results": 365,
         "median_per_patient": 60.0,
         "q1_per_patient": 6.2,
-        "q3_per_patient": 145.0
+        "q3_per_patient": 145.0,
+        "time_to_krt": {
+          "median": 4.4,
+          "q1": 0.1,
+          "q3": 10.1,
+          "count": 4
+        }
       },
       "proteinuria": {
         "count": 3,
@@ -4886,7 +5180,13 @@
         "total_results": 94,
         "median_per_patient": 4.0,
         "q1_per_patient": 3.5,
-        "q3_per_patient": 45.5
+        "q3_per_patient": 45.5,
+        "time_to_krt": {
+          "median": 2.3,
+          "q1": 2.0,
+          "q3": 8.4,
+          "count": 3
+        }
       }
     }
   },
@@ -5056,7 +5356,13 @@
         "total_results": 7019,
         "median_per_patient": 32.0,
         "q1_per_patient": 17.0,
-        "q3_per_patient": 68.5
+        "q3_per_patient": 68.5,
+        "time_to_krt": {
+          "median": 9.5,
+          "q1": 5.7,
+          "q3": 11.7,
+          "count": 139
+        }
       },
       "proteinuria": {
         "count": 101,
@@ -5064,7 +5370,13 @@
         "total_results": 999,
         "median_per_patient": 5.0,
         "q1_per_patient": 3.0,
-        "q3_per_patient": 13.0
+        "q3_per_patient": 13.0,
+        "time_to_krt": {
+          "median": 8.1,
+          "q1": 3.8,
+          "q3": 10.6,
+          "count": 101
+        }
       }
     }
   },
@@ -5234,7 +5546,13 @@
         "total_results": 1325,
         "median_per_patient": 9.0,
         "q1_per_patient": 2.5,
-        "q3_per_patient": 18.0
+        "q3_per_patient": 18.0,
+        "time_to_krt": {
+          "median": 8.0,
+          "q1": 2.6,
+          "q3": 11.6,
+          "count": 103
+        }
       },
       "proteinuria": {
         "count": 61,
@@ -5242,7 +5560,13 @@
         "total_results": 334,
         "median_per_patient": 3.0,
         "q1_per_patient": 1.0,
-        "q3_per_patient": 8.0
+        "q3_per_patient": 8.0,
+        "time_to_krt": {
+          "median": 7.9,
+          "q1": 3.1,
+          "q3": 11.3,
+          "count": 61
+        }
       }
     }
   },
@@ -5412,7 +5736,13 @@
         "total_results": 5359,
         "median_per_patient": 13.0,
         "q1_per_patient": 5.0,
-        "q3_per_patient": 27.0
+        "q3_per_patient": 27.0,
+        "time_to_krt": {
+          "median": 8.1,
+          "q1": 5.2,
+          "q3": 10.8,
+          "count": 249
+        }
       },
       "proteinuria": {
         "count": 177,
@@ -5420,7 +5750,13 @@
         "total_results": 1241,
         "median_per_patient": 4.0,
         "q1_per_patient": 2.0,
-        "q3_per_patient": 8.0
+        "q3_per_patient": 8.0,
+        "time_to_krt": {
+          "median": 4.9,
+          "q1": 3.6,
+          "q3": 8.8,
+          "count": 177
+        }
       }
     }
   },
@@ -5590,7 +5926,13 @@
         "total_results": 15803,
         "median_per_patient": 17.0,
         "q1_per_patient": 7.0,
-        "q3_per_patient": 38.0
+        "q3_per_patient": 38.0,
+        "time_to_krt": {
+          "median": 8.7,
+          "q1": 5.5,
+          "q3": 12.0,
+          "count": 473
+        }
       },
       "proteinuria": {
         "count": 267,
@@ -5598,7 +5940,13 @@
         "total_results": 1714,
         "median_per_patient": 4.0,
         "q1_per_patient": 2.0,
-        "q3_per_patient": 7.0
+        "q3_per_patient": 7.0,
+        "time_to_krt": {
+          "median": 5.2,
+          "q1": 2.4,
+          "q3": 10.5,
+          "count": 267
+        }
       }
     }
   },
@@ -5763,20 +6111,32 @@
     ],
     "biochemistry": {
       "creatinine": {
-        "count": 4316,
+        "count": 4317,
         "total": 6378,
-        "total_results": 230268,
+        "total_results": 230272,
         "median_per_patient": 41.0,
         "q1_per_patient": 18.0,
-        "q3_per_patient": 75.0
+        "q3_per_patient": 75.0,
+        "time_to_krt": {
+          "median": 8.5,
+          "q1": 4.2,
+          "q3": 12.0,
+          "count": 4317
+        }
       },
       "proteinuria": {
-        "count": 3405,
+        "count": 3406,
         "total": 6378,
-        "total_results": 57817,
+        "total_results": 57820,
         "median_per_patient": 12.0,
         "q1_per_patient": 5.0,
-        "q3_per_patient": 23.0
+        "q3_per_patient": 23.0,
+        "time_to_krt": {
+          "median": 7.6,
+          "q1": 3.5,
+          "q3": 11.2,
+          "count": 3406
+        }
       }
     }
   },
@@ -5946,7 +6306,13 @@
         "total_results": 1601,
         "median_per_patient": 13.0,
         "q1_per_patient": 8.0,
-        "q3_per_patient": 29.0
+        "q3_per_patient": 29.0,
+        "time_to_krt": {
+          "median": 8.9,
+          "q1": 6.7,
+          "q3": 12.0,
+          "count": 53
+        }
       },
       "proteinuria": {
         "count": 44,
@@ -5954,7 +6320,13 @@
         "total_results": 423,
         "median_per_patient": 4.0,
         "q1_per_patient": 2.0,
-        "q3_per_patient": 12.2
+        "q3_per_patient": 12.2,
+        "time_to_krt": {
+          "median": 7.6,
+          "q1": 4.4,
+          "q3": 11.1,
+          "count": 44
+        }
       }
     }
   }
