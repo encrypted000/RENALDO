@@ -30,6 +30,11 @@
   --status-4-bg: #fbeade; --status-4-fg: #a1501c; --status-4-dot: #dd8447; /* 60–80% */
   --status-5-bg: #fbe9e9; --status-5-fg: #ab2f2f; --status-5-dot: #d65f5f; /* 80–100% */
 
+  /* Table cell click/select — plain neutral gray, deliberately not blue
+     (accent), not any RAG colour, and not the purple used for LOW N */
+  --select-bg:     #eef0f3;
+  --select-border: #9aa5b1;
+
   --font:      'Segoe UI', system-ui, -apple-system, sans-serif;
   --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
 

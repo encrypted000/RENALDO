@@ -57,13 +57,16 @@ REQ_BADGE_STYLE = {
     "borderRadius":    "4px",
 }
 
-# Dash's default clicked/active-cell outline is a red border, which reads as
-# a warning next to our red = "80-100% missing" band. Override with a calm
-# accent-blue outline instead — background is left alone so a colour-coded
-# % Missing cell keeps its own colour when clicked.
+# Dash's default clicked/active-cell style is a reddish fill, which reads as
+# a warning right next to our red = "80-100% missing" band. Override both
+# the background and border — a border-only override left Dash's own red
+# background showing through — with a plain neutral gray that doesn't
+# overlap with any colour already carrying meaning elsewhere (accent blue,
+# the RAG scale, or the purple LOW N badge).
 ACTIVE_CELL_STYLE = {
     "if": {"state": "active"},
-    "border": "2px solid var(--accent)",
+    "backgroundColor": "var(--select-bg)",
+    "border":           "2px solid var(--select-border)",
 }
 
 
