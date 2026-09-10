@@ -605,9 +605,8 @@ body {
   /* Hide progress bar on very small screens — keeps header clean */
   .sec-bar-wrap { display: none !important; }
 
-  .dash-table-container { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
-  .dash-table-container .dash-spreadsheet-container { overflow-x: auto !important; }
-
+  /* No horizontal scroll — columns are percentage-widths and cells wrap,
+     so the table always fits; rows just get taller on narrow screens. */
   .dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner th,
   .dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner td {
     font-size: 11px !important;

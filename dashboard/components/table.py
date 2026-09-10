@@ -34,12 +34,17 @@ COLUMNS = [
     {"name": "Description",   "id": "desc"},
 ]
 
+
+# Percentage widths that sum to 100% — the table always fits its container
+# exactly, so a long description wraps onto more lines instead of forcing
+# the whole table into a horizontally-scrolling strip.
 COLUMN_WIDTHS = [
-    {"if": {"column_id": "req"},         "width": "44px",  "textAlign": "center"},
-    {"if": {"column_id": "id"},          "width": "60px",  "fontFamily": "var(--font-mono)", "fontSize": "11px", "color": "var(--text-3)"},
-    {"if": {"column_id": "pct_missing"}, "width": "84px",  "textAlign": "center"},
-    {"if": {"column_id": "name"},        "width": "210px", "fontWeight": "600", "color": "var(--text)"},
-    {"if": {"column_id": "counts"},      "width": "130px", "fontSize": "11.5px", "color": "var(--text-2)"},
+    {"if": {"column_id": "req"},         "width": "6%",  "textAlign": "center"},
+    {"if": {"column_id": "id"},          "width": "7%",  "fontFamily": "var(--font-mono)", "fontSize": "11px", "color": "var(--text-3)"},
+    {"if": {"column_id": "pct_missing"}, "width": "9%",  "textAlign": "center"},
+    {"if": {"column_id": "name"},        "width": "16%", "fontWeight": "600", "color": "var(--text)"},
+    {"if": {"column_id": "counts"},      "width": "13%", "fontSize": "11.5px", "color": "var(--text-2)"},
+    {"if": {"column_id": "desc"},        "width": "49%"},
 ]
 
 REQ_BADGE_STYLE = {
@@ -111,7 +116,7 @@ def build_table(variables: list, section_id: str):
         id=f"table-{section_id}",
         columns=COLUMNS,
         data=rows,
-        style_table={"overflowX": "auto"},
+        style_table={"width": "100%"},
         style_header={
             "backgroundColor":  "var(--surface-2)",
             "fontWeight":       "600",
@@ -122,15 +127,19 @@ def build_table(variables: list, section_id: str):
             "textTransform":    "uppercase",
             "letterSpacing":    "0.05em",
             "padding":          "6px 12px",
+            "whiteSpace":       "normal",
         },
         style_cell={
-            "fontSize":     "12.5px",
-            "padding":      "5px 12px",
-            "border":       "none",
-            "borderBottom": "1px solid var(--border)",
-            "fontFamily":   "var(--font)",
-            "textAlign":    "left",
+            "fontSize":        "12.5px",
+            "padding":         "7px 12px",
+            "border":          "none",
+            "borderBottom":    "1px solid var(--border)",
+            "fontFamily":      "var(--font)",
+            "textAlign":       "left",
             "backgroundColor": "var(--surface)",
+            "whiteSpace":      "normal",
+            "height":          "auto",
+            "overflowWrap":    "break-word",
         },
         style_data_conditional=style_conditions,
         style_cell_conditional=COLUMN_WIDTHS,
