@@ -30,7 +30,7 @@ from config.cohorts import (
     COHORT_LETTERS,
 )
 from analytics.utils import build_result, missing_mask, logger
-from analytics.pipeline import queries, follow_up, cohort_rules
+from analytics.pipeline import queries, follow_up, cohort_rules, biochemistry
 
 
 def run():
@@ -282,14 +282,10 @@ def run():
             for pid in all_cohort_pids
         }
 
-        def _pre_cutoff_counts(days_df):
-            df = days_df[days_df["patient_id"].isin(all_cohort_pids)].copy()
-            df["cutoff"] = df["patient_id"].map(cutoff_map)
-            df = df[df["result_date"] < df["cutoff"]]
-            return df.groupby("patient_id").size()
-
-        creatinine_pre_counts  = _pre_cutoff_counts(creatinine_days_df)
-        proteinuria_pre_counts = _pre_cutoff_counts(proteinuria_days_df)
+        creatinine_pre_counts  = biochemistry.counts_per_patient(creatinine_days_df,  all_cohort_pids, cutoff_map)
+        proteinuria_pre_counts = biochemistry.counts_per_patient(proteinuria_days_df, all_cohort_pids, cutoff_map)
+        creatinine_years_to_krt  = biochemistry.years_to_cutoff_per_patient(creatinine_days_df,  all_cohort_pids, cutoff_map)
+        proteinuria_years_to_krt = biochemistry.years_to_cutoff_per_patient(proteinuria_days_df, all_cohort_pids, cutoff_map)
         print(f"  Creatinine pre-cutoff results for {len(creatinine_pre_counts):,} patients; "
               f"Proteinuria (ACR+PCR) for {len(proteinuria_pre_counts):,} patients")
 
@@ -542,36 +538,27 @@ def run():
 
             if not skip_biochemistry:
                 # ── Biochemistry pre-KRT — denominator is all patients in the cohort ──
-                cohort_pids_list  = list(cohort_pids)
-                cohort_creat_cnt  = creatinine_pre_counts.reindex(cohort_pids_list,  fill_value=0)
-                cohort_prot_cnt   = proteinuria_pre_counts.reindex(cohort_pids_list, fill_value=0)
+                cohort_pids_list = list(cohort_pids)
 
-                creatinine_n_patients   = int((cohort_creat_cnt >= 1).sum())
-                proteinuria_n_patients  = int((cohort_prot_cnt  >= 1).sum())
-                creatinine_total_results  = int(cohort_creat_cnt.sum())
-                proteinuria_total_results = int(cohort_prot_cnt.sum())
-
-                creat_nonzero = cohort_creat_cnt[cohort_creat_cnt >= 1]
-                prot_nonzero  = cohort_prot_cnt[cohort_prot_cnt >= 1]
-                creat_median = round(creat_nonzero.median(), 1) if len(creat_nonzero) else 0
-                creat_q1     = round(creat_nonzero.quantile(0.25), 1) if len(creat_nonzero) else 0
-                creat_q3     = round(creat_nonzero.quantile(0.75), 1) if len(creat_nonzero) else 0
-                prot_median  = round(prot_nonzero.median(), 1) if len(prot_nonzero) else 0
-                prot_q1      = round(prot_nonzero.quantile(0.25), 1) if len(prot_nonzero) else 0
-                prot_q3      = round(prot_nonzero.quantile(0.75), 1) if len(prot_nonzero) else 0
+                creat_counts = biochemistry.summarise_counts(creatinine_pre_counts.reindex(cohort_pids_list))
+                prot_counts  = biochemistry.summarise_counts(proteinuria_pre_counts.reindex(cohort_pids_list))
+                creat_timing = biochemistry.summarise_years_to_cutoff(creatinine_years_to_krt.reindex(cohort_pids_list))
+                prot_timing  = biochemistry.summarise_years_to_cutoff(proteinuria_years_to_krt.reindex(cohort_pids_list))
 
                 section["biochemistry"] = {
                     "creatinine": {
-                        "count": creatinine_n_patients, "total": patient_count,
-                        "total_results": creatinine_total_results,
-                        "median_per_patient": creat_median,
-                        "q1_per_patient": creat_q1, "q3_per_patient": creat_q3,
+                        "count": creat_counts["n_patients"], "total": patient_count,
+                        "total_results": creat_counts["total_results"],
+                        "median_per_patient": creat_counts["median"],
+                        "q1_per_patient": creat_counts["q1"], "q3_per_patient": creat_counts["q3"],
+                        "time_to_krt": creat_timing,
                     },
                     "proteinuria": {
-                        "count": proteinuria_n_patients, "total": patient_count,
-                        "total_results": proteinuria_total_results,
-                        "median_per_patient": prot_median,
-                        "q1_per_patient": prot_q1, "q3_per_patient": prot_q3,
+                        "count": prot_counts["n_patients"], "total": patient_count,
+                        "total_results": prot_counts["total_results"],
+                        "median_per_patient": prot_counts["median"],
+                        "q1_per_patient": prot_counts["q1"], "q3_per_patient": prot_counts["q3"],
+                        "time_to_krt": prot_timing,
                     },
                 }
 

@@ -102,6 +102,13 @@ def _biochemistry_body(sec: dict, small_n: bool) -> html.Div:
                 html.Div(f"{n_results:,} total results recorded pre-KRT across the cohort", className="biochem-line"),
                 html.Div(f"Median {median} results per patient (IQR {q1}–{q3}) among patients with a result", className="biochem-line"),
             ]
+            timing = stat.get("time_to_krt")
+            if timing and timing.get("count"):
+                lines.append(html.Div(
+                    f"Median {timing['median']} yrs (IQR {timing['q1']}–{timing['q3']} yrs) "
+                    f"from first result to KRT or the current date",
+                    className="biochem-line",
+                ))
 
         blocks.append(
             html.Div([
@@ -117,7 +124,7 @@ def _biochemistry_dropdown(sec: dict, letter: str, small_n: bool) -> dbc.Accordi
     return dbc.Accordion([
         dbc.AccordionItem(
             children=_biochemistry_body(sec, small_n),
-            title="Biochemistry Metadata",
+            title="Biochemistry Metadata Prior to Kidney Replacement Therapy",
             item_id=f"item-{letter}-biochem",
         )
     ],
