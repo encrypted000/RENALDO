@@ -57,6 +57,15 @@ REQ_BADGE_STYLE = {
     "borderRadius":    "4px",
 }
 
+# Dash's default clicked/active-cell outline is a red border, which reads as
+# a warning next to our red = "80-100% missing" band. Override with a calm
+# accent-blue outline instead — background is left alone so a colour-coded
+# % Missing cell keeps its own colour when clicked.
+ACTIVE_CELL_STYLE = {
+    "if": {"state": "active"},
+    "border": "2px solid var(--accent)",
+}
+
 
 def build_table(variables: list, section_id: str):
     """
@@ -111,6 +120,8 @@ def build_table(variables: list, section_id: str):
                 "if": {"row_index": i, "column_id": "pct_missing"},
                 "color": "var(--text-3)",
             })
+
+    style_conditions.append(ACTIVE_CELL_STYLE)
 
     return dash_table.DataTable(
         id=f"table-{section_id}",

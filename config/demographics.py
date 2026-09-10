@@ -33,10 +33,10 @@ DEMOGRAPHICS_VARIABLES = [
     },
     {
         "id":       "A.6",
-        "name":     "GENDER",
+        "name":     "SEX",
         "column":   "gender",
         "required": True,
-        "desc":     "Gender",
+        "desc":     "Sex",
     },
     {
         "id":       "A.7",

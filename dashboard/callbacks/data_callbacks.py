@@ -9,8 +9,11 @@ import json
 import os
 import logging
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 from dash import callback, Input, Output
+
+UK_TZ = ZoneInfo("Europe/London")
 
 logger = logging.getLogger(__name__)
 
@@ -44,6 +47,6 @@ def load_data(_n_clicks):
     data = _load_json()
     if not data:
         return None, "No data found", "—", "Run: python -m analytics.run_all"
-    now       = datetime.now().strftime("%d/%m/%Y %H:%M")
+    now       = datetime.now(UK_TZ).strftime("%d/%m/%Y %H:%M")
     total_str = _total_patients(data)
     return data, now, total_str, f"Last loaded: {now}"
