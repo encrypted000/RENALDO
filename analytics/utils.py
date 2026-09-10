@@ -12,25 +12,24 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def calc_pct_missing(series: pd.Series) -> float:
+def missing_mask(series: pd.Series) -> pd.Series:
     """
-    Calculate % missing — catches both NULL and empty/whitespace strings.
-    A value is considered missing if it is:
+    True where a value is missing:
       - NULL (NaN in pandas)
-      - Empty string ""
-      - Whitespace only e.g. "   "
+      - Empty string "" or whitespace only e.g. "   "
+      - The string "nan" — this appears when a NaN gets cast to str
+        (e.g. pd.Series([None]).astype(str) gives "nan", not "")
     """
+    missing = series.isna() | (series.astype(str).str.strip() == "")
+    missing = missing | (series.astype(str).str.lower() == "nan")
+    return missing
+
+
+def calc_pct_missing(series: pd.Series) -> float:
+    """Calculate % missing — see missing_mask() for what counts as missing."""
     if len(series) == 0:
         return 0.0
-
-    missing = series.isna() | (series.astype(str).str.strip() == "")
-
-    # Exclude 'nan' string that appears when NaN is cast to str
-    # e.g. pd.Series([None]).astype(str) gives "nan" not ""
-    # So we must treat "nan" as missing too
-    missing = missing | (series.astype(str).str.lower() == "nan")
-
-    return round(missing.sum() / len(series) * 100, 1)
+    return round(missing_mask(series).sum() / len(series) * 100, 1)
 
 
 def calc_pct_missing_email(series: pd.Series, default_emails: list) -> float:

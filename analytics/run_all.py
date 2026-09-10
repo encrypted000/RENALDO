@@ -1,8 +1,13 @@
 """
 run_all.py
 ----------
-Runs demographics + all cohort completeness in a single tunnel session.
-One connection, pre-aggregated queries — much faster than running separately.
+Orchestrates the full completeness pipeline: opens a DB tunnel, pulls the
+raw data via analytics/pipeline/queries.py, runs it through the pure
+calculation modules (analytics/pipeline/follow_up.py, cohort_rules.py),
+assembles the per-section JSON, and writes output/completeness.json.
+
+One connection, pre-aggregated queries — much faster than running the
+old, now-deleted per-concern scripts separately.
 Run with: python -m analytics.run_all
 """
 import warnings
@@ -22,15 +27,10 @@ from config.cohorts import (
     EXCLUDED_GROUP_IDS,
     EXCLUDED_GROUP_NAMES,
     WITHDRAWN_GROUP_IDS,
-    NO_PRE_KRT_FOLLOWUP_COHORTS,
-    NO_BIOCHEMISTRY_COHORTS,
     COHORT_LETTERS,
 )
-from analytics.utils import build_result, logger
-
-
-def is_missing(series: pd.Series) -> pd.Series:
-    return series.isna() | (series.astype(str).str.strip() == "")
+from analytics.utils import build_result, missing_mask, logger
+from analytics.pipeline import queries, follow_up, cohort_rules
 
 
 def run():
@@ -48,12 +48,8 @@ def run():
         # and merge with the static ID-based exclusion list. Doing this once,
         # up front, means every downstream query's existing "NOT IN (excluded)"
         # filter picks it up automatically.
-        excluded_by_name_df = pd.read_sql(
-            "SELECT id FROM groups WHERE type = 'COHORT' AND LOWER(name) = ANY(%(names)s)",
-            conn,
-            params={"names": [n.lower() for n in EXCLUDED_GROUP_NAMES]},
-        )
-        excluded_ids = set(EXCLUDED_GROUP_IDS) | set(excluded_by_name_df["id"].tolist())
+        excluded_by_name = queries.fetch_excluded_group_ids_by_name(conn, EXCLUDED_GROUP_NAMES)
+        excluded_ids  = set(EXCLUDED_GROUP_IDS) | set(excluded_by_name)
         excluded      = ",".join(str(i) for i in sorted(excluded_ids))
         withdrawn_ids = ",".join(str(i) for i in WITHDRAWN_GROUP_IDS)
         today         = pd.Timestamp.today().normalize()
@@ -62,65 +58,18 @@ def run():
         # STEP 1 — Pre-aggregate cohort recruitment / diagnosis / withdrawal
         #          dates per patient ONCE (avoids slow full-table joins later)
         # ════════════════════════════════════════════════════════
-
-        # ── Pre-aggregate cohort recruitment date per patient ──
-        # group_patients.from_date where group type = COHORT is the "Recruited On" date
-        # shown on the RaDaR front end — this is the true enrolment date.
-        # A patient may be in multiple cohorts so we take the earliest.
         print("Pre-aggregating cohort recruitment dates...")
-        enrolment_df = pd.read_sql("""
-            SELECT gp.patient_id, MIN(COALESCE(gp.from_date::date, gp.created_date::date)) AS enrolled
-            FROM group_patients gp
-            JOIN groups g ON g.id = gp.group_id
-            WHERE g.type = 'COHORT'
-            GROUP BY gp.patient_id
-        """, conn)
-        enrolment_df["enrolled"] = pd.to_datetime(enrolment_df["enrolled"], errors="coerce")
+        enrolment_df = queries.fetch_enrolment_dates(conn)
         enrolment_map = enrolment_df.set_index("patient_id")["enrolled"].to_dict()
         print(f"  Cohort recruitment date loaded for {len(enrolment_map):,} patients\n")
 
-        # ── Pre-aggregate diagnosis date per patient (for diagnosis-based follow-up) ──
-        # Strict match: patient's primary diagnosis must be tied to a cohort they
-        # actually belong to (diagnosis_id AND group_id both match), restricted to
-        # their active membership and active diagnosis record. A looser match (just
-        # "is this diagnosis primary somewhere") over-counts.
         print("Pre-aggregating diagnosis dates...")
-        diagnosis_date_df = pd.read_sql(f"""
-            WITH base AS (
-                SELECT gp.patient_id, gp.group_id
-                FROM group_patients gp
-                JOIN groups g ON g.id = gp.group_id AND g.type = 'COHORT'
-                JOIN patients p ON p.id = gp.patient_id AND p.test = FALSE AND p.control = FALSE
-                WHERE gp.group_id NOT IN ({excluded})
-                  AND gp.to_date IS NULL
-            ),
-            cohort_prd AS (
-                SELECT group_id, diagnosis_id
-                FROM group_diagnoses
-                WHERE type = 'PRIMARY'
-            )
-            SELECT
-                pd.patient_id,
-                MIN(pd.from_date)::date AS diagnosis_date
-            FROM patient_diagnoses pd
-            JOIN cohort_prd ON cohort_prd.diagnosis_id = pd.diagnosis_id
-            JOIN base ON base.patient_id = pd.patient_id AND base.group_id = cohort_prd.group_id
-            WHERE pd.to_date IS NULL
-            GROUP BY pd.patient_id
-        """, conn)
-        diagnosis_date_df["diagnosis_date"] = pd.to_datetime(diagnosis_date_df["diagnosis_date"], errors="coerce")
+        diagnosis_date_df = queries.fetch_diagnosis_dates(conn, excluded)
         diagnosis_date_map = diagnosis_date_df.set_index("patient_id")["diagnosis_date"].to_dict()
         print(f"  Diagnosis date loaded for {len(diagnosis_date_map):,} patients")
 
-        # ── Pre-aggregate withdrawal date per patient (withdrawn-consent groups) ──
         print("Pre-aggregating withdrawal dates...")
-        withdrawal_df = pd.read_sql(f"""
-            SELECT patient_id, MIN(from_date)::date AS withdrawal_date
-            FROM group_patients
-            WHERE group_id IN ({withdrawn_ids})
-            GROUP BY patient_id
-        """, conn)
-        withdrawal_df["withdrawal_date"] = pd.to_datetime(withdrawal_df["withdrawal_date"], errors="coerce")
+        withdrawal_df = queries.fetch_withdrawal_dates(conn, withdrawn_ids)
         withdrawal_date_map = withdrawal_df.set_index("patient_id")["withdrawal_date"].to_dict()
         print(f"  Withdrawal date loaded for {len(withdrawal_date_map):,} patients\n")
 
@@ -130,35 +79,7 @@ def run():
         # ════════════════════════════════════════════════════════
         print("── Section A: Overall RaDaR ──")
         print("  Loading demographics data...")
-        # LEFT JOIN patient_demographics — a patient enrolled in a cohort but with
-        # NO RADAR demographics row must still appear (with NULL fields) so they're
-        # counted as missing below, not silently dropped from total/numerator alike.
-        # Mirrors the cohort-level population + no_demo logic used in STEP 3.
-        demographics = pd.read_sql(f"""
-            SELECT
-                base.patient_id,
-                pd.first_name, pd.last_name, pd.date_of_birth, pd.date_of_death,
-                pd.gender, pd.ethnicity_id, pd.email_address,
-                CASE WHEN pnum.patient_id IS NOT NULL
-                     THEN TRUE ELSE FALSE END AS has_nhs_number
-            FROM (
-                SELECT DISTINCT gp2.patient_id
-                FROM group_patients gp2
-                JOIN groups g2 ON g2.id = gp2.group_id AND g2.type = 'COHORT'
-                JOIN patients p ON p.id = gp2.patient_id AND p.test = FALSE AND p.control = FALSE
-                WHERE gp2.group_id NOT IN ({excluded})
-            ) base
-            LEFT JOIN patient_demographics pd
-                ON  pd.patient_id  = base.patient_id
-               AND  pd.source_type = 'RADAR'
-            LEFT JOIN (
-                SELECT DISTINCT patient_id
-                FROM patient_numbers
-                WHERE source_type IN ('RADAR', 'UKRDC')
-                  AND number_group_id IN (120, 121, 122)
-            ) pnum
-                ON pnum.patient_id = base.patient_id
-        """, conn)
+        demographics = queries.fetch_section_a_demographics(conn, excluded)
 
         # Use earliest cohort from_date as enrolment — fallback to patients.created_date
         demographics["enrolled"] = demographics["patient_id"].map(enrolment_map)
@@ -181,33 +102,22 @@ def run():
         #    entry (recruitment date) when no diagnosis date is recorded ──
         demographics["diagnosis_date"]  = demographics["patient_id"].map(diagnosis_date_map)
         demographics["withdrawal_date"] = demographics["patient_id"].map(withdrawal_date_map)
-        demographics["start_date"]      = demographics["diagnosis_date"].fillna(demographics["enrolled"])
-        withdrawn_mask = demographics["withdrawal_date"].notna()
+        demographics["start_date"]      = follow_up.start_date(demographics["diagnosis_date"], demographics["enrolled"])
 
-        # ── Overall follow-up: start date → death or today. Withdrawn patients
-        #    are excluded from the population entirely (not censored at their
-        #    withdrawal date), so the denominator = total patients - withdrawn. ──
-        overall_pop = demographics[~withdrawn_mask].copy()
-        overall_pop["overall_end"] = overall_pop["date_of_death"].fillna(today)
-        overall_pop["overall_follow_up_years"] = (
-            (overall_pop["overall_end"] - overall_pop["start_date"]).dt.days / 365.25
-        )
-        bad_overall = int((overall_pop["overall_follow_up_years"] < 0).sum())
+        # ── Overall follow-up: start date → death or today, withdrawn excluded ──
+        overall_pop, overall_stats = follow_up.overall_follow_up(demographics, today)
+        bad_overall = int((overall_pop["_years"] < 0).sum())
         if bad_overall:
             print(f"  WARNING: {bad_overall} patients excluded from Overall follow-up — start date after follow-up end (data error)")
             logger.warning(f"Demographics: {bad_overall} patients with start date after Overall follow-up end")
-        overall_fu = overall_pop["overall_follow_up_years"].dropna()
-        overall_fu = overall_fu[overall_fu >= 0]
-        overall_median_fu = round(overall_fu.median(), 1) if len(overall_fu) else 0.0
-        overall_q1_fu     = round(overall_fu.quantile(0.25), 1) if len(overall_fu) else 0.0
-        overall_q3_fu     = round(overall_fu.quantile(0.75), 1) if len(overall_fu) else 0.0
+        overall_median_fu, overall_q1_fu, overall_q3_fu = overall_stats["median"], overall_stats["q1"], overall_stats["q3"]
 
         print(f"  Total patients   : {total:,}")
         print(f"  Deceased         : {deceased_total:,}")
         print(f"  Adults           : {adults_total:,}  |  Children: {children_total:,}")
         if unknown_age:
             print(f"  Unknown age      : {unknown_age:,}")
-        print(f"  Median Overall follow-up : {overall_median_fu} yrs (IQR {overall_q1_fu}–{overall_q3_fu}) — {len(overall_fu):,} patients")
+        print(f"  Median Overall follow-up : {overall_median_fu} yrs (IQR {overall_q1_fu}–{overall_q3_fu}) — {overall_stats['count']:,} patients")
 
         # Completeness variables
         demo_results = []
@@ -242,7 +152,7 @@ def run():
                 result  = build_result(var, missing, total)
 
             else:
-                missing = int(is_missing(demographics[var_col]).sum())
+                missing = int(missing_mask(demographics[var_col]).sum())
                 result  = build_result(var, missing, total)
 
             pct    = result["pct_missing"]
@@ -261,13 +171,7 @@ def run():
         # ════════════════════════════════════════════════════════
         print("── Cohort Groups ──")
 
-        groups_df = pd.read_sql(f"""
-            SELECT id, name
-            FROM groups
-            WHERE type = 'COHORT'
-              AND id NOT IN ({excluded})
-            ORDER BY LOWER(name)
-        """, conn)
+        groups_df = queries.fetch_cohort_groups(conn, excluded)
         print(f"  Found {len(groups_df)} cohort groups in database")
 
         if len(groups_df) > len(COHORT_LETTERS):
@@ -276,54 +180,11 @@ def run():
                 f"{len(COHORT_LETTERS)} letters defined in config/cohorts.py."
             )
 
-        # Counts: total, adults, children — one query for all cohorts
-        counts_df = pd.read_sql(f"""
-            SELECT
-                gp.group_id,
-                COUNT(DISTINCT gp.patient_id)  AS patient_count,
-                COUNT(DISTINCT CASE
-                    WHEN DATE_PART('year', AGE(pd.date_of_birth)) >= 18
-                    THEN gp.patient_id END)     AS adults,
-                COUNT(DISTINCT CASE
-                    WHEN DATE_PART('year', AGE(pd.date_of_birth)) < 18
-                    THEN gp.patient_id END)     AS children
-            FROM group_patients gp
-            JOIN groups g
-                ON  g.id   = gp.group_id
-               AND  g.type = 'COHORT'
-            JOIN patients p
-                ON  p.id = gp.patient_id
-               AND p.test    = FALSE
-               AND p.control = FALSE
-            LEFT JOIN patient_demographics pd
-                ON  pd.patient_id  = gp.patient_id
-               AND  pd.source_type = 'RADAR'
-            WHERE gp.group_id NOT IN ({excluded})
-            GROUP BY gp.group_id
-        """, conn)
+        counts_df  = queries.fetch_cohort_counts(conn, excluded)
         counts_map = counts_df.set_index("group_id").to_dict(orient="index")
 
-        # Follow-up per cohort — enrolment/death per patient per cohort membership
         print("  Calculating cohort follow-up...")
-        cohort_patients_df = pd.read_sql(f"""
-            SELECT
-                gp.group_id,
-                p.id              AS patient_id,
-                COALESCE(gp.from_date::date, gp.created_date::date) AS enrolled,
-                pd.date_of_death
-            FROM group_patients gp
-            JOIN groups g
-                ON  g.id   = gp.group_id
-               AND  g.type = 'COHORT'
-            JOIN patients p
-                ON  p.id = gp.patient_id
-               AND p.test    = FALSE
-               AND p.control = FALSE
-            LEFT JOIN patient_demographics pd
-                ON  pd.patient_id  = gp.patient_id
-               AND  pd.source_type = 'RADAR'
-            WHERE gp.group_id NOT IN ({excluded})
-        """, conn)
+        cohort_patients_df = queries.fetch_cohort_patients(conn, excluded)
 
         # enrolled = from_date for that specific cohort (the "Recruited On" date on RaDaR front end)
         # fallback to earliest cohort date across all cohorts if from_date is null
@@ -346,80 +207,26 @@ def run():
         # ── Start date per patient per cohort: diagnosis date, else cohort entry ──
         cohort_patients_df["diagnosis_date"]  = cohort_patients_df["patient_id"].map(diagnosis_date_map)
         cohort_patients_df["withdrawal_date"] = cohort_patients_df["patient_id"].map(withdrawal_date_map)
-        cohort_patients_df["start_date"]      = cohort_patients_df["diagnosis_date"].fillna(cohort_patients_df["enrolled"])
-        cohort_withdrawn_mask = cohort_patients_df["withdrawal_date"].notna()
+        cohort_patients_df["start_date"]      = follow_up.start_date(cohort_patients_df["diagnosis_date"], cohort_patients_df["enrolled"])
 
         # ── Overall follow-up per cohort: start date → death or today, withdrawn excluded ──
-        overall_cohort_df = cohort_patients_df[~cohort_withdrawn_mask].copy()
-        overall_cohort_df["overall_end"] = overall_cohort_df["date_of_death"].fillna(today)
-        overall_cohort_df["overall_follow_up_years"] = (
-            (overall_cohort_df["overall_end"] - overall_cohort_df["start_date"]).dt.days / 365.25
-        )
-        bad_overall = overall_cohort_df[overall_cohort_df["overall_follow_up_years"] < 0].groupby("group_id").size()
+        overall_cohort_df, overall_fu_map = follow_up.overall_follow_up(cohort_patients_df, today, group_col="group_id")
+        bad_overall = overall_cohort_df[overall_cohort_df["_years"] < 0].groupby("group_id").size()
         if not bad_overall.empty:
             print(f"  WARNING: {bad_overall.sum()} patients excluded from Overall follow-up across {len(bad_overall)} cohort(s) — start date after follow-up end (data error)")
             logger.warning(f"Cohorts: {bad_overall.sum()} patients with start date after Overall follow-up end: {bad_overall.to_dict()}")
 
-        overall_valid_df = overall_cohort_df[
-            overall_cohort_df["overall_follow_up_years"].notna() & (overall_cohort_df["overall_follow_up_years"] >= 0)
-        ]
-        overall_fu_map = (
-            overall_valid_df.groupby("group_id")["overall_follow_up_years"]
-            .agg(
-                overall_median_fu=lambda x: round(x.median(), 1),
-                overall_q1_fu    =lambda x: round(x.quantile(0.25), 1),
-                overall_q3_fu    =lambda x: round(x.quantile(0.75), 1),
-                overall_fu_count ="count",
-            )
-            .to_dict(orient="index")
-        )
-
         # ── Load all RADAR demographics for cohort-level completeness ──
-        # Section A uses group_id=123 only. Cohort sections need their own patients,
-        # so we load demographics for all non-test/control patients here.
+        # Section A uses its own excluded-group filter. Cohort sections need
+        # their own patients, so we load demographics for all non-test/control
+        # patients here.
         print("  Loading demographics for all cohort patients...")
-        all_demo_df = pd.read_sql("""
-            SELECT
-                pd.patient_id,
-                pd.first_name, pd.last_name, pd.date_of_birth, pd.date_of_death,
-                pd.gender, pd.ethnicity_id,
-                pd.email_address,
-                CASE WHEN pnum.patient_id IS NOT NULL THEN TRUE ELSE FALSE END AS has_nhs_number
-            FROM patient_demographics pd
-            INNER JOIN patients p
-                ON  p.id = pd.patient_id
-               AND p.test    = FALSE
-               AND p.control = FALSE
-            LEFT JOIN (
-                SELECT DISTINCT patient_id
-                FROM patient_numbers
-                WHERE source_type IN ('RADAR', 'UKRDC')
-                  AND number_group_id IN (120, 121, 122)
-            ) pnum
-                ON pnum.patient_id = pd.patient_id
-            WHERE pd.source_type = 'RADAR'
-        """, conn)
+        all_demo_df = queries.fetch_all_cohort_demographics(conn)
         print(f"  {len(all_demo_df):,} RADAR demographic records loaded for cohorts")
 
         # ── Primary Renal Diagnosis (PRD) per patient per cohort ──
-        # A patient has a PRD if they have a diagnosis in patient_diagnoses whose
-        # diagnosis_id matches a group_diagnoses row with type='PRIMARY' for the
-        # same cohort group the patient is enrolled in.
         print("  Loading Primary Renal Diagnosis (PRD) data...")
-        prd_df = pd.read_sql(f"""
-            SELECT DISTINCT pdiag.patient_id, gp.group_id
-            FROM patient_diagnoses pdiag
-            JOIN group_patients gp
-                ON  gp.patient_id = pdiag.patient_id
-            JOIN groups g
-                ON  g.id   = gp.group_id
-                AND g.type = 'COHORT'
-            JOIN group_diagnoses gd
-                ON  gd.diagnosis_id = pdiag.diagnosis_id
-                AND gd.group_id     = gp.group_id
-                AND gd.type         = 'PRIMARY'
-            WHERE gp.group_id NOT IN ({excluded})
-        """, conn)
+        prd_df = queries.fetch_primary_renal_diagnoses(conn, excluded)
         prd_overall_pids = set(prd_df["patient_id"]) & all_cohort_pids
         prd_cohort_map   = prd_df.groupby("group_id")["patient_id"].apply(set).to_dict()
         print(f"  {len(prd_overall_pids):,} patients with a Primary Renal Diagnosis recorded")
@@ -441,61 +248,8 @@ def run():
         })
 
         # ── Kidney Failure patients (single query, reused for section A + all cohorts) ──
-        # KF = earliest of: transplant date, dialysis from_date, or eGFR<15 confirmed
-        # twice ≥28 days apart with no eGFR≥15 in between.
-        # NOTE: based on RaDaR data only — not linked to UKRR.
         print("  Calculating Kidney Failure patients...")
-        kf_df = pd.read_sql("""
-            WITH egfr_below_15 AS (
-                SELECT patient_id, date, value::numeric AS egfr_value
-                FROM results
-                WHERE observation_id = 47
-                  AND value::numeric < 15
-            ),
-            intervening_high AS (
-                SELECT DISTINCT r.patient_id
-                FROM results r
-                JOIN (
-                    SELECT patient_id, MIN(date) AS first_low, MAX(date) AS last_low
-                    FROM egfr_below_15
-                    GROUP BY patient_id
-                ) bounds ON bounds.patient_id = r.patient_id
-                WHERE r.observation_id = 47
-                  AND r.value::numeric >= 15
-                  AND r.date > bounds.first_low
-                  AND r.date < bounds.last_low
-            ),
-            egfr_kf AS (
-                -- KF confirmation date = date of the 2nd qualifying reading (≥28 days after the 1st)
-                SELECT e1.patient_id, MIN(e2.date) AS kf_date
-                FROM egfr_below_15 e1
-                JOIN egfr_below_15 e2
-                    ON  e1.patient_id = e2.patient_id
-                    AND e2.date >= e1.date + INTERVAL '28 days'
-                WHERE e1.patient_id NOT IN (SELECT patient_id FROM intervening_high)
-                GROUP BY e1.patient_id
-            ),
-            transplant_dates AS (
-                SELECT patient_id, MIN(date) AS kf_date FROM transplants GROUP BY patient_id
-            ),
-            dialysis_dates AS (
-                SELECT patient_id, MIN(from_date) AS kf_date FROM dialysis GROUP BY patient_id
-            ),
-            all_kf_dates AS (
-                SELECT patient_id, kf_date FROM transplant_dates
-                UNION ALL
-                SELECT patient_id, kf_date FROM dialysis_dates
-                UNION ALL
-                SELECT patient_id, kf_date FROM egfr_kf
-            )
-            SELECT patient_id, MIN(kf_date) AS kf_date
-            FROM all_kf_dates
-            GROUP BY patient_id
-        """, conn)
-        # Source columns (transplants.date, dialysis.from_date, results.date) are
-        # timestamptz — normalise to tz-naive, same as every other date column in
-        # this file, so downstream comparisons don't mix aware/naive timestamps.
-        kf_df["kf_date"] = pd.to_datetime(kf_df["kf_date"], errors="coerce", utc=True).dt.tz_localize(None)
+        kf_df = queries.fetch_kidney_failure_dates(conn)
         # Restrict to the cohort patients only (excludes excluded groups)
         kf_patient_ids = set(kf_df["patient_id"]) & all_cohort_pids
         kf_date_map    = kf_df.set_index("patient_id")["kf_date"].to_dict()
@@ -508,64 +262,18 @@ def run():
         print("  Calculating Follow-up pre-KRT...")
 
         demographics["kf_date"] = demographics["patient_id"].map(kf_date_map)
-        pre_krt_pop = demographics[~withdrawn_mask].copy()
-        pre_krt_pop["pre_krt_end"] = pre_krt_pop.apply(
-            lambda r: min([d for d in [today, r["date_of_death"], r["kf_date"]] if pd.notna(d)]),
-            axis=1,
-        )
-        pre_krt_pop["pre_krt_follow_up_years"] = (
-            (pre_krt_pop["pre_krt_end"] - pre_krt_pop["start_date"]).dt.days / 365.25
-        )
-        pre_krt_fu = pre_krt_pop["pre_krt_follow_up_years"].dropna()
-        pre_krt_fu = pre_krt_fu[pre_krt_fu >= 0]
-        pre_krt_median_fu = round(pre_krt_fu.median(), 1) if len(pre_krt_fu) else 0.0
-        pre_krt_q1_fu     = round(pre_krt_fu.quantile(0.25), 1) if len(pre_krt_fu) else 0.0
-        pre_krt_q3_fu     = round(pre_krt_fu.quantile(0.75), 1) if len(pre_krt_fu) else 0.0
+        pre_krt_pop, pre_krt_stats = follow_up.pre_krt_follow_up(demographics, today)
+        pre_krt_median_fu, pre_krt_q1_fu, pre_krt_q3_fu = pre_krt_stats["median"], pre_krt_stats["q1"], pre_krt_stats["q3"]
+        print(f"  Overall RaDaR — {pre_krt_stats['count']:,} patients with a valid Follow-up pre-KRT window")
 
         cohort_patients_df["kf_date"] = cohort_patients_df["patient_id"].map(kf_date_map)
-        pre_krt_cohort_df = cohort_patients_df[~cohort_withdrawn_mask].copy()
-        pre_krt_cohort_df["pre_krt_end"] = pre_krt_cohort_df.apply(
-            lambda r: min([d for d in [today, r["date_of_death"], r["kf_date"]] if pd.notna(d)]),
-            axis=1,
-        )
-        pre_krt_cohort_df["pre_krt_follow_up_years"] = (
-            (pre_krt_cohort_df["pre_krt_end"] - pre_krt_cohort_df["start_date"]).dt.days / 365.25
-        )
-        pre_krt_valid_df = pre_krt_cohort_df[
-            pre_krt_cohort_df["pre_krt_follow_up_years"].notna() & (pre_krt_cohort_df["pre_krt_follow_up_years"] >= 0)
-        ]
-        pre_krt_fu_map = (
-            pre_krt_valid_df.groupby("group_id")["pre_krt_follow_up_years"]
-            .agg(
-                pre_krt_median_fu=lambda x: round(x.median(), 1),
-                pre_krt_q1_fu    =lambda x: round(x.quantile(0.25), 1),
-                pre_krt_q3_fu    =lambda x: round(x.quantile(0.75), 1),
-                pre_krt_fu_count ="count",
-            )
-            .to_dict(orient="index")
-        )
-        print(f"  Overall RaDaR — {len(pre_krt_fu):,} patients with a valid Follow-up pre-KRT window")
+        pre_krt_cohort_df, pre_krt_fu_map = follow_up.pre_krt_follow_up(cohort_patients_df, today, group_col="group_id")
 
         # ── Biochemistry (creatinine/proteinuria) results, pre-KRT ──
         # Creatinine = observation_id 46. Proteinuria = ACR (1) + PCR (2) combined.
-        # Only rows with a value, deduped to at most one result per patient per day.
         print("  Loading biochemistry (creatinine/proteinuria) results...")
-        creatinine_days_df = pd.read_sql("""
-            SELECT DISTINCT patient_id, date::date AS result_date
-            FROM results
-            WHERE observation_id = 46
-              AND value IS NOT NULL
-              AND value::text <> ''
-        """, conn)
-        proteinuria_days_df = pd.read_sql("""
-            SELECT DISTINCT patient_id, date::date AS result_date
-            FROM results
-            WHERE observation_id IN (1, 2)
-              AND value IS NOT NULL
-              AND value::text <> ''
-        """, conn)
-        creatinine_days_df["result_date"]  = pd.to_datetime(creatinine_days_df["result_date"],  errors="coerce")
-        proteinuria_days_df["result_date"] = pd.to_datetime(proteinuria_days_df["result_date"], errors="coerce")
+        creatinine_days_df  = queries.fetch_creatinine_results(conn)
+        proteinuria_days_df = queries.fetch_proteinuria_results(conn)
 
         # Cutoff per patient: their KF/KRT date if they've reached it, else today
         # (denominator is ALL patients — those never reaching KRT are censored at today).
@@ -587,12 +295,7 @@ def run():
 
         # ── Transplant counts per patient (restricted to cohort patients) ──
         print("  Calculating transplant counts per patient...")
-        transplant_counts_df = pd.read_sql("""
-            SELECT patient_id, COUNT(DISTINCT date) AS transplant_count
-            FROM transplants
-            GROUP BY patient_id
-        """, conn)
-        # Restrict to cohort patients only
+        transplant_counts_df = queries.fetch_transplant_counts(conn)
         transplant_counts_df = transplant_counts_df[
             transplant_counts_df["patient_id"].isin(all_cohort_pids)
         ]
@@ -637,7 +340,7 @@ def run():
             "name":        "OVERALL_FOLLOW_UP",
             "pct_missing": None,
             "missing":     None,
-            "total":       len(overall_fu),
+            "total":       overall_stats["count"],
             "required":    False,
             "desc":        (
                 f"Median follow-up: {overall_median_fu} yrs (IQR {overall_q1_fu}–{overall_q3_fu} yrs) — "
@@ -649,7 +352,7 @@ def run():
             "name":        "FOLLOW_UP_PRE_KRT",
             "pct_missing": None,
             "missing":     None,
-            "total":       len(pre_krt_fu),
+            "total":       pre_krt_stats["count"],
             "required":    False,
             "desc":        (
                 f"Median follow-up: {pre_krt_median_fu} yrs (IQR {pre_krt_q1_fu}–{pre_krt_q3_fu} yrs) — "
@@ -671,36 +374,31 @@ def run():
         }
         print(f"  Section A done — {len(demo_results)} variables\n")
 
-        # Cohorts excluded from "Follow up pre KRT" / Biochemistry Metadata
-        no_pre_krt_names = {n.strip().lower() for n in NO_PRE_KRT_FOLLOWUP_COHORTS}
-        no_biochem_names = {n.strip().lower() for n in NO_BIOCHEMISTRY_COHORTS}
-
         # Build cohort sections
         cohort_sections = []
         for letter, (_, row) in zip(COHORT_LETTERS, groups_df.iterrows()):
             group_id = int(row["id"])
             db_name  = row["name"]
-            closed   = db_name.lower().startswith("z ")
-            name_lower        = db_name.strip().lower()
-            skip_pre_krt      = name_lower in no_pre_krt_names
-            skip_biochemistry = name_lower in no_biochem_names
+            closed   = cohort_rules.is_closed_cohort(db_name)
+            skip_pre_krt      = cohort_rules.should_skip_pre_krt(db_name)
+            skip_biochemistry = cohort_rules.should_skip_biochemistry(db_name)
 
             counts        = counts_map.get(group_id, {})
             patient_count = int(counts.get("patient_count", 0))
             adults        = int(counts.get("adults",        0))
             children      = int(counts.get("children",      0))
 
-            overall_stats  = overall_fu_map.get(group_id, {})
-            overall_median = overall_stats.get("overall_median_fu", 0)
-            overall_q1     = overall_stats.get("overall_q1_fu",     0)
-            overall_q3     = overall_stats.get("overall_q3_fu",     0)
-            overall_count  = int(overall_stats.get("overall_fu_count", 0))
+            overall_c = overall_fu_map.get(group_id, {})
+            overall_median = overall_c.get("median", 0)
+            overall_q1     = overall_c.get("q1",     0)
+            overall_q3     = overall_c.get("q3",     0)
+            overall_count  = int(overall_c.get("count", 0))
 
-            pre_krt_stats  = pre_krt_fu_map.get(group_id, {})
-            pre_krt_median = pre_krt_stats.get("pre_krt_median_fu", 0)
-            pre_krt_q1     = pre_krt_stats.get("pre_krt_q1_fu",     0)
-            pre_krt_q3     = pre_krt_stats.get("pre_krt_q3_fu",     0)
-            pre_krt_count  = int(pre_krt_stats.get("pre_krt_fu_count", 0))
+            pre_krt_c = pre_krt_fu_map.get(group_id, {})
+            pre_krt_median = pre_krt_c.get("median", 0)
+            pre_krt_q1     = pre_krt_c.get("q1",     0)
+            pre_krt_q3     = pre_krt_c.get("q3",     0)
+            pre_krt_count  = int(pre_krt_c.get("count", 0))
 
             # ── Demographics completeness for this cohort ──
             cohort_pids     = cohort_pid_map.get(group_id, set())
@@ -753,7 +451,7 @@ def run():
                     missing_in_demo = int((cohort_demo["has_nhs_number"] == False).sum())
 
                 else:
-                    missing_in_demo = int(is_missing(cohort_demo[var_col]).sum())
+                    missing_in_demo = int(missing_mask(cohort_demo[var_col]).sum())
 
                 total_missing = missing_in_demo + no_demo
                 pct = round(total_missing / patient_count * 100, 1) if patient_count > 0 else 0.0
