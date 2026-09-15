@@ -18,7 +18,7 @@ def build_summary_cards(data: list):
         ], className=f"summary-card {cls}".strip()), xs=6, sm=4, lg=4)
 
     return dbc.Row([
-        card("Total patients", f"{total_patients:,}", "RaDaR · excl. test & control", "highlight"),
+        card("Total patients", f"{total_patients:,}", "RaDaR patients, excluding test & control", "highlight"),
         card("Adults",         f"{adults:,}",         "patients aged ≥ 18"),
         card("Children",       f"{children:,}",       "patients aged < 18"),
     ], className="g-2")

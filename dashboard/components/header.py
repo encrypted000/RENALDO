@@ -8,7 +8,7 @@ def create_header():
                 html.Img(src="/assets/logo.png", className="logo-badge"),
                 html.Div([
                     html.H1("RENALDO"),
-                    html.Div("RarE kidNey dAta compLeteness DashbOard · UK Kidney Association", className="header-sub"),
+                    html.Div("RarE kidNey dAta compLeteness DashbOard for the UK Kidney Association", className="header-sub"),
                 ]),
             ], className="header-logo"),
 

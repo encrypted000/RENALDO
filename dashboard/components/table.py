@@ -20,9 +20,9 @@ COLUMNS = [
 COLUMN_WIDTHS = [
     {"if": {"column_id": "req"},         "width": "6%",  "textAlign": "center"},
     {"if": {"column_id": "id"},          "width": "7%",  "fontFamily": "var(--font-mono)", "fontSize": "11px", "color": "var(--text-3)"},
-    {"if": {"column_id": "pct_missing"}, "width": "9%",  "textAlign": "center"},
+    {"if": {"column_id": "pct_missing"}, "width": "9%",  "textAlign": "center", "fontVariantNumeric": "tabular-nums"},
     {"if": {"column_id": "name"},        "width": "16%", "fontWeight": "600", "color": "var(--text)"},
-    {"if": {"column_id": "counts"},      "width": "13%", "fontSize": "11.5px", "color": "var(--text-2)"},
+    {"if": {"column_id": "counts"},      "width": "13%", "fontSize": "11.5px", "color": "var(--text-2)", "fontVariantNumeric": "tabular-nums"},
     {"if": {"column_id": "desc"},        "width": "49%"},
 ]
 

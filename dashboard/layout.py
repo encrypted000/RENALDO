@@ -81,10 +81,10 @@ def create_layout():
 
             html.Div([
                 html.Strong("RaDaR Data Completeness Dashboard"),
-                " · UK Kidney Association · ",
-                "Completeness calculated for RADAR source records only, "
-                "excluding test and control patients. "
-                "Death-related fields calculated among deceased patients only.",
+                " is maintained by the UK Kidney Association.",
+                html.Br(),
+                "Completeness is calculated from RADAR source records only, excluding test and "
+                "control patients; death-related fields are calculated among deceased patients only.",
             ], className="footer mt-5 mb-4"),
 
         ], className="main"),
