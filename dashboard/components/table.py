@@ -1,26 +1,5 @@
 from dash import dash_table
-
-
-# ── Completeness bands (RAG — red/amber/green audit convention) ──
-# Colour tokens live in style.css (--status-N-*) so the palette stays in one
-# place and can be retuned without touching this file.
-
-_BANDS = [
-    (20,  "var(--status-1-bg)", "var(--status-1-fg)"),  # 0–20% missing
-    (40,  "var(--status-2-bg)", "var(--status-2-fg)"),  # 20–40%
-    (60,  "var(--status-3-bg)", "var(--status-3-fg)"),  # 40–60%
-    (80,  "var(--status-4-bg)", "var(--status-4-fg)"),  # 60–80%
-    (101, "var(--status-5-bg)", "var(--status-5-fg)"),  # 80–100%
-]
-
-
-def _band(pct):
-    if pct is None:
-        return None
-    for ceiling, bg, fg in _BANDS:
-        if pct < ceiling:
-            return bg, fg
-    return _BANDS[-1][1], _BANDS[-1][2]
+from dashboard.components.bands import band_for_pct_missing
 
 
 # ── Column definitions ──
@@ -108,9 +87,9 @@ def build_table(variables: list, section_id: str):
             "desc":        v.get("desc", ""),
         })
 
-        band = _band(pct)
+        band = band_for_pct_missing(pct)
         if band:
-            bg, fg = band
+            bg, fg, _dot = band
             style_conditions.append({
                 "if": {"row_index": i, "column_id": "pct_missing"},
                 "backgroundColor": bg,

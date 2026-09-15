@@ -64,7 +64,20 @@ def create_layout():
 
             _divider("Overall RaDaR"),
 
-            html.Div(id="accordion-content", className="mt-2"),
+            html.Div(id="demo-content", className="mt-2"),
+
+            html.Div([
+                dcc.Input(
+                    id="cohort-search",
+                    type="text",
+                    value="",
+                    placeholder='Search cohort groups or variables (e.g. "IgA", "NHS_NUMBER")…',
+                    className="cohort-search-input",
+                    debounce=False,
+                ),
+            ], className="cohort-search-wrap"),
+
+            html.Div(id="cohort-content", className="mt-2"),
 
             html.Div([
                 html.Strong("RaDaR Data Completeness Dashboard"),

@@ -1,6 +1,7 @@
 from dash import html
 import dash_bootstrap_components as dbc
 from dashboard.components.table import build_table
+from dashboard.components.bands import band_for_pct_missing
 
 
 SMALL_N_THRESHOLD = 20  # suppress cohorts with fewer patients than this
@@ -23,15 +24,24 @@ def _section_header(letter: str, title: str, n_vars: int,
                     small_n: bool = False) -> html.Div:
     closed_badge = html.Span("CLOSED", className="status-badge closed") if closed else None
 
-    bar = html.Div([
-        html.Div(className="sec-bar-bg", children=[
-            html.Div(className="sec-bar-fill",
-                     style={"width": f"{pct_complete}%"}),
-        ]),
-        html.Span(f"{pct_complete}% complete", className="sec-bar-pct"),
-    ], className="sec-bar-wrap ms-auto me-3") if pct_complete is not None else html.Div(
-        className="ms-auto me-3"
-    )
+    if pct_complete is not None:
+        # The bar stores "% complete"; the shared band lookup is keyed on
+        # "% missing" (same convention the per-variable table cells use),
+        # so convert before matching — this is the one place that has to
+        # stay consistent with table.py's usage of the same shared bands.
+        band = band_for_pct_missing(100 - pct_complete)
+        fill_color = band[2] if band else "var(--accent)"   # dot — visible at 5px height
+        text_color = band[1] if band else "var(--text-3)"   # fg — readable as text
+        bar = html.Div([
+            html.Div(className="sec-bar-bg", children=[
+                html.Div(className="sec-bar-fill",
+                         style={"width": f"{pct_complete}%", "background": fill_color}),
+            ]),
+            html.Span(f"{pct_complete}% complete", className="sec-bar-pct",
+                      style={"color": text_color}),
+        ], className="sec-bar-wrap ms-auto me-3")
+    else:
+        bar = html.Div(className="ms-auto me-3")
 
     count_label = "(low N)" if small_n else (f"({n_vars} variables)" if n_vars > 0 else "(coming soon)")
 
@@ -70,6 +80,41 @@ def _small_n_badge() -> html.Span:
     return html.Span("LOW N", className="status-badge low-n")
 
 
+def _biochem_cell(stat: dict, field: str) -> str:
+    if not stat or not stat.get("total"):
+        return "—"
+
+    if field == "coverage":
+        count, total = stat.get("count", 0), stat.get("total", 0)
+        pct = round(count / total * 100, 1) if total else 0
+        return f"{count:,} / {total:,} ({pct}%)"
+
+    if field == "n_results":
+        return f"{stat.get('total_results', 0):,}"
+
+    if field == "per_patient":
+        return (
+            f"{stat.get('median_per_patient', 0)} "
+            f"(IQR {stat.get('q1_per_patient', 0)}–{stat.get('q3_per_patient', 0)})"
+        )
+
+    if field == "time_to_krt":
+        timing = stat.get("time_to_krt")
+        if not timing or not timing.get("count"):
+            return "—"
+        return f"{timing['median']} yrs (IQR {timing['q1']}–{timing['q3']})"
+
+    return "—"
+
+
+_BIOCHEM_ROWS = [
+    ("Patients with ≥1 result pre-KRT",              "coverage"),
+    ("Total results recorded pre-KRT",                     "n_results"),
+    ("Results per patient (median, IQR)",                  "per_patient"),
+    ("Yrs from first result to KRT/today (median, IQR)",   "time_to_krt"),
+]
+
+
 def _biochemistry_body(sec: dict, small_n: bool) -> html.Div:
     if small_n:
         return _small_n_body()
@@ -81,43 +126,26 @@ def _biochemistry_body(sec: dict, small_n: bool) -> html.Div:
             html.P("Creatinine and proteinuria counts pre-KRT for this cohort will be added in a future update."),
         ], className="empty-state")
 
-    blocks = []
-    for key, label in (("creatinine", "Creatinine"), ("proteinuria", "Proteinuria")):
-        stat = biochem.get(key)
-        if not stat:
-            continue
-        count   = stat.get("count", 0)
-        total   = stat.get("total", 0)
-        n_results = stat.get("total_results", 0)
-        median  = stat.get("median_per_patient", 0)
-        q1      = stat.get("q1_per_patient", 0)
-        q3      = stat.get("q3_per_patient", 0)
+    creat = biochem.get("creatinine")
+    prot  = biochem.get("proteinuria")
 
-        if total == 0:
-            lines = [html.Div("No patients recorded in this cohort", className="biochem-line")]
-        else:
-            pct = round(count / total * 100, 1)
-            lines = [
-                html.Div(f"{count:,} / {total:,} patients ({pct}%) had at least one result pre-KRT", className="biochem-line"),
-                html.Div(f"{n_results:,} total results recorded pre-KRT across the cohort", className="biochem-line"),
-                html.Div(f"Median {median} results per patient (IQR {q1}–{q3}) among patients with a result", className="biochem-line"),
-            ]
-            timing = stat.get("time_to_krt")
-            if timing and timing.get("count"):
-                lines.append(html.Div(
-                    f"Median {timing['median']} yrs (IQR {timing['q1']}–{timing['q3']} yrs) "
-                    f"from first result to KRT or the current date",
-                    className="biochem-line",
-                ))
+    table = html.Table([
+        html.Thead(html.Tr([
+            html.Th(""),
+            html.Th("Creatinine"),
+            html.Th("Proteinuria"),
+        ])),
+        html.Tbody([
+            html.Tr([
+                html.Td(label, className="biochem-row-label"),
+                html.Td(_biochem_cell(creat, field)),
+                html.Td(_biochem_cell(prot, field)),
+            ])
+            for label, field in _BIOCHEM_ROWS
+        ]),
+    ], className="biochem-table")
 
-        blocks.append(
-            html.Div([
-                html.Div(label, className="biochem-label"),
-                *lines,
-            ], className="biochem-block")
-        )
-
-    return html.Div(blocks, style={"padding": "6px 16px 14px"})
+    return html.Div(table, style={"padding": "6px 16px 14px"})
 
 
 def _biochemistry_dropdown(sec: dict, letter: str, small_n: bool) -> dbc.Accordion:
@@ -135,15 +163,30 @@ def _biochemistry_dropdown(sec: dict, letter: str, small_n: bool) -> dbc.Accordi
     )
 
 
-def _cohort_divider(n: int) -> html.Div:
+def _section_divider(label: str) -> html.Div:
     return html.Div([
         html.Div(className="section-divider-line"),
-        html.Span(f"Cohort Groups ({n})", className="section-divider-label"),
+        html.Span(label, className="section-divider-label"),
         html.Div(className="section-divider-line"),
     ], className="section-divider")
 
 
-def _build_items(data: list, active_all: bool = False, demo_open: bool = False):
+def _cohort_matches(sec: dict, query: str) -> tuple:
+    """
+    (title_match, variable_match) for one cohort against a lowercased,
+    stripped search query — matches on cohort title or a variable's ID/name
+    only, not free-text descriptions.
+    """
+    title_match = query in sec.get("title", "").lower()
+    variable_match = any(
+        query in str(v.get("id", "")).lower() or query in str(v.get("name", "")).lower()
+        for v in sec.get("variables", [])
+    )
+    return title_match, variable_match
+
+
+def _build_items(data: list, active_all: bool = False, demo_open: bool = False,
+                  search: str = None):
     demo_sec  = next((s for s in data if s.get("section") == "A"), None)
     demo_vars = demo_sec.get("variables", []) if demo_sec else []
     pct       = _section_pct_complete(demo_vars) if demo_vars else None
@@ -161,21 +204,34 @@ def _build_items(data: list, active_all: bool = False, demo_open: bool = False):
         className="radar-accordion mb-2",
     )
 
-    cohort_items = []
-    all_item_ids = []
+    query = (search or "").strip().lower()
+
+    cohort_items    = []
+    all_item_ids    = []
+    variable_matches = []   # matched only via a variable, not the title — auto-expand these
+    n_total_cohorts = 0
 
     for sec in (s for s in data if s.get("section") != "A"):
-        variables = sec.get("variables", [])
+        n_total_cohorts += 1
+        letter  = sec["section"]
+        item_id = f"item-{letter}"
+
+        if query:
+            title_match, variable_match = _cohort_matches(sec, query)
+            if not (title_match or variable_match):
+                continue
+            if variable_match and not title_match:
+                variable_matches.append(item_id)
+
+        variables  = sec.get("variables", [])
         n_patients = _patient_count(variables)
         small_n    = n_patients < SMALL_N_THRESHOLD
 
-        letter  = sec["section"]
         # Overall % complete is a single rolled-up figure across all variables —
         # unlike the per-variable counts in the table, it doesn't reveal small
         # numbers, so it's shown even for suppressed (low N) cohorts.
         pct_c   = _section_pct_complete(variables) if variables else None
         closed  = sec.get("closed", False)
-        item_id = f"item-{letter}"
         all_item_ids.append(item_id)
 
         if small_n:
@@ -203,31 +259,47 @@ def _build_items(data: list, active_all: bool = False, demo_open: bool = False):
             )
         )
 
-    cohorts_accordion = dbc.Accordion(
-        cohort_items,
-        active_item=all_item_ids if active_all else None,
-        start_collapsed=not active_all,
-        flush=False,
-        className="radar-accordion",
-    )
+    if query:
+        # A variable-name match means the researcher is hunting for a specific
+        # field, not just the cohort — open it automatically. A title-only
+        # match keeps whatever expand/collapse state is already active.
+        active_items = list(dict.fromkeys(
+            (all_item_ids if active_all else []) + variable_matches
+        ))
+    else:
+        active_items = all_item_ids if active_all else None
 
     n_cohorts = len(cohort_items)
-    return demo_accordion, _cohort_divider(n_cohorts), cohorts_accordion
+
+    if query and not cohort_items:
+        cohorts_accordion = html.Div([
+            html.Strong("No matching cohorts"),
+            html.P(f'Nothing matches "{search.strip()}" — try a cohort name (e.g. "IgA") '
+                   f'or a variable name (e.g. "NHS_NUMBER").'),
+        ], className="empty-state")
+    else:
+        cohorts_accordion = dbc.Accordion(
+            cohort_items,
+            active_item=active_items,
+            start_collapsed=not (active_all or (query and active_items)),
+            flush=False,
+            className="radar-accordion",
+        )
+
+    label = f"Cohort Groups ({n_cohorts} of {n_total_cohorts})" if query else f"Cohort Groups ({n_cohorts})"
+    return demo_accordion, _section_divider(label), cohorts_accordion
 
 
-def build_accordion(data: list) -> html.Div:
-    """Default — everything collapsed."""
-    demo, divider, cohorts = _build_items(data, active_all=False, demo_open=False)
-    return html.Div([demo, divider, cohorts])
+def build_accordion(data: list, search: str = None):
+    """Default — everything collapsed unless matched by a search term."""
+    return _build_items(data, active_all=False, demo_open=False, search=search)
 
 
-def build_accordion_expanded(data: list) -> html.Div:
+def build_accordion_expanded(data: list, search: str = None):
     """Expand all — everything open."""
-    demo, divider, cohorts = _build_items(data, active_all=True, demo_open=True)
-    return html.Div([demo, divider, cohorts])
+    return _build_items(data, active_all=True, demo_open=True, search=search)
 
 
-def build_accordion_collapsed(data: list) -> html.Div:
+def build_accordion_collapsed(data: list, search: str = None):
     """Collapse all — everything collapsed."""
-    demo, divider, cohorts = _build_items(data, active_all=False, demo_open=False)
-    return html.Div([demo, divider, cohorts])
+    return _build_items(data, active_all=False, demo_open=False, search=search)

@@ -41,6 +41,10 @@
   --radius-sm: 6px;
   --radius:    8px;
 
+  /* Subtle depth cue, hover-only — keeps the flat baseline look while
+     still signalling that cards/rows are interactive. */
+  --shadow-sm: 0 1px 2px rgba(17, 24, 39, 0.06), 0 1px 1px rgba(17, 24, 39, 0.04);
+
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -253,6 +257,34 @@ body {
   white-space:    nowrap;
 }
 
+/* ── Cohort search ── */
+.cohort-search-wrap {
+  margin: 0 0 var(--space-4);
+}
+
+.cohort-search-input {
+  display:       block;
+  width:         100%;
+  max-width:     420px;
+  font-size:     13px;
+  font-family:   var(--font);
+  color:         var(--text);
+  background:    var(--surface);
+  border:        1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding:       8px 12px;
+  transition:    border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.cohort-search-input::placeholder { color: var(--text-3); }
+
+.cohort-search-input:focus,
+.cohort-search-input:focus-visible {
+  outline:      none;
+  border-color: var(--accent);
+  box-shadow:   0 0 0 3px var(--accent-lt);
+}
+
 /* ── Summary cards ── */
 .summary-card {
   background:    var(--surface) !important;
@@ -260,6 +292,12 @@ body {
   border-radius: var(--radius) !important;
   padding:       var(--space-4) var(--space-5) !important;
   box-shadow:    none !important;
+  transition:    box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.summary-card:hover {
+  border-color: var(--border-strong) !important;
+  box-shadow:   var(--shadow-sm) !important;
 }
 
 .summary-card.highlight {
@@ -343,6 +381,11 @@ body {
   margin-bottom: 6px !important;
   overflow:      hidden;
   box-shadow:    none !important;
+  transition:    box-shadow 0.15s ease;
+}
+
+.radar-accordion .accordion-item:hover {
+  box-shadow: var(--shadow-sm) !important;
 }
 
 .radar-accordion .accordion-button {
@@ -463,18 +506,36 @@ body {
   white-space: nowrap;
 }
 
-/* ── Status badges (CLOSED / LOW N) ── */
+/* ── Status badges (CLOSED / LOW N) ──
+   REQ (table.py / legend) is a solid filled pill with no border — a data-
+   field flag. These are cohort-level caveats, not field flags, so they use
+   a different visual language on purpose: outlined, with a leading dot
+   marker, so the two badge families are never mistaken for each other. */
 .status-badge {
+  display:        inline-flex;
+  align-items:    center;
+  gap:            4px;
   font-size:      10px;
   font-weight:    700;
   letter-spacing: 0.03em;
-  padding:        2px 7px;
-  border-radius:  4px;
+  padding:        2px 8px 2px 6px;
+  border-radius:  3px;
   margin-left:    6px;
 }
 
+.status-badge::before {
+  content:       "";
+  width:         6px;
+  height:        6px;
+  border-radius: 50%;
+  flex-shrink:   0;
+}
+
 .status-badge.closed { background: var(--surface-2); color: var(--text-2); border: 1px solid var(--border); }
-.status-badge.low-n  { background: #f1ecf9; color: #6842a6; }
+.status-badge.closed::before { background: var(--text-3); }
+
+.status-badge.low-n { background: #f1ecf9; color: #6842a6; border: 1px solid #ddd0f0; }
+.status-badge.low-n::before { background: #6842a6; }
 
 /* ── Empty / informational states ── */
 .empty-state {
@@ -500,9 +561,40 @@ body {
 }
 
 /* ── Biochemistry body text ── */
-.biochem-block { padding: var(--space-2) 0; }
-.biochem-label { font-weight: 600; font-size: 12.5px; margin-bottom: 4px; color: var(--text); }
-.biochem-line  { font-size: 12px; color: var(--text-2); margin-top: 2px; }
+.biochem-table {
+  width:           100%;
+  border-collapse: collapse;
+  font-size:       12.5px;
+}
+
+.biochem-table th {
+  text-align:     center;
+  font-size:      10.5px;
+  font-weight:    600;
+  color:          var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding:        6px 12px;
+  border-bottom:  1px solid var(--border);
+  white-space:    nowrap;
+}
+
+.biochem-table th:first-child { text-align: left; }
+
+.biochem-table td {
+  padding:       7px 12px;
+  border-bottom: 1px solid var(--border);
+  color:         var(--text-2);
+  text-align:    center;
+}
+
+.biochem-table tbody tr:last-child td { border-bottom: none; }
+
+.biochem-row-label {
+  text-align:  left !important;
+  color:       var(--text) !important;
+  font-weight: 500;
+}
 
 /* ── Table ── */
 .dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner th {
