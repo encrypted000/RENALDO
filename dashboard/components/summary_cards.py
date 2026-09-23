@@ -1,5 +1,4 @@
 from dash import html
-import dash_bootstrap_components as dbc
 
 
 def build_summary_cards(data: list):
@@ -10,15 +9,16 @@ def build_summary_cards(data: list):
     stats     = demo_sec.get("stats", {})
     adults    = stats.get("adults",    0)
     children  = stats.get("children",  0)
-    def card(label, value, sub, cls=""):
-        return dbc.Col(dbc.Card([
+
+    def stat(label, value, sub, cls=""):
+        return html.Div([
             html.Div(label, className="card-label"),
             html.Div(value, className="card-value"),
             html.Div(sub,   className="card-sub"),
-        ], className=f"summary-card {cls}".strip()), xs=6, sm=4, lg=4)
+        ], className=f"stat-group {cls}".strip())
 
-    return dbc.Row([
-        card("Total patients", f"{total_patients:,}", "RaDaR patients, excluding test & control", "highlight"),
-        card("Adults",         f"{adults:,}",         "patients aged ≥ 18"),
-        card("Children",       f"{children:,}",       "patients aged < 18"),
-    ], className="g-2")
+    return html.Div([
+        stat("Total patients", f"{total_patients:,}", "RaDaR patients, excluding test & control", "primary"),
+        stat("Adults",         f"{adults:,}",         "patients aged ≥ 18"),
+        stat("Children",       f"{children:,}",       "patients aged < 18"),
+    ], className="stat-strip")

@@ -38,12 +38,11 @@
   --font:      'Segoe UI', system-ui, -apple-system, sans-serif;
   --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
 
-  --radius-sm: 6px;
-  --radius:    8px;
-
-  /* Subtle depth cue, hover-only — keeps the flat baseline look while
-     still signalling that cards/rows are interactive. */
-  --shadow-sm: 0 1px 2px rgba(17, 24, 39, 0.06), 0 1px 1px rgba(17, 24, 39, 0.04);
+  /* Sharp, ledger-like corners rather than soft SaaS-card rounding — this
+     is a dense audit tool, not a consumer app. No box-shadow anywhere in
+     this file, by the same reasoning: flat surfaces, borders do the work. */
+  --radius-sm: 3px;
+  --radius:    4px;
 
   --space-1: 4px;
   --space-2: 8px;
@@ -223,13 +222,12 @@ body {
 .info-box {
   background:    var(--surface);
   border:        1px solid var(--border);
-  border-left:   3px solid var(--accent);
   border-radius: var(--radius);
-  padding:       22px var(--space-5);
+  padding:       18px var(--space-5);
   margin-bottom: var(--space-5);
   font-size:     13.5px;
   color:         var(--text-2);
-  line-height:   1.75;
+  line-height:   1.65;
 }
 
 .info-box p { margin-bottom: var(--space-2); }
@@ -256,15 +254,22 @@ body {
   white-space: nowrap;
 }
 
-/* ── Cohort search ── */
+/* ── Cohort search ──
+   Sits directly above the "Cohort Groups" divider it filters — the
+   divider's own top margin is tightened here so the two read as one
+   toolbar rather than two disconnected blocks. */
 .cohort-search-wrap {
-  margin: 0 0 var(--space-4);
+  margin: var(--space-2) 0 0;
+}
+
+#cohort-content .section-divider {
+  margin-top: var(--space-2);
 }
 
 .cohort-search-input {
   display:       block;
   width:         100%;
-  max-width:     420px;
+  max-width:     480px;
   font-size:     13px;
   font-family:   var(--font);
   color:         var(--text);
@@ -284,38 +289,46 @@ body {
   box-shadow:   0 0 0 3px var(--accent-lt);
 }
 
-/* ── Summary cards ── */
-.summary-card {
-  background:    var(--surface) !important;
-  border:        1px solid var(--border) !important;
-  border-radius: var(--radius) !important;
-  padding:       var(--space-4) var(--space-5) !important;
-  box-shadow:    none !important;
+/* ── Summary stats — one dense ledger strip, not three separate feature
+   cards. The primary figure (Total patients) is marked out by being set
+   larger than the two breakdown figures, not by a colour accent. ── */
+.stat-strip {
+  display:       flex;
+  background:    var(--surface);
+  border:        1px solid var(--border);
+  border-radius: var(--radius);
+  overflow:      hidden;
 }
 
-.summary-card.highlight {
-  border-color: var(--accent) !important;
+.stat-group {
+  flex:        1;
+  padding:     14px var(--space-5);
+  border-left: 1px solid var(--border);
 }
+
+.stat-group:first-child { border-left: none; }
 
 .card-label {
   font-size:     12px;
   color:         var(--text-3);
   font-weight:   600;
-  margin-bottom: var(--space-2);
+  margin-bottom: 4px;
 }
 
 .card-value {
-  font-size:            26px;
   font-weight:          700;
   color:                var(--text);
   line-height:          1;
   font-variant-numeric: tabular-nums;
 }
 
+.stat-group.primary .card-value     { font-size: 28px; }
+.stat-group:not(.primary) .card-value { font-size: 19px; }
+
 .card-sub {
   font-size:  12px;
   color:      var(--text-3);
-  margin-top: 6px;
+  margin-top: 5px;
 }
 
 /* ── Legend ── */
@@ -371,11 +384,6 @@ body {
   margin-bottom: 6px !important;
   overflow:      hidden;
   box-shadow:    none !important;
-  transition:    box-shadow 0.15s ease;
-}
-
-.radar-accordion .accordion-item:hover {
-  box-shadow: var(--shadow-sm) !important;
 }
 
 .radar-accordion .accordion-button {
@@ -393,7 +401,6 @@ body {
 
 .radar-accordion .accordion-button:not(.collapsed) {
   background: var(--accent-lt) !important;
-  box-shadow: inset 3px 0 0 var(--accent) !important;
 }
 
 .radar-accordion .accordion-button:focus-visible {
@@ -668,10 +675,11 @@ body {
 
   .nav-btn { font-size: 11px; padding: 4px 10px; }
 
-  .summary-card { padding: var(--space-3) var(--space-3) !important; }
-  .card-value { font-size: 21px; }
-  .card-label { font-size: 11px; }
-  .card-sub { font-size: 10.5px; }
+  .stat-group { padding: var(--space-2) var(--space-2); }
+  .stat-group.primary .card-value     { font-size: 19px; }
+  .stat-group:not(.primary) .card-value { font-size: 15px; }
+  .card-label { font-size: 10.5px; }
+  .card-sub { font-size: 10px; }
 
   .info-box { padding: var(--space-3); font-size: 12px; }
 
@@ -705,5 +713,5 @@ body {
 @media (min-width: 768px) and (max-width: 991px) {
   .header-inner { padding: var(--space-4); }
   .main { padding: var(--space-4); }
-  .card-value { font-size: 23px; }
+  .stat-group.primary .card-value { font-size: 24px; }
 }
