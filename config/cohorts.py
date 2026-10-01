@@ -8,7 +8,7 @@ EXCLUDED_GROUP_IDS = (184, 137, 149, 152, 18, 194, 19, 161, 182, 174, 140, 220, 
 # disease cohort, and is excluded from the public dashboard entirely (UKKA
 # decision, Sept 2026) — including from the Section A "Overall RaDaR" totals.
 EXCLUDED_GROUP_NAMES = (
-    "Data Completeness",
+    "Data Completeness", "z CLOSED Dent Disease and Lowe Syndrome"
 )
 
 # Group IDs representing withdrawn consent. Patients in these groups are
