@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
     Output("summary-cards",  "children"),
     Output("demo-content",   "children"),
     Output("cohort-content", "children"),
+    Output("cohort-divider-label", "children"),
     Input("data-store",      "data"),
     Input("expand-btn",      "n_clicks"),
     Input("collapse-btn",    "n_clicks"),
@@ -39,17 +40,18 @@ def render_content(data, _expand, _collapse, search):
                            "borderRadius": "4px", "fontSize": "12px"},
                 ),
             ], className="state-box"),
+            "Cohort Groups",
         )
 
     logger.info(f"Rendering — triggered by: {ctx.triggered_id}")
 
     if ctx.triggered_id == "expand-btn":
-        demo, divider, cohorts = build_accordion_expanded(data, search)
+        demo, label, cohorts = build_accordion_expanded(data, search)
     elif ctx.triggered_id == "collapse-btn":
-        demo, divider, cohorts = build_accordion_collapsed(data, search)
+        demo, label, cohorts = build_accordion_collapsed(data, search)
     else:
         # Default (including a search-box edit) — demographics open, cohorts
         # collapsed except for any cohort the search term matches.
-        demo, divider, cohorts = build_accordion(data, search)
+        demo, label, cohorts = build_accordion(data, search)
 
-    return build_summary_cards(data), demo, html.Div([divider, cohorts])
+    return build_summary_cards(data), demo, cohorts, label

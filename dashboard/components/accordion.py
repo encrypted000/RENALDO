@@ -218,14 +218,6 @@ def _lab_results_dropdown(sec: dict, letter: str, small_n: bool) -> dbc.Accordio
     )
 
 
-def _section_divider(label: str) -> html.Div:
-    return html.Div([
-        html.Div(className="section-divider-line"),
-        html.Span(label, className="section-divider-label"),
-        html.Div(className="section-divider-line"),
-    ], className="section-divider")
-
-
 def _cohort_matches(sec: dict, query: str) -> tuple:
     """
     (title_match, variable_match) for one cohort against a lowercased,
@@ -342,7 +334,7 @@ def _build_items(data: list, active_all: bool = False, demo_open: bool = False,
         )
 
     label = f"Cohort Groups ({n_cohorts} of {n_total_cohorts})" if query else f"Cohort Groups ({n_cohorts})"
-    return demo_accordion, _section_divider(label), cohorts_accordion
+    return demo_accordion, label, cohorts_accordion
 
 
 def build_accordion(data: list, search: str = None):

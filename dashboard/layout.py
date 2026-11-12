@@ -66,14 +66,24 @@ def create_layout():
 
             html.Div(id="demo-content", className="mt-2"),
 
+            # Static so the search box keeps focus while typing — only the
+            # label text (with the match count) is updated by the callback.
+            html.Div([
+                html.Div(className="section-divider-line"),
+                html.Span("Cohort Groups", id="cohort-divider-label", className="section-divider-label"),
+                html.Div(className="section-divider-line"),
+            ], className="section-divider"),
+
             html.Div([
                 dcc.Input(
                     id="cohort-search",
-                    type="text",
+                    type="search",
                     value="",
-                    placeholder='Search cohort groups or variables (e.g. "IgA", "NHS_NUMBER")…',
+                    placeholder="Search cohorts or variables, e.g. IgA",
                     className="cohort-search-input",
                     debounce=False,
+                    autoComplete="off",
+                    spellCheck=False,
                 ),
             ], className="cohort-search-wrap"),
 
