@@ -30,7 +30,7 @@ from config.cohorts import (
     COHORT_LETTERS,
 )
 from analytics.utils import build_result, missing_mask, logger
-from analytics.pipeline import queries, follow_up, cohort_rules, biochemistry
+from analytics.pipeline import queries, follow_up, cohort_rules, biochemistry, biopsies
 
 
 def run():
@@ -180,6 +180,13 @@ def run():
                 f"{len(COHORT_LETTERS)} letters defined in config/cohorts.py."
             )
 
+        unmatched = cohort_rules.unmatched_biopsy_rule_names(groups_df["name"])
+        if unmatched:
+            raise ValueError(
+                f"Biopsy rules in config/cohorts.py name cohorts not found in the DB: {unmatched}. "
+                f"Fix the names (or remove them) so no excluded biopsy figures are published."
+            )
+
         counts_df  = queries.fetch_cohort_counts(conn, excluded)
         counts_map = counts_df.set_index("group_id").to_dict(orient="index")
 
@@ -297,6 +304,15 @@ def run():
         ]
         transplant_count_map = transplant_counts_df.set_index("patient_id")["transplant_count"].to_dict()
         print(f"  Transplant counts loaded for {len(transplant_count_map):,} patients")
+
+        # ── Renal biopsies (all dates) — blank kidney_type inferred from
+        #    each patient's first transplant date, see pipeline/biopsies.py ──
+        print("  Loading renal biopsies...")
+        first_tx_df  = queries.fetch_first_transplant_dates(conn)
+        first_tx_map = first_tx_df.set_index("patient_id")["first_tx_date"].to_dict()
+        biopsies_df  = biopsies.classify_biopsies(queries.fetch_biopsies(conn), first_tx_map)
+        print(f"  {len(biopsies_df):,} biopsies for {biopsies_df['patient_id'].nunique():,} patients "
+              f"({int(biopsies_df['inferred'].sum()):,} with type inferred from transplant date)")
 
         # ── Section A: add overall KF row then finalise demo_section ──
         kf_total_a = len(kf_patient_ids)
@@ -561,6 +577,13 @@ def run():
                         "time_to_krt": prot_timing,
                     },
                 }
+
+            # Biopsies apply to every cohort, including those without biochemistry,
+            # except the types UKKA asked to leave out (config/cohorts.py)
+            biopsy_types = cohort_rules.biopsy_types_shown(db_name)
+            if biopsy_types:
+                biopsy_stats = biopsies.summarise_biopsies(biopsies_df, cohort_pids, patient_count)
+                section["biopsies"] = {t: biopsy_stats[t] for t in biopsy_types}
 
             cohort_sections.append(section)
 

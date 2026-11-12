@@ -9,3 +9,4 @@ logs/
 *.log
 .venv/
 radar_env/
+CLAUDE.md

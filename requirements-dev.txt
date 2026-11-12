@@ -5,3 +5,6 @@ pytest==9.1.1
 
 # scripts/generate_report.py only — not needed in production
 python-docx==1.2.0
+
+# scripts/format_biopsy_counts.py only — not needed in production
+openpyxl==3.1.5

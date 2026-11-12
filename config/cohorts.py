@@ -32,6 +32,33 @@ NO_BIOCHEMISTRY_COHORTS = (
     "BK Nephropathy",
 )
 
+# Renal biopsy rows, reviewed cohort by cohort with UKKA (Nov 2026).
+# Matched case-insensitively. Excluded figures are left out of
+# completeness.json entirely, not just hidden in the UI, because the whole
+# JSON is public (committed to GitHub and sent to the browser).
+#   NO_BIOPSY_COHORTS: no biopsy rows at all.
+#   BIOPSY_TRANSPLANT_ONLY_COHORTS: transplant biopsies only, native left out.
+NO_BIOPSY_COHORTS = (
+    "APRT Deficiency",
+    "Calciphylaxis",
+    "Early onset Hypertension",
+    "Inherited Renal Cancer Syndromes",
+    "Mitochondrial Renal Disease",
+    "Pure Red Cell Aplasia",
+    "Retroperitoneal Fibrosis",
+    "Tuberous Sclerosis",
+)
+
+BIOPSY_TRANSPLANT_ONLY_COHORTS = (
+    "Autosomal Dominant Polycystic Kidney Disease",
+    "Autosomal Recessive Polycystic Kidney Disease/Nephronophthisis/Ciliopathy",
+    "Congenital Anomalies of the Kidneys and Urinary Tracts",
+    "Cystinosis",
+    "Cystinuria",
+    "Fibromuscular Dysplasia",
+    "HNF1b Mutations",
+)
+
 # Letter sequence assigned to cohorts B–AH (one per DB cohort, in DB sort order).
 # Section A is reserved for Patient Demographics.
 COHORT_LETTERS = [

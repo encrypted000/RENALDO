@@ -115,21 +115,32 @@ _BIOCHEM_ROWS = [
 ]
 
 
-def _biochemistry_body(sec: dict, small_n: bool) -> html.Div:
-    if small_n:
-        return _small_n_body()
+def _biopsy_cell(stat: dict, field: str) -> str:
+    if not stat or not stat.get("total"):
+        return "—"
 
-    biochem = sec.get("biochemistry")
-    if not biochem:
-        return html.Div([
-            html.Strong("Biochemistry metadata coming soon"),
-            html.P("Creatinine and proteinuria counts pre-KRT for this cohort will be added in a future update."),
-        ], className="empty-state")
+    if field == "coverage":
+        count, total = stat.get("count", 0), stat.get("total", 0)
+        pct = round(count / total * 100, 1) if total else 0
+        return f"{count:,} / {total:,} ({pct}%)"
 
+    if field == "n_biopsies":
+        return f"{stat.get('total_biopsies', 0):,}"
+
+    return "—"
+
+
+_BIOPSY_ROWS = [
+    ("Patients with ≥1 biopsy", "coverage"),
+    ("Total biopsies",          "n_biopsies"),
+]
+
+
+def _biochemistry_table(biochem: dict) -> html.Table:
     creat = biochem.get("creatinine")
     prot  = biochem.get("proteinuria")
 
-    table = html.Table([
+    return html.Table([
         html.Thead(html.Tr([
             html.Th(""),
             html.Th("Creatinine"),
@@ -145,15 +156,59 @@ def _biochemistry_body(sec: dict, small_n: bool) -> html.Div:
         ]),
     ], className="biochem-table")
 
-    return html.Div(table, style={"padding": "6px 16px 14px"})
+
+def _biopsy_table(biopsies: dict) -> html.Table:
+    # Only the types the pipeline published — some cohorts are transplant only
+    types = [(key, label) for key, label in (("native", "Native"), ("transplant", "Transplant"))
+             if key in biopsies]
+
+    return html.Table([
+        html.Thead(html.Tr([html.Th("")] + [html.Th(label) for _, label in types])),
+        html.Tbody([
+            html.Tr(
+                [html.Td(label, className="biochem-row-label")]
+                + [html.Td(_biopsy_cell(biopsies[key], field)) for key, _ in types]
+            )
+            for label, field in _BIOPSY_ROWS
+        ]),
+    ], className="biochem-table")
 
 
-def _biochemistry_dropdown(sec: dict, letter: str, small_n: bool) -> dbc.Accordion:
+def _lab_results_body(sec: dict, small_n: bool) -> html.Div:
+    if small_n:
+        return _small_n_body()
+
+    biochem  = sec.get("biochemistry")
+    biopsies = sec.get("biopsies")
+    if not biochem and not biopsies:
+        return html.Div([
+            html.Strong("Lab results metadata coming soon"),
+            html.P("Lab results for this cohort will be added in a future update."),
+        ], className="empty-state")
+
+    parts = []
+    if biochem:
+        parts += [
+            html.Div("Creatinine and proteinuria · prior to KRT", className="lab-subhead"),
+            _biochemistry_table(biochem),
+        ]
+    if biopsies:
+        parts += [
+            html.Div("Renal biopsies · all dates", className="lab-subhead"),
+            _biopsy_table(biopsies),
+            html.P("Where native or transplant was not recorded, the type is inferred from "
+                   "the patient's first transplant date.", className="lab-note"),
+        ]
+
+    return html.Div(parts, style={"padding": "6px 16px 14px"})
+
+
+def _lab_results_dropdown(sec: dict, letter: str, small_n: bool) -> dbc.Accordion:
     return dbc.Accordion([
         dbc.AccordionItem(
-            children=_biochemistry_body(sec, small_n),
-            title="Biochemistry Metadata Prior to Kidney Replacement Therapy",
-            item_id=f"item-{letter}-biochem",
+            children=_lab_results_body(sec, small_n),
+            title="Lab Results Metadata",
+            item_id=f"item-{letter}-labs",
         )
     ],
         active_item=None,
@@ -241,8 +296,8 @@ def _build_items(data: list, active_all: bool = False, demo_open: bool = False,
         else:
             body = _coming_soon_body()
 
-        if sec.get("biochemistry") is not None:
-            body = html.Div([body, _biochemistry_dropdown(sec, letter, small_n)])
+        if sec.get("biochemistry") is not None or sec.get("biopsies") is not None:
+            body = html.Div([body, _lab_results_dropdown(sec, letter, small_n)])
 
         cohort_items.append(
             dbc.AccordionItem(

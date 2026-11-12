@@ -412,7 +412,7 @@ body {
   padding: 0 !important;
 }
 
-/* ── Nested sub-accordion (Biochemistry Metadata) ── */
+/* ── Nested sub-accordion (Lab Results Metadata) ── */
 .radar-accordion-sub {
   margin: 0 16px 14px;
 }
@@ -593,6 +593,26 @@ body {
   text-align:  left !important;
   color:       var(--text) !important;
   font-weight: 500;
+}
+
+/* ── Lab Results sub-headings (biochemistry, biopsies) ── */
+.lab-subhead {
+  font-size:   12px;
+  font-weight: 600;
+  color:       var(--text);
+  padding:     10px 0 4px;
+}
+
+.lab-subhead:not(:first-child) {
+  margin-top:  10px;
+  border-top:  1px solid var(--border);
+  padding-top: 14px;
+}
+
+.lab-note {
+  font-size:     11px;
+  color:         var(--text-3);
+  margin:        6px 0 0;
 }
 
 /* ── Table ── */

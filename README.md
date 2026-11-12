@@ -149,6 +149,7 @@ git push
 | Overall follow-up | Diagnosis date (or cohort entry if unavailable) to death or today — withdrawn patients excluded |
 | Follow-up pre KRT | Diagnosis date (or cohort entry if unavailable) to KRT/death/today — not shown for CMV Post Transplant or BK Nephropathy |
 | Cohort entry | `group_patients.from_date` (matches "Recruited On" in RaDaR front end) |
+| Renal biopsies | All dates, from `pathology`. One biopsy per patient per date per type. Native = `NATIVE`; transplant = `TRANSPLANT` or `TIME ZERO TRANSPLANT`. Blank type is inferred: before the first transplant (or no transplant recorded) → native, on/after it → transplant. Shown for every cohort, including CMV Post Transplant and BK Nephropathy, except those listed in `config/cohorts.py` as no biopsies or transplant only (agreed cohort by cohort with UKKA) |
 
 ---
 

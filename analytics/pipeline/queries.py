@@ -334,3 +334,30 @@ def fetch_transplant_counts(conn) -> pd.DataFrame:
         FROM transplants
         GROUP BY patient_id
     """, conn)
+
+
+def fetch_biopsies(conn) -> pd.DataFrame:
+    """
+    One row per patient per biopsy date per recorded kidney_type, from
+    pathology (BATCH and RADAR sources). Free-text report columns are
+    deliberately never selected.
+    """
+    df = pd.read_sql("""
+        SELECT DISTINCT patient_id, date::date AS biopsy_date, kidney_type
+        FROM pathology
+        WHERE date IS NOT NULL
+    """, conn)
+    df["biopsy_date"] = pd.to_datetime(df["biopsy_date"], errors="coerce")
+    return df
+
+
+def fetch_first_transplant_dates(conn) -> pd.DataFrame:
+    """patient_id -> earliest recorded transplant date."""
+    df = pd.read_sql("""
+        SELECT patient_id, MIN(date::date) AS first_tx_date
+        FROM transplants
+        WHERE date IS NOT NULL
+        GROUP BY patient_id
+    """, conn)
+    df["first_tx_date"] = pd.to_datetime(df["first_tx_date"], errors="coerce")
+    return df

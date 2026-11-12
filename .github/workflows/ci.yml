@@ -20,4 +20,4 @@ jobs:
         run: pip install -r requirements-dev.txt
 
       - name: Run tests (no live DB required)
-        run: python -m pytest tests/test_utils.py tests/test_follow_up.py tests/test_cohort_rules.py -v
+        run: python -m pytest tests/test_utils.py tests/test_follow_up.py tests/test_cohort_rules.py tests/test_biopsies.py -v
