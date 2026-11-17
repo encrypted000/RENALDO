@@ -582,7 +582,13 @@ def run():
             # except the types UKKA asked to leave out (config/cohorts.py)
             biopsy_types = cohort_rules.biopsy_types_shown(db_name)
             if biopsy_types:
-                biopsy_stats = biopsies.summarise_biopsies(biopsies_df, cohort_pids, patient_count)
+                # Transplant biopsies can only happen to patients who have
+                # actually been transplanted — the denominator for that row
+                # is those patients, not the whole cohort (UKKA feedback).
+                transplanted_pids_c = {pid for pid in cohort_pids if transplant_count_map.get(pid, 0) >= 1}
+                biopsy_stats = biopsies.summarise_biopsies(
+                    biopsies_df, cohort_pids, patient_count, transplanted_pids=transplanted_pids_c
+                )
                 section["biopsies"] = {t: biopsy_stats[t] for t in biopsy_types}
 
             cohort_sections.append(section)

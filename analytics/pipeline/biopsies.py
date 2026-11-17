@@ -52,15 +52,26 @@ def classify_biopsies(biopsies_df: pd.DataFrame, first_tx_map: dict) -> pd.DataF
     )
 
 
-def summarise_biopsies(classified: pd.DataFrame, cohort_pids: set, patient_count: int) -> dict:
-    """Per type: patients with >=1 biopsy, cohort size, and total biopsies."""
+def summarise_biopsies(classified: pd.DataFrame, cohort_pids: set, patient_count: int,
+                        transplanted_pids: set = None) -> dict:
+    """
+    Per type: patients with >=1 biopsy against the type-appropriate
+    denominator. Native biopsies are measured against the whole cohort;
+    transplant biopsies are only possible for patients who have actually
+    been transplanted, so they're measured against `transplanted_pids`
+    (falling back to the whole cohort if the caller doesn't have it —
+    the two are identical for an all-transplanted cohort).
+    """
     in_cohort = classified[classified["patient_id"].isin(cohort_pids)]
+    transplant_total = patient_count if transplanted_pids is None else len(cohort_pids & transplanted_pids)
+    denominators = {"native": patient_count, "transplant": transplant_total}
+
     stats = {}
     for biopsy_type in BIOPSY_TYPES:
         rows = in_cohort[in_cohort["biopsy_type"] == biopsy_type]
         stats[biopsy_type] = {
             "count":          int(rows["patient_id"].nunique()),
-            "total":          int(patient_count),
+            "total":          int(denominators[biopsy_type]),
             "total_biopsies": int(len(rows)),
         }
     return stats

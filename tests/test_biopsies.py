@@ -135,3 +135,25 @@ def test_classify_empty_input():
     assert out.empty
     stats = summarise_biopsies(out, {1}, patient_count=1)
     assert stats["native"]["count"] == 0
+
+
+# ── Transplant biopsy denominator — patients transplanted, not whole cohort ──
+
+def test_transplant_denominator_uses_transplanted_patients_not_whole_cohort(classified):
+    # Cohort of 3 (patients 1, 2, 4), but only patient 1 has been transplanted.
+    stats = summarise_biopsies(classified, {1, 2, 4}, patient_count=3, transplanted_pids={1})
+    assert stats["transplant"] == {"count": 1, "total": 1, "total_biopsies": 1}
+    # Native is unaffected — still measured against the whole cohort.
+    assert stats["native"] == {"count": 2, "total": 3, "total_biopsies": 3}
+
+
+def test_transplant_denominator_matches_whole_cohort_when_all_transplanted(classified):
+    # e.g. CMV Post Transplant / BK Nephropathy, where every cohort member
+    # has been transplanted — denominator equals the whole-cohort figure.
+    stats = summarise_biopsies(classified, {1, 2, 4}, patient_count=3, transplanted_pids={1, 2, 4})
+    assert stats["transplant"]["total"] == 3
+
+
+def test_transplant_denominator_falls_back_to_patient_count_when_not_given(classified):
+    stats = summarise_biopsies(classified, {1, 2, 4}, patient_count=3)
+    assert stats["transplant"]["total"] == 3

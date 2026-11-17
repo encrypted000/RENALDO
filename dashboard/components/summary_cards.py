@@ -18,7 +18,7 @@ def build_summary_cards(data: list):
         ], className=f"stat-group {cls}".strip())
 
     return html.Div([
-        stat("Total patients", f"{total_patients:,}", "RaDaR patients, excluding test & control", "primary"),
+        stat("Total patients", f"{total_patients:,}", "RaDaR patients", "primary"),
         stat("Adults",         f"{adults:,}",         "patients aged ≥ 18"),
         stat("Children",       f"{children:,}",       "patients aged < 18"),
     ], className="stat-strip")
