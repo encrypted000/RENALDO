@@ -194,7 +194,7 @@ def _lab_results_body(sec: dict, small_n: bool) -> html.Div:
         ]
     if biopsies:
         parts += [
-            html.Div("Renal biopsies · all dates", className="lab-subhead"),
+            html.Div("Renal Biopsy – Written Pathology Reports", className="lab-subhead"),
             _biopsy_table(biopsies),
             html.P("Where native or transplant was not recorded, the type is inferred from "
                    "the patient's first transplant date.", className="lab-note"),

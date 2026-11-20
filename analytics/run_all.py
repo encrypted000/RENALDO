@@ -487,7 +487,7 @@ def run():
                     "id": f"{letter}.total",   "name": "TOTAL_PATIENTS",
                     "pct_missing": None, "missing": None, "total": patient_count,
                     "required": False,
-                    "desc": "Total patients enrolled in this cohort (test and control patients excluded)",
+                    "desc": "Total patients enrolled in this cohort",
                 },
                 {
                     "id": f"{letter}.adults",  "name": "ADULTS",
