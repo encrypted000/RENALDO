@@ -133,7 +133,7 @@ run.font.color.rgb = RGBColor(0xA0, 0xC4, 0xE0)
 ver_para = doc.add_paragraph()
 ver_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
 para_shade(ver_para, "1A4A6E")
-run = ver_para.add_run("Version 1.0  ·  April 2026  ·  renaldo.onrender.com")
+run = ver_para.add_run("Version 1.0  ·  April 2026  ·  renaldo.fly.dev")
 run.font.name  = "Calibri"
 run.font.size  = Pt(9)
 run.font.color.rgb = RGBColor(0xCC, 0xDD, 0xEE)
@@ -500,7 +500,7 @@ body("The dashboard operates on a static JSON model — there is no live databas
 steps = [
     ("Step 1", "run_all.py runs locally — opens SSH tunnel to RaDaR PostgreSQL database, runs all queries (demographics, cohort counts, follow-up, KF, transplants), writes output/completeness.json"),
     ("Step 2", "completeness.json is committed to GitHub"),
-    ("Step 3", "Render.com auto-deploys from GitHub — dashboard reads completeness.json at startup. No database credentials required on the server."),
+    ("Step 3", "Deployed to Fly.io (`fly deploy`) — dashboard reads completeness.json at startup. No database credentials required on the server."),
 ]
 for label, text in steps:
     p = doc.add_paragraph(style="Normal")
@@ -513,7 +513,7 @@ for label, text in steps:
 doc.add_paragraph()
 
 h2("7.2  Update Frequency")
-body("The dashboard is updated manually by running the analytics pipeline locally and pushing the resulting JSON file to GitHub. Render.com redeploys automatically within approximately 2 minutes of each push.")
+body("The dashboard is updated manually by running the analytics pipeline locally, pushing the resulting JSON file to GitHub, then running `fly deploy` to publish it.")
 
 h2("7.3  Technology Stack")
 styled_table(
@@ -523,7 +523,7 @@ styled_table(
         ["UI components",       "Dash Bootstrap Components (Bootstrap 5)"],
         ["Data processing",     "pandas"],
         ["Database connection", "PostgreSQL via SSH tunnel (psycopg2 + sshtunnel)"],
-        ["Hosting",             "Render.com"],
+        ["Hosting",             "Fly.io"],
         ["Version control",     "GitHub — encrypted000/RENALDO"],
     ]
 )
@@ -578,7 +578,7 @@ styled_table(
 doc.add_paragraph()
 p = doc.add_paragraph(style="Normal")
 p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-r = p.add_run("Report prepared by the UK Kidney Association data team  ·  Dashboard: renaldo.onrender.com  ·  Source: github.com/encrypted000/RENALDO")
+r = p.add_run("Report prepared by the UK Kidney Association data team  ·  Dashboard: renaldo.fly.dev  ·  Source: github.com/encrypted000/RENALDO")
 r.font.size = Pt(8.5)
 r.font.color.rgb = RGBColor(0xAA, 0xAA, 0xAA)
 

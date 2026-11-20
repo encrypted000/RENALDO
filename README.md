@@ -3,7 +3,7 @@
 
 > An interactive data completeness monitoring dashboard for the [RaDaR](https://www.radar.nhs.uk) (Rare Disease Registry) — managed by the **UK Kidney Association**.
 
-🔗 **Live dashboard:** [renaldo.onrender.com](https://renaldo.onrender.com)
+🔗 **Live dashboard:** [renaldo.fly.dev](https://renaldo.fly.dev)
 
 ---
 
@@ -127,10 +127,15 @@ The hosted dashboard reads from `output/completeness.json`. To update it:
 # Step 1 — refresh data from database
 python -m analytics.run_all
 
-# Step 2 — push to GitHub (Render auto-redeploys)
+# Step 2 — push to GitHub, then deploy to Fly.io
+# (Fly doesn't auto-redeploy from a GitHub push the way Render did —
+# there's no GitHub Actions workflow wired up for it, so `fly deploy`
+# is a separate, manual step until one is added.)
 git add output/completeness.json
 git commit -m "Update completeness data"
 git push
+
+fly deploy
 ```
 
 ---
@@ -173,7 +178,7 @@ python -m pytest tests/test_connection.py -v
 | UI components | [Dash Bootstrap Components](https://dash-bootstrap-components.opensource.faculty.ai/) |
 | Data processing | [pandas](https://pandas.pydata.org/) |
 | Database | PostgreSQL via SSH tunnel (psycopg2 + sshtunnel) |
-| Hosting | [Render](https://render.com) |
+| Hosting | [Fly.io](https://fly.io) |
 
 ---
 

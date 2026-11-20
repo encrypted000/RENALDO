@@ -243,7 +243,7 @@ callout(
 doc.add_paragraph()
 p = doc.add_paragraph(style="Normal")
 p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-r = p.add_run("RENALDO Dashboard  ·  UK Kidney Association  ·  renaldo.onrender.com")
+r = p.add_run("RENALDO Dashboard  ·  UK Kidney Association  ·  renaldo.fly.dev")
 r.font.size = Pt(8.5)
 r.font.color.rgb = TEXT_3
 

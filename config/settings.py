@@ -5,8 +5,8 @@ import psycopg2
 import os
 
 # Loads a local .env file if one exists (see .env.example) — a no-op if it
-# doesn't, so this is safe in production where Render injects env vars
-# directly rather than via a file.
+# doesn't, so this is safe in production where Fly.io injects env vars
+# directly (fly.toml [env] / `fly secrets`) rather than via a file.
 load_dotenv()
 
 

@@ -1,7 +1,7 @@
 from dashboard import create_app
 
 app = create_app()
-server = app.server  # required for Render/gunicorn
+server = app.server  # required for gunicorn (Procfile, Fly.io)
 
 if __name__ == "__main__":
     import os
