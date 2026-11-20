@@ -26,7 +26,7 @@ def _description_box() -> html.Div:
             "Data completeness has been assessed for each variable across all patients. "
             "A variable is considered missing when no value has been recorded for a "
             "patient for whom that information would be expected. Variables designated "
-            "as Required form part of the RaDaR minimum dataset and should be completed "
+            "as required/ must be collected ('REQ') form part of the RaDaR minimum dataset and should be completed "
             "for every patient."
         ),
 
