@@ -232,6 +232,14 @@ body {
 
 .info-box p { margin-bottom: var(--space-2); }
 .info-box p:last-child { margin-bottom: 0; }
+.info-box strong { color: var(--text); font-weight: 700; }
+.info-box .info-box-lead { margin-bottom: 4px; }
+.info-box-list {
+  margin:       0 0 var(--space-2);
+  padding-left: 1.4em;
+}
+.info-box-list li { margin-bottom: 2px; }
+.info-box-list li::marker { color: var(--text-2); }
 
 /* ── Section dividers ── */
 .section-divider {
